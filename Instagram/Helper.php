@@ -15,6 +15,7 @@ class Helper {
 	public static function parseTagsAndMentions( $text, \Closure $tags_closure, \Closure $mentions_closure ) {
 		$text = self::parseTags( $text, $tags_closure );
 		$text = self::parseMentions( $text, $mentions_closure );
+		return $text;
 	}
 
 }

@@ -20,7 +20,7 @@ require( '_header.php' );
 <a href="<?php echo $media->getLink() ?>"><img src="<?php echo $media->getStandardRes()->url ?>"><br></a>
 
 <?php if( $media->getCaption() ): ?>
-<caption><em><?php echo $media->getCaption()->getText( $tags_closure, $mentions_closure ) ?></em></caption>
+<caption><em><?php echo \Instagram\Helper::parseTagsAndMentions( $media->getCaption(), $tags_closure, $mentions_closure ) ?></em></caption>
 <?php endif; ?>
 
 <dl>
