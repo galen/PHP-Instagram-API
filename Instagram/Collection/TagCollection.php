@@ -4,13 +4,6 @@ namespace Instagram\Collection;
 
 class TagCollection extends \Instagram\Collection\CollectionAbstract {
 
-	public function __construct( $raw_data = null ) {
-		if ( $raw_data ) {
-			$this->setData( $raw_data );
-			$this->convertData( '\Instagram\Tag' );
-		}
-	}
-
 	public function setData( $raw_data ) {
 		if ( isset( $raw_data->data ) ) {
 			$this->data = $raw_data->data;

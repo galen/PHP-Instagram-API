@@ -4,14 +4,10 @@ namespace Instagram\Collection;
 
 class UserCollection extends \Instagram\Collection\CollectionAbstract {
 
-	protected $pagination;
-
-	public function __construct( $raw_data = null ) {
-		if ( $raw_data ) {
-			$this->setData( $raw_data );
-			$this->pagination = isset( $raw_data->pagination ) ? $raw_data->pagination : null;
-			$this->convertData( '\Instagram\User' );
-		}
+	public function setData( $raw_data ) {
+		$this->data = $raw_data->data;
+		$this->pagination = isset( $raw_data->pagination ) ? $raw_data->pagination : null;
+		$this->convertData( '\Instagram\User' );
 	}
 
 	public function getNextCursor() {

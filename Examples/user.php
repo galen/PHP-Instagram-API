@@ -4,9 +4,9 @@ require( '_common.php' );
 
 $user_id = isset( $_GET['user'] ) ? $_GET['user'] : 11007611;
 $user = $instagram->getUser( $user_id );
+$media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 $follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
 $followed_by = $user->getFollowedBy( isset( $_GET['followed_by_cursor'] ) ? array( 'cursor' => $_GET['followed_by_cursor'] ) : null );
-$media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 
 
 require( '_header.php' );

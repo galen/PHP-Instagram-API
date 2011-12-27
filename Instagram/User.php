@@ -5,13 +5,9 @@ namespace Instagram;
 class User extends \Instagram\Core\ProxyObjectAbstract {
 
 	protected $media;
-	protected $media_all;
-
 	protected $follows;
-	protected $follows_all;
-
 	protected $followed_by;
-	protected $followed_by_all;
+
 
 	public function getUserName() {
 		return $this->data->username;
@@ -57,14 +53,6 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 		return $this->media;
 	}
 
-	public function getAllMedia( array $params = null, $force_fetch = null ) {
-		if ( $this->media_all && !(bool)$force_fetch ) {
-			return $this->media_all;
-		}
-		$this->media_all = $this->proxy->getAllUserMedia( $this->getApiId(), $params );
-		return $this->media_all;
-	}
-
 	public function getFollows( array $params = null, $force_fetch = null ) {
 		if ( $this->follows && !(bool)$force_fetch ) {
 			return $this->follows;
@@ -73,27 +61,11 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 		return $this->follows;
 	}
 
-	public function getAllFollows( $force_fetch = null ) {
-		if ( $this->follows_all && !(bool)$force_fetch ) {
-			return $this->follows_all;
-		}
-		$this->follows_all = $this->proxy->getAllUserFollows( $this->getApiId() );
-		return $this->follows_all;
-	}
-
 	public function getFollowedBy( array $params = null, $force_fetch = null ) {
 		if ( $this->followed_by && !(bool)$force_fetch ) {
 			return $this->followed_by;
 		}
 		$this->followed_by = $this->proxy->getUserFollowedBy( $this->getApiId(), $params );
-		return $this->followed_by;
-	}
-
-	public function getAllFollowedBy( $force_fetch = null ) {
-		if ( $this->followed_by && !(bool)$force_fetch ) {
-			return $this->followed_by;
-		}
-		$this->followed_by = $this->proxy->getAllUserFollowedBy( $this->getApiId() );
 		return $this->followed_by;
 	}
 

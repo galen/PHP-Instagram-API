@@ -14,38 +14,27 @@ class Proxy {
 		$this->client = $client;
 	}
 
-	private function getObjectMedia( $api_endpoint, $id, array $params = null ) {
+	private function getObjectMedia( $api_endpoint, $id, \Instagram\Collection\CollectionAbstract $collection, array $params = null ) {
 		$response = $this->apiCall(
 			'get',
 			sprintf( '%s/%s/%s/media/recent', $this->api_url, strtolower( $api_endpoint ), $id  ),
 			$params
 		);
-		return new \Instagram\Collection\MediaCollection( $response->getRawData() );
-	}
-
-	public function getAllObjectMedia( $api_endpoint, $id, array $params = null ) {
-		$media_all = new \Instagram\Collection\MediaCollection;
-		do {
-			$get_media = $this->getObjectMedia( $api_endpoint, $id, isset( $get_media ) ? (array)$params + array( 'max_id' => $get_media->getNextMaxId() ) : null );
-			$media_all->addData( $get_media );
-		}while( $get_media->getNextMaxId() );
-		return $media_all;
+		$collection->setData( $response->getRawData() );
+		return $collection;
 	}
 
 	public function getLocationMedia( $id, array $params = null ) {
-		return $this->getObjectMedia( 'Locations', $id, $params );
+		$collection = $this->getObjectMedia( 'Locations', $id, new \Instagram\Collection\MediaCollection, $params );
+		return $collection;
 	}
 
 	public function getTagMedia( $id, array $params = null ) {
-		return $this->getObjectMedia( 'Tags', $id, $params );
+		return $this->getObjectMedia( 'Tags', $id, new \Instagram\Collection\TagMediaCollection, $params );
 	}
 
 	public function getUserMedia( $id, array $params = null ) {
-		return $this->getObjectMedia( 'Users', $id, $params );
-	}
-
-	public function getAllUserMedia( $id, array $params = null ) {
-		return $this->getAllObjectMedia( 'Users', $id, $params );
+		return $this->getObjectMedia( 'Users', $id, new \Instagram\Collection\MediaCollection, $params );
 	}
 
 	public function getUser( $id ) {
@@ -65,15 +54,6 @@ class Proxy {
 		return new \Instagram\Collection\UserCollection( $response->getRawData() );
 	}
 
-	public function getAllUserFollows( $id ) {
-		$follows = new \Instagram\Collection\UserCollection;
-		do {
-			$get_follows = $this->getUserFollows( $id, isset( $get_follows ) ? array( 'cursor' => $get_follows->getNextCursor() ) : null );
-			$follows->addData( $get_follows );
-		}while( $get_follows->getNextCursor() );
-		return $follows;
-	}
-
 	public function getUserFollowedBy( $id, array $params = null ) {
 		$response = $this->apiCall(
 			'get',
@@ -81,15 +61,6 @@ class Proxy {
 			$params
 		);
 		return new \Instagram\Collection\UserCollection( $response->getRawData() );
-	}
-
-	public function getAllUserFollowedBy( $id ) {
-		$followed_by = new \Instagram\Collection\UserCollection;
-		do {
-			$get_followed_by = $this->getUserFollowedBy( $id, isset( $get_followed_by ) ? array( 'cursor' => $get_followed_by->getNextCursor() ) : null );
-			$followed_by->addData( $get_followed_by );
-		}while( $get_followed_by->getNextCursor() );
-		return $followed_by;
 	}
 
 	public function getMediaComments( $id ) {

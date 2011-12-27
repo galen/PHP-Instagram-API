@@ -2,15 +2,20 @@
 
 namespace Instagram\Collection;
 
-class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable {
+abstract class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable {
 
+	protected $pagination;
 	protected $position;
 	protected $data = array();
 
-	public function setData( $raw_data ) {
-		$this->data = $raw_data->data;
+	public function __construct( $raw_data = null ) {
+		if ( $raw_data ) {
+			$this->setData( $raw_data );
+		}
 	}
-	
+
+	abstract function setData( $raw_data );
+
 	public function getData() {
 		return $this->data;
 	}
