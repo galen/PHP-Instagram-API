@@ -175,7 +175,6 @@ class Proxy {
 	}
 
 	private function apiCall( $method, $url, array $params = null, $throw_exception = true ){
-
 		$response = $this->client->$method(
 			$url,
 			array(
@@ -197,7 +196,6 @@ class Proxy {
 			}
 		}
 		return $response;
-	
 	}
 
 

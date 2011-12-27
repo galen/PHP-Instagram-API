@@ -8,7 +8,6 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 	protected $follows;
 	protected $followed_by;
 
-
 	public function getUserName() {
 		return $this->data->username;
 	}
@@ -30,19 +29,26 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 	}
 
 	public function getCounts() {
-		return $this->data->counts;
+		$this->checkFull();
+		return isset( $this->data->counts ) ? $this->data->counts : null;
 	}
 
 	public function getFollowsCount() {
-		return (int)$this->data->counts->follows;
+		return (int)$this->getCounts()->follows;
 	}
 
 	public function getFollowedByCount() {
-		return (int)$this->data->counts->followed_by;
+		return (int)$this->getCounts()->followed_by;
 	}
 
 	public function getMediaCount() {
-		return (int)$this->data->counts->media;
+		return (int)$this->getCounts()->media;
+	}
+
+	public function checkFull() {
+		if ( !isset( $this->data->counts ) ) {
+			$this->setData( $this->proxy->getUser( $this->getApiId() )->getData() );
+		}
 	}
 
 	public function getMedia( array $params = null, $force_fetch = null ) {

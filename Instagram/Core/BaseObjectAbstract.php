@@ -22,4 +22,8 @@ abstract class BaseObjectAbstract {
 		$this->data = $data;
 	}
 
+	public function getData() {
+		return $this->data;
+	}
+
 }

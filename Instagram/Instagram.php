@@ -65,7 +65,7 @@ class Instagram {
 		return $popular_media;
 	}
 
-	public function searchUsersByName( $query, array $params = null ) {
+	public function searchUsers( $query, array $params = null ) {
 		$params = (array)$params;
 		$params['q'] = $query;
 		$user_collection = $this->proxy->searchUsers( $params );

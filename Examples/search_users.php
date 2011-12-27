@@ -3,7 +3,7 @@
 require( '_common.php' );
 
 $q = isset( $_GET['q'] ) ? $_GET['q'] : 'yoshi';
-$users = $instagram->searchUsersByName( $q );
+$users = $instagram->searchUsers( $q );
 
 
 require( '_header.php' );

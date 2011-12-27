@@ -84,13 +84,13 @@ class InstagramTest extends PHPUnit_Framework_TestCase {
 
 	public function testSearchUsers() {
 		$instagram = new Instagram\Instagram( $this->config );
-		$users = $instagram->searchUsersByName( 'john' );
+		$users = $instagram->searchUsers( 'john' );
 		$this->assertInstanceOf( '\Instagram\Collection\UserCollection', $users );
 	}
 
 	public function testSearchUsersNoResults() {
 		$instagram = new Instagram\Instagram( $this->config );
-		$users = $instagram->searchUsersByName( 'laksdfjalskfja;sldfjas;lkfj' );
+		$users = $instagram->searchUsers( 'laksdfjalskfja;sldfjas;lkfj' );
 		$this->assertInstanceOf( '\Instagram\Collection\UserCollection', $users );
 		$this->assertTrue( $users->count() == 0 );
 	}
@@ -98,7 +98,7 @@ class InstagramTest extends PHPUnit_Framework_TestCase {
 	public function testInvalidSearchUsers() {
 		$this->setExpectedException('\Instagram\Core\ApiException');
 		$instagram = new Instagram\Instagram( $this->config );
-		$users = $instagram->searchUsersByName( '' );
+		$users = $instagram->searchUsers( '' );
 		$this->assertInstanceOf( '\Instagram\Collection\UserCollection', $users );
 	}
 

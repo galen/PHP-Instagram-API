@@ -6,8 +6,15 @@ class Comment extends \Instagram\Core\BaseObjectAbstract {
 
 	protected $user;
 
-	public function getText() {
-		return $this->data->text;
+	public function getText( \Closure $tags_closure = null, \Closure $mentions_closure = null ) {
+		$text = $this->data->text;
+		if ( $tags_closure ) {
+			$text = \Instagram\Helper::parseTags( $text, $tags_closure );
+		}
+		if ( $mentions_closure ) {
+			$text = \Instagram\Helper::parseMentions( $text, $mentions_closure );
+		}
+		return $text;
 	}
 
 	public function getUser() {
@@ -18,7 +25,7 @@ class Comment extends \Instagram\Core\BaseObjectAbstract {
 	}
 
 	public function __toString() {
-		return $this->data->text;
+		return $this->getText();
 	}
 
 	public function getCreatedTime( $format = null ) {

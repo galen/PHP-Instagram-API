@@ -3,7 +3,13 @@
 require( '_common.php' );
 
 $user_id = isset( $_GET['user'] ) ? $_GET['user'] : 11007611;
-$user = $instagram->getUser( $user_id );
+if ( ctype_digit( $user_id ) ) {
+	$user = $instagram->getUser( $user_id );
+}
+else {
+	$user = $instagram->searchUsers( $user_id, array( 'count' => 1 ) )->getItem( 1 );
+}
+
 $media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 $follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
 $followed_by = $user->getFollowedBy( isset( $_GET['followed_by_cursor'] ) ? array( 'cursor' => $_GET['followed_by_cursor'] ) : null );
