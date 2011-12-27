@@ -2,14 +2,14 @@
 
 require( '_common.php' );
 
-$q = isset( $_GET['q'] ) ? $_GET['q'] : 'pjladd';
+$q = isset( $_GET['q'] ) ? $_GET['q'] : 'yoshi';
 $users = $instagram->searchUsersByName( $q );
 
 
 require( '_header.php' );
 ?>
 
-<h1>Search for "<?php echo $q ?>" (<?php echo count( $users ) ?> results)</h1>
+<h1>Search for user "<?php echo $q ?>" (<?php echo count( $users ) ?> results)</h1>
 
 <ul>
 <?php foreach( $users as $n => $user ): ?>

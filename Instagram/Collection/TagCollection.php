@@ -11,6 +11,7 @@ class TagCollection extends \Instagram\Collection\CollectionAbstract {
 		elseif( is_array( $raw_data ) ) {
 			$this->data = array_map( function( $t ){ return (object)array( 'name' => $t ); }, $raw_data );
 		}
+		$this->convertData( '\Instagram\Tag' );
 	}
 
 	public function getNextMaxTagId() {

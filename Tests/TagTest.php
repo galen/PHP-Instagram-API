@@ -24,7 +24,7 @@ class TagTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetMedia() {
 		$media = $this->tag->getMedia();
-		$this->assertInstanceOf( '\Instagram\Collection\MediaCollection', $media );
+		$this->assertInstanceOf( '\Instagram\Collection\TagMediaCollection', $media );
 	}
 
 }

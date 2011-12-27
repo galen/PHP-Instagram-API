@@ -28,9 +28,9 @@ class MediaTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf( '\Instagram\User', $this->media->getUser() );
 		$this->assertInstanceOf( '\Instagram\Collection\CommentCollection', $this->media->getComments() );
 		$this->assertTrue( is_string( $this->media->getFilter() ) );
-		$this->assertTrue( is_array( $this->media->getTags() ) );
+		$this->assertInstanceOf( '\Instagram\Collection\TagCollection',  $this->media->getTags() );
 		$this->assertTrue( is_string( $this->media->getLink() ) );
-		$this->assertTrue( is_int( $this->media->getLikeCount() ) );
+		$this->assertTrue( is_int( $this->media->getLikesCount() ) );
 		$this->assertInstanceOf( '\Instagram\Collection\UserCollection', $this->media->getLikes() );	
 		$this->assertTrue(
 			is_null( $this->media->getLocation() ) ||
