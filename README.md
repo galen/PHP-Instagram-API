@@ -14,7 +14,7 @@ Instagram will then send the user back to the redirect url you created with a co
 
     $_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] ); 
 
-**Authentication example comign soon**
+**Authentication example coming soon**
 
 ##Basic Usage
 
@@ -85,7 +85,7 @@ In `user_media.php` you would check for a next page when obtaining the user medi
     $params = isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null;
     $media = $user->getMedia( $params );
 
-Unfortunately methods require different params to be passed ot them in order to obtain the next set of results (e.g. Tags require the *max_tag_id* param ).
+Unfortunately methods require different params to be passed to them in order to obtain the next set of results (e.g. Tags require the *max_tag_id* param ).
 
 ##Searching
 
