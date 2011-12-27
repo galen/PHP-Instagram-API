@@ -16,4 +16,8 @@ class MediaSearchCollection extends \Instagram\Collection\CollectionAbstract {
 		return $this->next_max_timestamp;
 	}
 
+	public function getNext() {
+		return $this->getNextMaxTimeStamp();
+	}
+
 }

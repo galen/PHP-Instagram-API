@@ -14,8 +14,8 @@ class UserCollection extends \Instagram\Collection\CollectionAbstract {
 		return isset( $this->pagination->next_cursor ) && !empty( $this->pagination->next_cursor ) ? $this->pagination->next_cursor : null;
 	}
 
-	public function getNextUrl() {
-		return isset( $this->pagination->next_url ) && !empty( $this->pagination->next_url ) ? $this->pagination->next_url : null;
+	public function getNext() {
+		return $this->getNextCursor();
 	}
 
 }

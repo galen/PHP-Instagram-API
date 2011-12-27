@@ -18,4 +18,8 @@ class MediaCollection extends \Instagram\Collection\CollectionAbstract {
 		return isset( $this->pagination->next_url ) ? $this->pagination->next_url : null;
 	}
 
+	public function getNext() {
+		return $this->getNextMaxId();
+	}
+
 }

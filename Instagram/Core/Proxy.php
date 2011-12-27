@@ -171,7 +171,7 @@ class Proxy {
 			$this->api_url . '/users/self/media/liked',
 			$params
 		);
-		return new \Instagram\Collection\MediaCollection( $response->getRawData() );
+		return new \Instagram\Collection\LikedMediaCollection( $response->getRawData() );
 	}
 
 	private function apiCall( $method, $url, array $params = null, $throw_exception = true ){

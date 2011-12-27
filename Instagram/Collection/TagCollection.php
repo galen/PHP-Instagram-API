@@ -14,12 +14,4 @@ class TagCollection extends \Instagram\Collection\CollectionAbstract {
 		$this->convertData( '\Instagram\Tag' );
 	}
 
-	public function getNextMaxTagId() {
-		return isset( $this->pagination->next_max_tag_id ) ? $this->pagination->next_max_tag_id : null;
-	}
-
-	public function getNextUrl() {
-		return isset( $this->pagination->next_url ) ? $this->pagination->next_url : null;
-	}
-
 }
