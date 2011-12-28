@@ -35,9 +35,10 @@ window.location=window.location+"&lat="+position.coords.latitude+"&lng="+positio
 }
 error = function(){}
 if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(success, error, {enableHighAccuracy: true});
+  navigator.geolocation.getCurrentPosition(success, error, {enableHighAccuracy: true, timeout: 10000});
 } else {
-  alert('not supported');
+  alert('Error getting location');
+  window.location = 'http://www.galengrover.com/projects/instagram';
 }
 </script>
 <p>Searching for your location <img src="/projects/instagram/system/lib/Instagram/Examples/_images/working.gif"></p>
