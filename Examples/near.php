@@ -14,12 +14,15 @@ require( '_header.php' );
 ?>
 
 <?php if ( isset( $media ) ): ?>
-<h1>Search media near me (<?php echo count( $media ) ?> results)</h1>
+<h2>Search media near me</h2>
 
+<h3>Found <?php echo count( $media ) ?> results <?php if( $media->getNextMaxTimeStamp() ): ?><a href="?example=near.php&lat=<?php echo $_GET['lat'] ?>&lng=<?php echo $_GET['lng'] ?>&max_timestamp=<?php echo $media->getNextMaxTimestamp() ?>" class="next_page">Next page</a><?php endif; ?></h3>
+
+<ul class="media_list">
 <?php foreach( $media as $n => $m ): ?>
-<a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a>
+<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a></li>
 <?php endforeach ?>
-<?php if( $media->getNextMaxTimeStamp() ): ?><br><br><a href="?example=near.php&lat=<?php echo $_GET['lat'] ?>&lng=<?php echo $_GET['lng'] ?>&max_timestamp=<?php echo $media->getNextMaxTimestamp() ?>">Next page</a><?php endif; ?>
+</ul>
 <?php else: ?>
 <script type="text/javascript">
 success = function(position){
@@ -36,4 +39,4 @@ if (navigator.geolocation) {
 Searching for your location…
 <?php endif; ?>
 
-
+<?php require( '_footer.php' ); ?>

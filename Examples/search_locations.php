@@ -8,7 +8,7 @@ $locations = $instagram->searchLocations( 40.778201, -73.969874 );
 require( '_header.php' );
 ?>
 
-<h1>Search Locations near Central Park (<?php echo count( $locations ) ?> results)</h1>
+<h2>Search Locations near Central Park (<?php echo count( $locations ) ?> results)</h2>
 
 <ol>
 <?php foreach( $locations as $n => $location ): ?>

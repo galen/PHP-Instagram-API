@@ -8,11 +8,15 @@ $media = $tag->getMedia( isset( $_GET['max_tag_id'] ) ? array( 'max_tag_id' => $
 require( '_header.php' );
 ?>
 
-<h1>#<?php echo $tag ?></h1>
+<h3>#<?php echo $tag ?></h3>
 
-<h2>Recent Media </h2>
+<h4>Recent Media <?php if( $media->getNextMaxTagId() ): ?><a href="?example=tag.php&tag=<?php echo $tag ?>&max_tag_id=<?php echo $media->getNextMaxTagId() ?>" class="next_page">Next page</a></li><?php endif; ?></h4>
+<ul class="media_list">
 <?php foreach( $media as $m ): ?>
-<a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a>
+<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a></li>
 <?php endforeach; ?>
+</ul>
 
-<?php if( $media->getNextMaxTagId() ): ?><br><br><a href="?example=tag.php&tag=<?php echo $tag ?>&max_tag_id=<?php echo $media->getNextMaxTagId() ?>">Next page</a><?php endif; ?>
+
+
+<?php require( '_footer.php' ); ?>

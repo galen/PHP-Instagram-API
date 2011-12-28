@@ -9,7 +9,7 @@ $tags = $instagram->searchTags( $q );
 require( '_header.php' );
 ?>
 
-<h1>Search for tag "<?php echo $q ?>" (<?php echo count( $tags ) ?> results)</h1>
+<h2>Search for tag "<?php echo $q ?>" (<?php echo count( $tags ) ?> results)</h2>
 
 <ol>
 <?php foreach( $tags as $tag ): ?>

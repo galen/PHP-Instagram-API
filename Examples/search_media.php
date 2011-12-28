@@ -18,10 +18,11 @@ $media = $instagram->searchMedia( $lat, $lng, isset( $_GET['max_timestamp'] ) ? 
 require( '_header.php' );
 ?>
 
-<h1>Search media near <?php if( isset( $search ) ): ?><?php echo $lat ?>, <?php echo $lng ?><?php else: ?>the Eiffel Tower<?php endif; ?> (<?php echo count( $media ) ?> results)</h1>
+<h3>Search media near <?php if( isset( $search ) ): ?><?php echo $lat ?>, <?php echo $lng ?><?php else: ?>the Eiffel Tower<?php endif; ?> (<?php echo count( $media ) ?> results) <?php if( $media->getNextMaxTimeStamp() ): ?><a href="?example=search_media.php&lat=<?php echo $lat ?>&lng=<?php echo $lng ?>&max_timestamp=<?php echo $media->getNextMaxTimestamp() ?>" class="next_page">Next page</a><?php endif; ?></h3>
 
+<ul class="media_list">
 <?php foreach( $media as $n => $m ): ?>
 <a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a>
 <?php endforeach ?>
+</ul>
 
-<?php if( $media->getNextMaxTimeStamp() ): ?><br><br><a href="?example=search_media.php&lat=<?php echo $lat ?>&lng=<?php echo $lng ?>&max_timestamp=<?php echo $media->getNextMaxTimestamp() ?>">Next page</a><?php endif; ?>
