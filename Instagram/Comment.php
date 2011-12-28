@@ -1,26 +1,35 @@
 <?php
 
+/**
+* Instagram PHP
+* @author Galen Grover <galenjr@gmail.com>
+* @license http://opensource.org/licenses/mit-license.php The MIT License
+*/
+
 namespace Instagram;
 
+/**
+ * Comment class
+ * 
+ * @see \Instagram\Media::getCaption()
+ * @see \Instagram\Media::getComments()
+ */
 class Comment extends \Instagram\Core\BaseObjectAbstract {
 
+	/**
+	 * Hold the comment's user
+	 *
+	 * @var \Instagram\User
+	 */
 	protected $user;
 
-	public function getText() {
-		return $this->data->text;
-	}
-
-	public function getUser() {
-		if ( !$this->user ) {
-			$this->user = new \Instagram\User( $this->data->from );
-		}
-		return $this->user;
-	}
-
-	public function __toString() {
-		return $this->getText();
-	}
-
+	/**
+	 * Get comment creation time
+	 *
+	 * @param $format Time format {@link http://php.net/manual/en/function.date.php}
+	 * @return string Returns the creation time with optional formatting
+	 * @access public
+	 */
 	public function getCreatedTime( $format = null ) {
 		if ( $format ) {
 			$date = date( $format, $this->data->created_time );
@@ -29,6 +38,41 @@ class Comment extends \Instagram\Core\BaseObjectAbstract {
 			$date = $this->data->created_time;
 		}
 		return $date;
+	}
+
+	/**
+	 * Get the comment text
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function getText() {
+		return $this->data->text;
+	}
+
+	/**
+	 * Get the comment's user
+	 *
+	 * @access public
+	 * @return \Instagram\User
+	 */
+	public function getUser() {
+		if ( !$this->user ) {
+			$this->user = new \Instagram\User( $this->data->from );
+		}
+		return $this->user;
+	}
+
+	/**
+	 * Magic __toString method
+	 *
+	 * Return the comment text
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->getText();
 	}
 
 }

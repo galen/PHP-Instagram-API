@@ -6,7 +6,11 @@ if ( isset( $_GET['lat'], $_GET['lng'] ) ) {
 	$search = true;
 	$lat = $_GET['lat'];
 	$lng = $_GET['lng'];
-	$media = $instagram->searchMedia( $lat, $lng, isset( $_GET['max_timestamp'] ) ? array( 'max_timestamp' => $_GET['max_timestamp'] ) : null );
+	$params = array(
+		'distance' =>100,
+		'max_timestamp' => isset( $_GET['max_timestamp'] ) ? $_GET['max_timestamp'] : null
+	);
+	$media = $instagram->searchMedia( $lat, $lng, $params );
 }
 
 
@@ -36,7 +40,7 @@ if (navigator.geolocation) {
   alert('not supported');
 }
 </script>
-Searching for your location…
+<p>Searching for your location <img src="/projects/instagram/system/lib/Instagram/Examples/_images/working.gif"></p>
 <?php endif; ?>
 
 <?php require( '_footer.php' ); ?>

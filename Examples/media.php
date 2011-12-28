@@ -27,7 +27,7 @@ require( '_header.php' );
 	<dt>Date</dt>
 	<dd><?php echo $media->getCreatedTime( 'M jS Y @ g:ia' ) ?></dd>
 	<dt>Likes</dt>
-	<dd><?php echo $media->getLikesCount() ?></dd>
+	<dd><ul class="media_list"><?php foreach( $media->getLikes() as $like ): ?><li><a href="?example=user.php&user=<?php echo $like->getId() ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
 	<dt>Tags</dt>
 	<dd><?php echo $media->getTags()->implode( function( $t ){ return sprintf( '<a href="?example=tag.php&tag=%1$s">#%1$s</a>', $t ); } ) ?></dd>
 	<dt>filter</dt>

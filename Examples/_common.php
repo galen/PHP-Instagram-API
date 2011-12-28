@@ -1,5 +1,8 @@
 <?php
 
+// Set default timezone
+date_default_timezone_set('America/Los_Angeles');
+
 require( '_SplClassLoader.php' );
 $loader = new SplClassLoader( 'Instagram', dirname( __DIR__ ) );
 $loader->register();

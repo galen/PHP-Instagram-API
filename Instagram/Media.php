@@ -68,7 +68,7 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 		return (int)$this->data->likes->count;
 	}
 	
-	public function getLikes( $force_fetch = false ) {
+	public function getAllLikes( $force_fetch = false ) {
 		if ( $this->likes && !(bool)$force_fetch ) {
 			return $this->likes;
 		}
@@ -76,6 +76,10 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 		$user_collection->setProxy( $this->proxy );
 		$this->likes = $user_collection;
 		return $this->likes;
+	}
+
+	public function getLikes() {
+		return new \Instagram\Collection\UserCollection( $this->data->likes );
 	}
 
 	public function hasLocation() {

@@ -4,7 +4,7 @@
 	<title>Instagram Examples<?php if( isset( $_GET['example'] ) ): ?> - <?php echo ucwords( str_replace( '_', ' ', basename( $_GET['example'], '.php' ) ) ) ?><?php endif; ?></title>
 	<style type="text/css">
 		* { margin:0; padding:0 }
-		body { font-family: arial, verdana, sans-serif; padding-bottom: 1000px; background:#f9f6f1 }
+		body { font-family: arial, verdana, sans-serif; padding-bottom: 100px; background:#f9f6f1 }
 		h1 { background: #675548; color:#fff; padding: 6px; font-size: 18px; }
 		#breadcrumbs { background: #d9d1c2; padding: 6px; font-size: 14px; }
 		#breadcrumbs a { color: #aa0000;text-decoration:none }
@@ -19,7 +19,7 @@
 		.media_list img { width:50px; height:50px; border: 1px solid #aaa; padding: 2px; }
 		.media_list img:hover { border: 1px solid #000 }
 		dl { overflow:auto }
-		dt, dd { float:left; width: 250px;}
+		dt, dd { float:left; width: 450px; margin-bottom: 6px}
 		dt { clear:left; width:150px }
 		#caption { margin-bottom: 15px }
 		pre { font-family: courier; width:600px; overflow:auto }

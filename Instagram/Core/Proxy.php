@@ -9,9 +9,18 @@ class Proxy {
 
 	protected $api_url = 'https://api.instagram.com/v1';
 
-	function __construct( $access_token, \Instagram\Net\ClientInterface $client ) {
-		$this->access_token = $access_token;
+	function __construct( \Instagram\Net\ClientInterface $client, $access_token = null ) {
 		$this->client = $client;
+		$this->access_token = $access_token;
+	}
+
+	public function getAccessToken( array $data ) {
+		$response = $this->apiCall(
+			'post',
+			'https://api.instagram.com/oauth/access_token',
+			$data
+		);
+		return $response;
 	}
 
 	private function getObjectMedia( $api_endpoint, $id, \Instagram\Collection\CollectionAbstract $collection, array $params = null ) {
