@@ -1,5 +1,11 @@
 #PHP Instagram API
 
+This is a PHP 5.3+ API wrapper for the [Instagram API](http://instagram.com/developer/)
+
+Still in early development
+
+[Live Examples](http://galengrover.com/projects/instagram/)
+
 ##Notes
  - Currently only GET requests are covered. PUT/POST/DELETE are coming soon
  - This library uses PHP 5.3+ and requires the [SPLClassLoader](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md) ( available in Examples/_SplClassLoader.php )
@@ -14,7 +20,7 @@ Instagram will then send the user back to the redirect url you created with a co
 
     $_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] ); 
 
-**Authentication example coming soon**
+**Authentication example comign soon**
 
 ##Basic Usage
 
@@ -62,16 +68,27 @@ You can pass an array of parameters to `getMedia()`. These parameters will be pa
         array( 'max_id' => $max_id )
     );
 
-##Pagination
+##Collections
 
-Some methods return collections that have links to the "next page".
+When making a call to a method that returns more than one of something (e.g. getMedia(), searchUsers() ), a collection object will be returned.  Collections cane be iterated, counted, and accessed like arrays.
+
+    $user = $instagram->getUser( $user_id );
+    $media = $user->getMedia();
+    foreach( $media as $photo ) {
+         ...
+    }
+    $media_count = count( $media );
+    $first_photo = $media[0];
+
+
+The collection object will sometimes have an identifier to the "next page".
 
 For example:
 
     $user = $instagram->getUser( $user_id );
     $media = $user->getMedia();
 
-This next method call will obtain the "max_id" of the next page of the user's media.
+To obtain the identifier for the next page you call `getNext()` on the collection object.
 
     $next_page = $media->getNext();
 
