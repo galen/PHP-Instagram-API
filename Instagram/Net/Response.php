@@ -18,7 +18,7 @@ class Response {
 	}
 
 	function isValid() {
-		return $this->response instanceof \StdClass && !isset( $this->response->meta->error_type );
+		return $this->response instanceof \StdClass && !isset( $this->response->meta->error_type ) && !isset( $this->response->error_type );
 	}
 
 	public function getData() {

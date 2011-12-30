@@ -26,3 +26,4 @@ require( '_header.php' );
 <?php endforeach ?>
 </ul>
 
+<?php require( '_footer.php' ) ?>

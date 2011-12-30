@@ -17,13 +17,6 @@ namespace Instagram;
 class Comment extends \Instagram\Core\BaseObjectAbstract {
 
 	/**
-	 * Hold the comment's user
-	 *
-	 * @var \Instagram\User
-	 */
-	protected $user;
-
-	/**
 	 * Get comment creation time
 	 *
 	 * @param $format Time format {@link http://php.net/manual/en/function.date.php}
@@ -57,14 +50,11 @@ class Comment extends \Instagram\Core\BaseObjectAbstract {
 	 * @return \Instagram\User
 	 */
 	public function getUser() {
-		if ( !$this->user ) {
-			$this->user = new \Instagram\User( $this->data->from );
-		}
-		return $this->user;
+		return new \Instagram\User( $this->data->from );
 	}
 
 	/**
-	 * Magic __toString method
+	 * Magic toString method
 	 *
 	 * Return the comment text
 	 *

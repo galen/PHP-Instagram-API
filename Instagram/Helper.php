@@ -10,6 +10,18 @@ namespace Instagram;
 
 /**
  * Helper class
+ *
+ * Example:
+ *
+ * $tags_closure = function($m){
+ *     return sprintf( '<a href="?example=tag.php&tag=%s">%s</a>', $m[1], $m[0] );
+ * };
+ *
+ * $mentions_closure = function($m){
+ *    return sprintf( '<a href="?example=user.php&user=%s">%s</a>', $m[1], $m[0] );
+ * };
+ *
+ * echo \Instagram\Helper::parseTagsAndMentions( $media->getCaption(), $tags_closure, $mentions_closure )
  */
 class Helper {
 

@@ -12,22 +12,10 @@ namespace Instagram;
  * Current User
  *
  * Holds the currently logged in user
+ *
+ * @see \Instagram\Instagram->getCurrentUser()
  */
 class CurrentUser extends \Instagram\User {
-
-	/**
-	 * Current user's feed
-	 *
-	 * @var MediaCollection
-	 */
-	protected $feed;
-
-	/**
-	 * Current user's liked media
-	 *
-	 * @var MediaCollection
-	 */
-	protected $liked_media;
 
 	/**
 	 * Get the API ID
@@ -42,28 +30,26 @@ class CurrentUser extends \Instagram\User {
 	/**
 	 * Get the current user's feed
 	 *
+ 	 * This can be paginated with the next_max_id param obtained from MediaCollection->getNext()
+	 *
 	 * @param array $params Optional params to pass to the endpoint
 	 * @return \Instagram\Collection\MediaCollection
 	 * @access public
 	 */
 	public function getFeed( array $params = null ) {
-		if ( $this->feed && !(bool)$force_fetch ) {
-			return $this->feed;
-		}
 		return $this->proxy->getFeed( $params );
 	}
 
 	/**
 	 * Get the current user's liked media
 	 *
+ 	 * This can be paginated with the next_max_like_id param obtained from MediaCollection->getNext()
+	 *
 	 * @param array $params Optional params to pass to the endpoint
 	 * @return \Instagram\Collection\MediaCollection
 	 * @access public
 	 */
 	public function getLikedMedia( array $params = null ) {
-		if ( $this->liked_media && !(bool)$force_fetch ) {
-			return $this->liked_media;
-		}
 		return $this->proxy->getLikedMedia( $params );
 	}
 

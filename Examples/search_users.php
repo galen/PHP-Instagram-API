@@ -16,3 +16,5 @@ require( '_header.php' );
 <li><a href="?example=user.php&user=<?php echo $user->getId() ?>" title="<?php echo $user ?>"><img src="<?php echo $user->getProfilePicture() ?>"></a></li>
 <?php endforeach ?>
 </ul>
+
+<?php require( '_footer.php' ) ?>

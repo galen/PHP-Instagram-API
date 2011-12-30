@@ -16,3 +16,5 @@ require( '_header.php' );
 	<li><a href="?example=tag.php&tag=<?php echo $tag ?>"><?php echo $tag ?></a></li>
 <?php endforeach ?>
 </ol>
+
+<?php require( '_footer.php' ) ?>

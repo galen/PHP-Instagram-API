@@ -19,6 +19,15 @@ require( '_header.php' );
 <h3><?php echo $user ?></h3>
 <img src="<?php echo $user->getProfilePicture() ?>">
 
+<dl>
+	<dt>Name</dt>
+	<dd><?php echo $user->getFullName() ?></dd>
+	<dt>Website</dt>
+	<dd><a href="<?php echo $user->getWebsite() ?>"><?php echo $user->getWebsite() ?></a></dd>
+	<dt>Bio</dt>
+	<dd><?php echo $user->getBio() ?></dd>
+</dl>
+
 <a name="recent_media"></a>
 <h4>Recent Media (<?php echo $user->getMediaCount() ?>) <?php if( $media->getNextMaxId() ): ?><a href="?example=user.php&max_id=<?php echo $media->getNextMaxId() ?>#recent_media" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">

@@ -15,3 +15,5 @@ require( '_header.php' );
 <li><a href="?example=location.php&location=<?php echo $location->getId() ?>"><?php echo $location ?></a></li>
 <?php endforeach ?>
 </ol>
+
+<?php require( '_footer.php' ) ?>

@@ -2,7 +2,7 @@
 
 require( '_common.php' );
 
-$media = $instagram->getMedia( isset( $_GET['media'] ) ? $_GET['media'] : 23 );
+$media = $instagram->getMedia( isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611' );
 $comments = $media->getComments();
 
 $tags_closure = function($m){
@@ -26,11 +26,11 @@ require( '_header.php' );
 	<dd><a href="?example=user.php&user=<?php echo $media->getUser()->getId() ?>"><?php echo $media->getUser() ?></a></dd>
 	<dt>Date</dt>
 	<dd><?php echo $media->getCreatedTime( 'M jS Y @ g:ia' ) ?></dd>
-	<dt>Likes</dt>
+	<dt>Likes (<?php echo $media->getLikesCount() ?>)</dt>
 	<dd><ul class="media_list"><?php foreach( $media->getLikes() as $like ): ?><li><a href="?example=user.php&user=<?php echo $like->getId() ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
 	<dt>Tags</dt>
 	<dd><?php echo $media->getTags()->implode( function( $t ){ return sprintf( '<a href="?example=tag.php&tag=%1$s">#%1$s</a>', $t ); } ) ?></dd>
-	<dt>filter</dt>
+	<dt>Filter</dt>
 	<dd><?php echo $media->getFilter() ?></dd>
 	<dt>Location</dt>
 	<dd>
@@ -43,8 +43,12 @@ require( '_header.php' );
 </dl>
 
 <h3>Comments</h3>
+<?php if( count( $comments ) ): ?>
 <?php foreach( $comments as $comment ): ?>
-<p><strong><a href="?example=user.php&user=<?php echo $comment->getUser()->getId() ?>"><?php echo $comment->getUser() ?></a>: </strong><?php echo $comment->getText( $tags_closure, $mentions_closure ) ?></p>
+<p><strong><a href="?example=user.php&user=<?php echo $comment->getUser()->getId() ?>"><?php echo $comment->getUser() ?></a>: </strong><?php echo \Instagram\Helper::parseTagsAndMentions( $comment->getText(), $tags_closure, $mentions_closure ) ?></p>
 <?php endforeach ?>
+<?php else: ?>
+<p><em>No comments</em></p>
+<?php endif; ?>
 
-
+<?php require( '_footer.php' ) ?>

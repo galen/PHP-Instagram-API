@@ -21,13 +21,6 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 	protected $comments;
 
 	/**
-	 * Likes cache
-	 *
-	 * @var \Instagram\Collection\UserCollection
-	 */
-	protected $likes;
-
-	/**
 	 * Location
 	 *
 	 * @var \Instagram\Location
@@ -114,6 +107,9 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 	/**
 	 * Get all comments
 	 *
+	 * The media object will already contain the first 10 comments attached to it whcih can be obtained
+	 * with getComments(). This will return all of them.
+	 *
 	 * @param bool $force_fetch Don't use the cache
 	 * @return \Instagram\CommentCollection
 	 * @access public
@@ -182,13 +178,13 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 	}
 
 	/**
-	 * Get all likes
+	 * Fetch likes from the API
 	 *
 	 * @param bool $force_fetch Don't use the cache
 	 * @return \Instagram\UserCollection
 	 * @access public
 	 */
-	public function getAllLikes( $force_fetch = false ) {
+	public function fetchLikes( $force_fetch = false ) {
 		if ( $this->likes && !(bool)$force_fetch ) {
 			return $this->likes;
 		}
