@@ -92,7 +92,7 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 	 * @return int
 	 * @access public
 	 */
-	public function getFollowedByCount() {
+	public function getFollowersCount() {
 		return (int)$this->getCounts()->followed_by;
 	}
 
@@ -162,7 +162,7 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 	 * @return\Instagram\Collection\UserCollection
 	 * @access public
 	 */
-	public function getFollowedBy( array $params = null ) {
+	public function getFollowers( array $params = null ) {
 		return $this->proxy->getUserFollowedBy( $this->getApiId(), $params );
 	}
 

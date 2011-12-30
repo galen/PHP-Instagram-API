@@ -11,7 +11,7 @@ else {
 }
 $media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 $follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
-$followers = $user->getFollowedBy( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
+$followers = $user->getFollowers( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
 
 require( '_header.php' );
 ?>
@@ -29,7 +29,7 @@ require( '_header.php' );
 </dl>
 
 <a name="recent_media"></a>
-<h4>Recent Media (<?php echo $user->getMediaCount() ?>) <?php if( $media->getNextMaxId() ): ?><a href="?example=user.php&max_id=<?php echo $media->getNextMaxId() ?>#recent_media" class="next_page">Next page</a><?php endif; ?></h4>
+<h4>Recent Media (<?php echo $user->getMediaCount() ?>) <?php if( $media->getNextMaxId() ): ?><a href="?example=user.php&user=<?php echo $user->getId() ?>&max_id=<?php echo $media->getNextMaxId() ?>#recent_media" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $media as $m ): ?>
 <li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a></li>
@@ -37,7 +37,7 @@ require( '_header.php' );
 </ul>
 
 <a name="follows"></a>
-<h4>Follows (<?php echo $user->getFollowsCount() ?>) <?php if( $follows->getNextCursor() ): ?><a href="?example=user.php&follows_cursor=<?php echo $follows->getNextCursor() ?>#follows" class="next_page">Next page</a><?php endif; ?></h4>
+<h4>Follows (<?php echo $user->getFollowsCount() ?>) <?php if( $follows->getNextCursor() ): ?><a href="?example=user.php&user=<?php echo $user->getId() ?>&follows_cursor=<?php echo $follows->getNextCursor() ?>#follows" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $follows as $follow ): ?>
 <li><a href="?example=user.php&user=<?php echo $follow->getId() ?>"><img src="<?php echo $follow->getProfilePicture() ?>" title="<?php echo $follow ?>"></a></li>
@@ -45,7 +45,7 @@ require( '_header.php' );
 </ul>
 
 <a name="followers"></a>
-<h4>Followers (<?php echo $user->getFollowedByCount() ?>) <?php if( $followers->getNextCursor() ): ?><a href="?example=user.php&followers_cursor=<?php echo $followers->getNextCursor() ?>#followers" class="next_page">Next page</a><?php endif; ?></h4>
+<h4>Followers (<?php echo $user->getFollowersCount() ?>) <?php if( $followers->getNextCursor() ): ?><a href="?example=user.php&user=<?php echo $user->getId() ?>&followers_cursor=<?php echo $followers->getNextCursor() ?>#followers" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $followers as $follower ): ?>
 <li><a href="?example=user.php&user=<?php echo $follower->getId() ?>"><img src="<?php echo $follower->getProfilePicture() ?>" title="<?php echo $follower ?>"></a></li>

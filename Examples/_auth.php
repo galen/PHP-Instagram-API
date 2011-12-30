@@ -11,7 +11,7 @@ $instagram = new Instagram\Instagram( $auth_config );
 if ( isset( $_GET['code'] ) ) {
 	try {
 		$_SESSION['instagram_access_token'] = $instagram->getAccessToken( $_GET['code'] );
-		$redirect = '/projects/instagram/' . isset( $_GET['example'] ) ? '?example=' . $_GET['example'] : '';
+		$redirect = '/projects/instagram/' .  ( isset( $_GET['example'] ) ? '?example=' . $_GET['example'] : '' );
 		header( 'Location: ' . $redirect );
 		exit;
 	}

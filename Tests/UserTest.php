@@ -25,7 +25,7 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( is_string( $this->user->getBio() ) );
 		$this->assertTrue( is_string( $this->user->getWebsite() ) );
 		$this->assertTrue( is_int( $this->user->getFollowsCount() ) );
-		$this->assertTrue( is_int( $this->user->getFollowedByCount() ) );
+		$this->assertTrue( is_int( $this->user->getFollowersCount() ) );
 		$this->assertTrue( is_int( $this->user->getMediaCount() ) );
 		$this->assertInstanceOf( '\StdClass', $this->user->getCounts() );
 	}

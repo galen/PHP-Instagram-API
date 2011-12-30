@@ -24,6 +24,10 @@ abstract class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable
 		return isset( $this->data[$item-1] ) ? $this->data[$item-1] : null;
 	}
 
+	public function getSlice( $offset, $length ) {
+		return array_slice( $this->data, $offset, $length );
+	}
+
 	public function addData( \Instagram\Collection\CollectionAbstract $object ) {
 		$this->data = array_merge( $this->data, $object->getData() );
 	}

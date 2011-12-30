@@ -5,7 +5,7 @@ require( '_common.php' );
 $user = $instagram->getCurrentUser();
 $media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 $follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
-$followers = $user->getFollowedBy( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
+$followers = $user->getFollowers( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
 $liked_media = $user->getLikedMedia( isset( $_GET['max_like_id'] ) ? array( 'max_like_id' => $_GET['max_like_id'] ) : null );
 $feed = $user->getFeed( isset( $_GET['max_feed_id'] ) ? array( 'max_id' => $_GET['max_feed_id'] ) : null );
 
@@ -33,7 +33,7 @@ require( '_header.php' );
 </ul>
 
 <a name="followers"></a>
-<h4>Followers (<?php echo $user->getFollowedByCount() ?>) <?php if( $followers->getNextCursor() ): ?><a href="?example=current_user.php&followers_cursor=<?php echo $followers->getNextCursor() ?>#followers" class="next_page">Next page</a><?php endif; ?></h4>
+<h4>Followers (<?php echo $user->getFollowersCount() ?>) <?php if( $followers->getNextCursor() ): ?><a href="?example=current_user.php&followers_cursor=<?php echo $followers->getNextCursor() ?>#followers" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $followers as $follower ): ?>
 <li><a href="?example=user.php&user=<?php echo $follower->getId() ?>"><img src="<?php echo $follower->getProfilePicture() ?>" title="<?php echo $follower ?>"></a></li>
