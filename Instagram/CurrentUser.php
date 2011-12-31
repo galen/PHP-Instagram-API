@@ -17,7 +17,32 @@ namespace Instagram;
  */
 class CurrentUser extends \Instagram\User {
 
-	protected $relationships;
+	/**
+	 * Holds relationship info for the current user
+	 *
+	 * @access protected
+	 * @var array
+	 */
+	protected $relationships = array();
+
+	/**
+	 * Holds liked info for the current user
+	 *
+	 * Current user likes are stored in media objects
+	 * If a media is liked after a media has been fetched the like will not be a part of the media object
+	 *
+	 * @access protected
+	 * @var array
+	 */
+	protected $liked = array();
+
+	/**
+	 * Holds unliked info for the current user
+	 *
+	 * @access protected
+	 * @var array
+	 */
+	protected $unliked = array();
 
 	/**
 	 * Get the API ID
@@ -27,6 +52,40 @@ class CurrentUser extends \Instagram\User {
 	 */
 	public function getApiId() {
 		return 'self';
+	}
+
+	/**
+	 * Does the current use like a media
+	 *
+	 * @param \Instagram\Media $media Media to query for a like from the current user
+	 * @access public
+	 */
+	public function likes( \Instagram\Media $media ) {
+		return isset( $this->liked[$media->getId()] ) || ( isset( $media->getData()->user_has_liked ) && (bool)$media->getData()->user_has_liked === true && !isset( $this->unliked[$media->getId()] ) );
+	}
+
+	/**
+	 * Add like from current user
+	 *
+	 * @param \Instagram\Media $media Media to add a like to from the current user
+	 * @access public
+	 */
+	public function addLike( \Instagram\Media $media ) {
+		$this->proxy->like( $media );
+		unset( $this->unliked[$media->getId()] );
+		$this->liked[$media->getId()] = true;
+	}
+
+	/**
+	 * Delete like from current user
+	 *
+	 * @param \Instagram\Media $media Media to delete a like to from the current user
+	 * @access public
+	 */
+	public function deleteLike( \Instagram\Media $media ) {
+		$this->proxy->unLike( $media );
+		unset( $this->liked[$media->getId()] );
+		$this->unliked[$media->getId()] = true;
 	}
 
 	/**

@@ -23,7 +23,11 @@ class CurlClient implements ClientInterface {
 	}
 	
 	function put( $url, array $data = null  ){}
-	function delete( $url, array $data = null  ){}
+	function delete( $url, array $data = null  ){
+		curl_setopt( $this->curl, CURLOPT_URL, sprintf( "%s?%s", $url, http_build_query( $data ) ) );
+		curl_setopt( $this->curl, CURLOPT_CUSTOMREQUEST, 'DELETE' );
+		return $this->fetch();
+	}
 	
 	function initializeCurl() {
 		$this->curl = curl_init();

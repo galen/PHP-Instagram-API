@@ -186,7 +186,7 @@ class Proxy {
 	public function getRelationshipToCurrentUser( \instagram\User $user ) {
 		$response = $this->apiCall(
 			'get',
-			$this->api_url . sprintf( '/users/%s/relationship/', $user->getId() )
+			$this->api_url . sprintf( '/users/%s/relationship', $user->getId() )
 		);
 		return $response->getData();
 	}
@@ -198,6 +198,20 @@ class Proxy {
 			array( 'action'	=> $relationship )
 		);
 		return $response->getData();
+	}
+
+	public function like( \Instagram\Media $media ) {
+		$this->apiCall(
+			'post',
+			$this->api_url . sprintf( '/media/%s/likes', $media->getId() )
+		);
+	}
+
+	public function unLike( \Instagram\Media $media ) {
+		$this->apiCall(
+			'delete',
+			$this->api_url . sprintf( '/media/%s/likes', $media->getId() )
+		);
 	}
 
 	private function apiCall( $method, $url, array $params = null, $throw_exception = true ){

@@ -24,6 +24,7 @@
 		#caption { margin-bottom: 15px }
 		pre { font-family: courier; width:600px; overflow:auto }
 		.more_examples { position:absolute; right: 0; }
+		#like { padding: 8px 0; text-align:center; width: 612px; background: #eee; margin-bottom: 10px }
 	</style>
 </head>
 <body>

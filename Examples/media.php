@@ -13,6 +13,19 @@ $mentions_closure = function($m){
 	return sprintf( '<a href="?example=user.php&user=%s">%s</a>', $m[1], $m[0] );
 };
 
+$current_user = $instagram->getCurrentUser();
+
+if ( isset( $_GET['action'] ) ) {
+	switch( $_GET['action'] ) {
+		case 'like':
+			$current_user->addLike( $media );
+			break;
+		case 'unlike':
+			$current_user->deleteLike( $media );
+			break;
+	}
+}
+
 require( '_header.php' );
 ?>
 
@@ -20,7 +33,7 @@ require( '_header.php' );
 <?php if( $media->getCaption() ): ?>
 <p id="caption"><em><?php echo \Instagram\Helper::parseTagsAndMentions( $media->getCaption(), $tags_closure, $mentions_closure ) ?></em></p>
 <?php endif; ?>
-
+<p id="like"><?php if( $current_user->likes( $media ) ): ?><a href="?example=media.php&media=<?php echo $media->getId() ?>&action=unlike">Unlike</a><?php else: ?><a href="?example=media.php&media=<?php echo $media->getId() ?>&action=like">Like</a><?php endif; ?></p>
 <dl>
 	<dt>User</dt>
 	<dd><a href="?example=user.php&user=<?php echo $media->getUser()->getId() ?>"><?php echo $media->getUser() ?></a></dd>
