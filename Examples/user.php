@@ -13,6 +13,21 @@ $media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['m
 $follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
 $followers = $user->getFollowers( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
 
+$current_user = $instagram->getCurrentUser();
+
+if ( isset( $_GET['action'] ) ) {
+	switch( $_GET['action'] ) {
+		case 'follow':
+			$current_user->follow( $user );
+			break;
+		case 'unfollow':
+			$current_user->unFollow( $user );
+			break;
+	}
+}
+
+
+
 require( '_header.php' );
 ?>
 
@@ -26,6 +41,8 @@ require( '_header.php' );
 	<dd><a href="<?php echo $user->getWebsite() ?>"><?php echo $user->getWebsite() ?></a></dd>
 	<dt>Bio</dt>
 	<dd><?php echo $user->getBio() ?></dd>
+	<dt>Relationship</dt>
+	<dd><?php if( $current_user->isFollowing( $user ) ): ?>Following<a href="?example=user.php&user=<?php echo $user->getId() ?>&action=unfollow">X</a><?php else: ?><a href="?example=user.php&user=<?php echo $user->getId() ?>&action=follow">Follow</a><?php endif; ?> <?php if( $current_user->isFollowedBy( $user ) ): ?>Followed by<?php endif; ?></dd>
 </dl>
 
 <a name="recent_media"></a>

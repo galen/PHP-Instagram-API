@@ -183,6 +183,23 @@ class Proxy {
 		return new \Instagram\Collection\LikedMediaCollection( $response->getRawData() );
 	}
 
+	public function getRelationshipToCurrentUser( \instagram\User $user ) {
+		$response = $this->apiCall(
+			'get',
+			$this->api_url . sprintf( '/users/%s/relationship/', $user->getId() )
+		);
+		return $response->getData();
+	}
+
+	public function modifyRelationship( \instagram\User $user, $relationship ) {
+		$response = $this->apiCall(
+			'post',
+			$this->api_url . sprintf( '/users/%s/relationship', $user->getId() ),
+			array( 'action'	=> $relationship )
+		);
+		return $response->getData();
+	}
+
 	private function apiCall( $method, $url, array $params = null, $throw_exception = true ){
 		$response = $this->client->$method(
 			$url,
@@ -190,7 +207,6 @@ class Proxy {
 				'access_token'	=> $this->access_token
 			) + (array) $params
 		);
-
 		if ( !$response->isValid() ) {
 			if ( $throw_exception ) {
 				if ( $response->getErrorType() == 'OAuthAccessTokenException' ) {
