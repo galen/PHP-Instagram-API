@@ -70,10 +70,13 @@ class CurrentUser extends \Instagram\User {
 	 * @param \Instagram\Media $media Media to add a like to from the current user
 	 * @access public
 	 */
-	public function addLike( \Instagram\Media $media ) {
+	public function addLike( $media ) {
+		if ( $media instanceof \Instagram\Media ) {
+			$media = $media->getId();
+		}
 		$this->proxy->like( $media );
-		unset( $this->unliked[$media->getId()] );
-		$this->liked[$media->getId()] = true;
+		unset( $this->unliked[$media] );
+		$this->liked[$media] = true;
 	}
 
 	/**
@@ -82,10 +85,44 @@ class CurrentUser extends \Instagram\User {
 	 * @param \Instagram\Media $media Media to delete a like to from the current user
 	 * @access public
 	 */
-	public function deleteLike( \Instagram\Media $media ) {
+	public function deleteLike( $media ) {
+		if ( $media instanceof \Instagram\Media ) {
+			$media = $media->getId();
+		}
 		$this->proxy->unLike( $media );
-		unset( $this->liked[$media->getId()] );
-		$this->unliked[$media->getId()] = true;
+		unset( $this->liked[$media] );
+		$this->unliked[$media] = true;
+	}
+
+	/**
+	 * Add a media comment
+	 *
+	 * @param int|\Instagram\Media ID of media or a media object
+	 * @param string $text Comment text
+	 * @access public
+	 */
+	public function addMediaComment( $media, $text ) {
+		if ( $media instanceof \Instagram\Media ) {
+			$media = $media->getId();
+		}
+		$this->proxy->addMediaComment( $media, $text );
+	}
+
+	/**
+	 * Delete a media comment
+	 *
+	 * @param int|\Instagram\Media ID of media or a media object
+	 * @param string $text Comment text
+	 * @access public
+	 */
+	public function deleteMediaComment( $media, $comment ) {
+		if ( $media instanceof \Instagram\Media ) {
+			$media = $media->getId();
+		}
+		if ( $comment instanceof \Instagram\Comment ) {
+			$comment = $comment->getId();
+		}
+		$this->proxy->deleteMediaComment( $media, $comment );
 	}
 
 	/**
@@ -102,7 +139,7 @@ class CurrentUser extends \Instagram\User {
 	 */
 	protected function updateRelationship( \Instagram\User $user ) {
 		if ( !isset( $this->relationships[ $user->getId() ] ) ) {
-			$this->relationships[ $user->getId() ] = $this->proxy->getRelationshipToCurrentUser( $user );
+			$this->relationships[ $user->getId() ] = $this->proxy->getRelationshipToCurrentUser( $user->getId() );
 		}
 	}
 
@@ -114,7 +151,7 @@ class CurrentUser extends \Instagram\User {
 	 */
 	public function follow( \Instagram\User $user ) {
 		$this->updateRelationship( $user );
-		$response = $this->proxy->modifyRelationship( $user, 'follow' );
+		$response = $this->proxy->modifyRelationship( $user->getId(), 'follow' );
 		foreach( $response as $r => $v ) {
 			$this->relationships[ $user->getId() ]->$r = $v;
 		}
@@ -129,7 +166,7 @@ class CurrentUser extends \Instagram\User {
 	 */
 	public function unFollow( \Instagram\User $user ) {
 		$this->updateRelationship( $user ); 
-		$response = $this->proxy->modifyRelationship( $user, 'unfollow' );
+		$response = $this->proxy->modifyRelationship( $user->getId(), 'unfollow' );
 		foreach( $response as $r => $v ) {
 			$this->relationships[ $user->getId() ]->$r = $v;
 		}

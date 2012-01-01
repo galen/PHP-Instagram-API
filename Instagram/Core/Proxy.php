@@ -183,34 +183,49 @@ class Proxy {
 		return new \Instagram\Collection\LikedMediaCollection( $response->getRawData() );
 	}
 
-	public function getRelationshipToCurrentUser( \instagram\User $user ) {
+	public function getRelationshipToCurrentUser( $user_id ) {
 		$response = $this->apiCall(
 			'get',
-			$this->api_url . sprintf( '/users/%s/relationship', $user->getId() )
+			$this->api_url . sprintf( '/users/%s/relationship', $user_id )
 		);
 		return $response->getData();
 	}
 
-	public function modifyRelationship( \instagram\User $user, $relationship ) {
+	public function modifyRelationship( $user_id, $relationship ) {
 		$response = $this->apiCall(
 			'post',
-			$this->api_url . sprintf( '/users/%s/relationship', $user->getId() ),
+			$this->api_url . sprintf( '/users/%s/relationship', $user_id ),
 			array( 'action'	=> $relationship )
 		);
 		return $response->getData();
 	}
 
-	public function like( \Instagram\Media $media ) {
+	public function like( $media_id ) {
 		$this->apiCall(
 			'post',
-			$this->api_url . sprintf( '/media/%s/likes', $media->getId() )
+			$this->api_url . sprintf( '/media/%s/likes', $media_id )
 		);
 	}
 
-	public function unLike( \Instagram\Media $media ) {
+	public function unLike( $media_id ) {
 		$this->apiCall(
 			'delete',
-			$this->api_url . sprintf( '/media/%s/likes', $media->getId() )
+			$this->api_url . sprintf( '/media/%s/likes', $media_id )
+		);
+	}
+
+	public function addMediaComment( $media_id, $text ) {
+		$this->apiCall(
+			'post',
+			$this->api_url . sprintf( '/media/%s/comments', $media_id ),
+			array( 'text' => $text )
+		);
+	}
+
+	public function deleteMediaComment( $media_id, $comment_id ) {
+		$this->apiCall(
+			'delete',
+			$this->api_url . sprintf( '/media/%s/comments/%s', $media_id, $comment_id )
 		);
 	}
 

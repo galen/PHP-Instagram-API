@@ -114,7 +114,7 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 	 * @return \Instagram\CommentCollection
 	 * @access public
 	 */
-	public function getAllComments( $force_fetch = false ) {
+	public function fetchComments( $force_fetch = false ) {
 		if ( $this->comments && !(bool)$force_fetch ) {
 			return $this->comments;
 		}

@@ -2,8 +2,34 @@
 
 require( '_common.php' );
 
-$media = $instagram->getMedia( isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611' );
-$comments = $media->getComments();
+$media_id = isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611';
+
+$current_user = $instagram->getCurrentUser();
+
+if ( isset( $_POST['action'] ) ) {
+	switch( $_POST['action'] ) {
+		case 'add_comment':
+			$current_user->addMediaComment( $media_id, $_POST['comment_text'] );
+			break;
+		case 'delete_comment':
+			$current_user->deleteMediaComment( $media_id, $_POST['comment_id'] );
+			break;
+	}
+}
+
+if ( isset( $_GET['action'] ) ) {
+	switch( $_GET['action'] ) {
+		case 'like':
+			$current_user->addLike( $media_id );
+			break;
+		case 'unlike':
+			$current_user->deleteLike( $media_id );
+			break;
+	}
+}
+
+$media = $instagram->getMedia( $media_id );
+$comments = $media->fetchComments();
 
 $tags_closure = function($m){
 	return sprintf( '<a href="?example=tag.php&tag=%s">%s</a>', $m[1], $m[0] );
@@ -13,18 +39,9 @@ $mentions_closure = function($m){
 	return sprintf( '<a href="?example=user.php&user=%s">%s</a>', $m[1], $m[0] );
 };
 
-$current_user = $instagram->getCurrentUser();
 
-if ( isset( $_GET['action'] ) ) {
-	switch( $_GET['action'] ) {
-		case 'like':
-			$current_user->addLike( $media );
-			break;
-		case 'unlike':
-			$current_user->deleteLike( $media );
-			break;
-	}
-}
+
+
 
 require( '_header.php' );
 ?>
@@ -58,10 +75,22 @@ require( '_header.php' );
 <h3>Comments</h3>
 <?php if( count( $comments ) ): ?>
 <?php foreach( $comments as $comment ): ?>
-<p><strong><a href="?example=user.php&user=<?php echo $comment->getUser()->getId() ?>"><?php echo $comment->getUser() ?></a>: </strong><?php echo \Instagram\Helper::parseTagsAndMentions( $comment->getText(), $tags_closure, $mentions_closure ) ?></p>
+<p><strong><a href="?example=user.php&user=<?php echo $comment->getUser()->getId() ?>"><?php echo $comment->getUser() ?></a>: </strong><?php echo \Instagram\Helper::parseTagsAndMentions( $comment->getText(), $tags_closure, $mentions_closure ) ?><?php if( $comment->getUSer()->getId() == $current_user->getId() ): ?>
+<form action="" method="post">
+<input type="submit" value="X">
+<input type="hidden" name="example" value="media.php">
+<input type="hidden" name="media" value="<?php echo $media->getId() ?>">
+<input type="hidden" name="action" value="delete_comment">
+<input type="hidden" name="comment_id" value="<?php echo $comment->getId() ?>">
+</form>
+<?php endif; ?></p>
 <?php endforeach ?>
 <?php else: ?>
 <p><em>No comments</em></p>
 <?php endif; ?>
-
+<form action="" method="post" id="comment_form">
+<input type="hidden" name="action" value="add_comment">
+<textarea id="comment_text" name="comment_text"></textarea>
+<input type="submit" name="comment_submit" value="Comment">
+</form>
 <?php require( '_footer.php' ) ?>
