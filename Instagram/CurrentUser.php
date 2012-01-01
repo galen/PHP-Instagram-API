@@ -134,26 +134,32 @@ class CurrentUser extends \Instagram\User {
 	 * @see \Instagram\CurrentUser::unFollow
 	 * @see \Instagram\CurrentUser::getRelationship
 	 *
-	 * @param \Instagram\User $user User whose relationship you'd like to update
+	 * @param \Instagram\User|string User object or user id whose relationship you'd like to update
 	 * @access protected
 	 */
-	protected function updateRelationship( \Instagram\User $user ) {
-		if ( !isset( $this->relationships[ $user->getId() ] ) ) {
-			$this->relationships[ $user->getId() ] = $this->proxy->getRelationshipToCurrentUser( $user->getId() );
+	protected function updateRelationship( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
+		if ( !isset( $this->relationships[ $user ] ) ) {
+			$this->relationships[ $user ] = $this->proxy->getRelationshipToCurrentUser( $user );
 		}
 	}
 
 	/**
 	 * Follow user
 	 *
-	 * @param \Instagram\User $user User who should be followed
+	 * @param \Instagram\User|string User object or user id who should be followed
 	 * @return boolean
 	 */
-	public function follow( \Instagram\User $user ) {
+	public function follow( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
 		$this->updateRelationship( $user );
-		$response = $this->proxy->modifyRelationship( $user->getId(), 'follow' );
+		$response = $this->proxy->modifyRelationship( $user, 'follow' );
 		foreach( $response as $r => $v ) {
-			$this->relationships[ $user->getId() ]->$r = $v;
+			$this->relationships[ $user ]->$r = $v;
 		}
 		return true;
 	}
@@ -161,14 +167,17 @@ class CurrentUser extends \Instagram\User {
 	/**
 	 * Unfollow user
 	 *
-	 * @param \Instagram\User $user User who should be unfollowed
+	 * @param \Instagram\User|string $user User object or user id who should be unfollowed
 	 * @return boolean
 	 */
-	public function unFollow( \Instagram\User $user ) {
+	public function unFollow( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
 		$this->updateRelationship( $user ); 
-		$response = $this->proxy->modifyRelationship( $user->getId(), 'unfollow' );
+		$response = $this->proxy->modifyRelationship( $user, 'unfollow' );
 		foreach( $response as $r => $v ) {
-			$this->relationships[ $user->getId() ]->$r = $v;
+			$this->relationships[ $user ]->$r = $v;
 		}
 		return true;
 	}
@@ -178,12 +187,15 @@ class CurrentUser extends \Instagram\User {
 	 *
 	 * Get the complete relationship to a user
 	 *
-	 * @param \Instagram\User $user User to get the relationship details of
+	 * @param \Instagram\User|string $user User object or user id to get the relationship details of
 	 * @return StdClass
 	 */
-	public function getRelationship( \Instagram\User $user ) {
+	public function getRelationship( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
 		$this->updateRelationship( $user );
-		return $this->relationships[ $user->getId() ];
+		return $this->relationships[ $user ];
 	}
 
 	/**
@@ -191,22 +203,28 @@ class CurrentUser extends \Instagram\User {
 	 *
 	 * Check if hte current user is following a user
 	 *
-	 * @param \Instagram\User $user User to check the following status of
+	 * @param \Instagram\User|string $user User object or user id to check the following status of
 	 * @return boolean
 	 */
-	public function isFollowing( \Instagram\User $user ) {
+	public function isFollowing( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
 		return $this->getRelationship( $user )->outgoing_status == 'follows';
 	}
 
 	/**
 	 * Check following status
 	 *
-	 * Check if hte current user is followed by
+	 * Check if the current user is followed by a user
 	 *
-	 * @param \Instagram\User $user User to check the followed by status of
+	 * @param \Instagram\User|string $user User object or user id to check the followed by status of
 	 * @return boolean
 	 */
-	public function isFollowedBy( \Instagram\User $user ) {
+	public function isFollowedBy( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
 		return $this->getRelationship( $user )->incoming_status == 'followed_by';
 	}
 

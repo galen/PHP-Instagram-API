@@ -10,6 +10,10 @@ Still in early development
  - Currently only GET requests are covered. PUT/POST/DELETE are coming soon
  - This library uses PHP 5.3+ and requires the [SPLClassLoader](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md) ( available in Examples/_SplClassLoader.php )
 
+##The API
+
+All methods that access the API can throw exceptions. If the API request fails for any reason other than an expired/missing access token an exception of type `\Instagram\Core\ApiException` will be thrown.  If the API request fails because of an expired/missing access token an exception of type `\Instagram\Core\ApiAuthException`. You can use this to redirect to your authorization page.
+
 ##Authenticating
 
 This will forward a user to the instagram authorization page:
@@ -20,7 +24,35 @@ Instagram will then send the user back to the redirect url you created with a co
 
     $_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] ); 
 
-**Authentication example comign soon**
+Complete authorization example
+
+	// You can get this info from your Instagram developer page
+	// http://instagram.com/developer/manage/
+	$auth_config = array(
+		'client_id'			=> '',
+		'client_secret'		=> '',
+		'callback_url'		=> '',
+		'scope'				=> array( 'likes', 'comments', 'relationships' )
+	);
+
+	$instagram = new Instagram\Instagram( $auth_config );
+
+	// If a code is present try and get the access token
+	// otherwise redirect to the Instagram auth page to get the code
+	// Fill in your own redirect location 
+	if ( isset( $_GET['code'] ) ) {
+		try {
+			$_SESSION['instagram_access_token'] = $instagram->getAccessToken( $_GET['code'] );
+			header( 'Location: /' );
+			exit;
+		}
+		catch ( \Instagram\Core\ApiException $e ) {
+			die( $e->getMessage() );
+		}
+	}
+	else {
+		$instagram->authorize();
+	}
 
 ##Basic Usage
 
@@ -45,6 +77,27 @@ The current user object will give you the currently logged in user.  With this o
     $feed = $current_user->getFeed();
     $liked_media = $current_user->getLikedMedia();
 
+####Liking Media
+
+You can supply a media object or a media id.
+
+	$current_user->addLike( $media );
+	$current_user->deleteLike( $media );
+
+####Media Comments
+
+You can supply a media object or a media id.
+
+	$current_user->addMediaComment( $media_id, $_POST['comment_text'] );
+	$current_user->deleteMediaComment( $media_id, $_POST['comment_id'] );
+
+####Following
+
+You can supply a user object or a user id.
+
+	$current_user->follow( $user );
+	$current_user->unFollow( $user );
+
 ##Getting Media
 
 Users, tags, locations, and the current user have media associated with them.
@@ -67,6 +120,7 @@ You can pass an array of parameters to `getMedia()`. These parameters will be pa
     $location->getMedia(
         array( 'max_id' => $max_id )
     );
+
 
 ##Collections
 

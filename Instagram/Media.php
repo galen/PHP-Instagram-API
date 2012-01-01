@@ -105,31 +105,21 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 	}
 
 	/**
-	 * Get all comments
+	 * Get media comments
 	 *
-	 * The media object will already contain the first 10 comments attached to it whcih can be obtained
-	 * with getComments(). This will return all of them.
+	 * Media objects contain the first 10 comments. You can get these comments by passing `false`
+	 * to this method. Using the internal comments of a media object cause issues when adding/deleting comments on media.
 	 *
-	 * @param bool $force_fetch Don't use the cache
+	 * @param bool $fetch_from_api Query the API or use internal
 	 * @return \Instagram\CommentCollection
 	 * @access public
 	 */
-	public function fetchComments( $force_fetch = false ) {
-		if ( $this->comments && !(bool)$force_fetch ) {
-			return $this->comments;
+	public function getComments( $fetch_from_api = true ) {
+		if ( !$fetch_from_api ) {
+			return $this->proxy->getMediaComments( $this->getApiId() );
 		}
 		$this->comments = $this->proxy->getMediaComments( $this->getApiId() );
 		return $this->comments;
-	}
-
-	/**
-	 * Get first 10 comments that were returned with the media
-	 *
-	 * @return \Instagram\CommentCollection
-	 * @access public
-	 */
-	public function getComments() {
-		return $this->proxy->getMediaComments( $this->getApiId() );
 	}
 
 	/**
@@ -178,31 +168,23 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 	}
 
 	/**
-	 * Fetch likes from the API
+	 * Get media likes
 	 *
-	 * @param bool $force_fetch Don't use the cache
+	 * Media objects contain the first 10 likes. You can get these likes by passing `false`
+	 * to this method. Using the internal likes of a media object cause issues when liking/disliking media.
+	 *
+	 * @param bool $fetch_from_api Query the API or use internal
 	 * @return \Instagram\UserCollection
 	 * @access public
 	 */
-	public function fetchLikes( $force_fetch = false ) {
-		if ( $this->likes && !(bool)$force_fetch ) {
-			return $this->likes;
+	public function getLikes( $fetch_from_api = true ) {
+		if ( !$fetch_from_api ) {
+			return new \Instagram\Collection\UserCollection( $this->data->likes );
 		}
 		$user_collection = $this->proxy->getMediaLikes( $this->getApiId() );
 		$user_collection->setProxy( $this->proxy );
 		$this->likes = $user_collection;
 		return $this->likes;
-	}
-
-	/**
-	 * Get first 10 likes that were returned with the media
-	 *
-	 * @param bool $force_fetch Don't use the cache
-	 * @return \Instagram\CommentCollection
-	 * @access public
-	 */
-	public function getLikes() {
-		return new \Instagram\Collection\UserCollection( $this->data->likes );
 	}
 
 	/**

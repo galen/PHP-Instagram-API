@@ -9,9 +9,6 @@ if ( ctype_digit( $user_id ) ) {
 else {
 	$user = $instagram->searchUsers( $user_id, array( 'count' => 1 ) )->getItem( 1 );
 }
-$media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
-$follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
-$followers = $user->getFollowers( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
 
 $current_user = $instagram->getCurrentUser();
 
@@ -26,7 +23,9 @@ if ( isset( $_GET['action'] ) ) {
 	}
 }
 
-
+$media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
+$follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
+$followers = $user->getFollowers( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
 
 require( '_header.php' );
 ?>

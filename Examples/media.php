@@ -29,7 +29,7 @@ if ( isset( $_GET['action'] ) ) {
 }
 
 $media = $instagram->getMedia( $media_id );
-$comments = $media->fetchComments();
+$comments = $media->getComments();
 
 $tags_closure = function($m){
 	return sprintf( '<a href="?example=tag.php&tag=%s">%s</a>', $m[1], $m[0] );
@@ -57,7 +57,7 @@ require( '_header.php' );
 	<dt>Date</dt>
 	<dd><?php echo $media->getCreatedTime( 'M jS Y @ g:ia' ) ?></dd>
 	<dt>Likes (<?php echo $media->getLikesCount() ?>)</dt>
-	<dd><ul class="media_list"><?php foreach( $media->getLikes() as $like ): ?><li><a href="?example=user.php&user=<?php echo $like->getId() ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
+	<dd><ul class="media_list"><?php foreach( $media->getLikes( false ) as $like ): ?><li><a href="?example=user.php&user=<?php echo $like->getId() ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
 	<dt>Tags</dt>
 	<dd><?php echo $media->getTags()->implode( function( $t ){ return sprintf( '<a href="?example=tag.php&tag=%1$s">#%1$s</a>', $t ); } ) ?></dd>
 	<dt>Filter</dt>
@@ -72,11 +72,12 @@ require( '_header.php' );
 	</dd>
 </dl>
 
+<a name="comments"></a>
 <h3>Comments</h3>
 <?php if( count( $comments ) ): ?>
 <?php foreach( $comments as $comment ): ?>
 <p><strong><a href="?example=user.php&user=<?php echo $comment->getUser()->getId() ?>"><?php echo $comment->getUser() ?></a>: </strong><?php echo \Instagram\Helper::parseTagsAndMentions( $comment->getText(), $tags_closure, $mentions_closure ) ?><?php if( $comment->getUSer()->getId() == $current_user->getId() ): ?>
-<form action="" method="post">
+<form action="#comments" method="post">
 <input type="submit" value="X">
 <input type="hidden" name="example" value="media.php">
 <input type="hidden" name="media" value="<?php echo $media->getId() ?>">
@@ -88,7 +89,7 @@ require( '_header.php' );
 <?php else: ?>
 <p><em>No comments</em></p>
 <?php endif; ?>
-<form action="" method="post" id="comment_form">
+<form action="#comments" method="post" id="comment_form">
 <input type="hidden" name="action" value="add_comment">
 <textarea id="comment_text" name="comment_text"></textarea>
 <input type="submit" name="comment_submit" value="Comment">
