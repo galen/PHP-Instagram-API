@@ -137,7 +137,7 @@ class Instagram {
  	/**
  	 * Get user
  	 *
- 	 * Retreive a user given it's ID
+ 	 * Retrieve a user given his/her ID
  	 *
  	 * @param int $id ID of the user to retrieve
  	 * @return \Instagram\User
@@ -147,6 +147,24 @@ class Instagram {
 		$user = $this->proxy->getUser( $id );
 		$user->setProxy( $this->proxy );
 		return $user;
+	}
+
+ 	/**
+ 	 * Get user
+ 	 *
+ 	 * Retrieve a user given their username
+ 	 *
+ 	 * @param string $username Username of the user to retrieve
+ 	 * @return \Instagram\User
+ 	 * @access public
+ 	 */
+	public function getUserByUsername( $username ) {
+		return $this->searchUsers( $username, array( 'count' => 1 ) )->getItem( 1 );
+	}
+
+	public function isUserPrivate( $user_id ) {
+		$relationship = $this->proxy->getRelationshipToCurrentUser( $user_id );
+		return (bool)$relationship->target_user_is_private;
 	}
 
  	/**
