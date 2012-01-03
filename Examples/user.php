@@ -5,8 +5,8 @@ require( '_common.php' );
 $current_user = $instagram->getCurrentUser();
 
 try{
-	$user_id = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
-	$user = $instagram->searchUsers( $user_id, array( 'count' => 1 ) )->getItem( 1 );
+	$username = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
+	$user = $instagram->getUserByUsername( $username );
 
 	if ( isset( $_GET['action'] ) ) {
 		switch( $_GET['action'] ) {
@@ -24,11 +24,14 @@ try{
 	$followers = $user->getFollowers( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );
 }
 catch( \Instagram\Core\ApiException $e ) {
-	if ( $e->getType() == 'APINotAllowedError' ) {
+	if ( $e->getType() == $e::TYPE_NOT_ALLOWED ) {
 		require( 'views/_header.php' );
 		require( 'views/user_private.php' );
 		require( 'views/_footer.php' );
 		exit;
+	}
+	else {
+		throw $e;
 	}
 }
 

@@ -3,7 +3,6 @@
 require( '_common.php' );
 
 $media_id = isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611';
-
 $current_user = $instagram->getCurrentUser();
 
 if ( isset( $_POST['action'] ) ) {

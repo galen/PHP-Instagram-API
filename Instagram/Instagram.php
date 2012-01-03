@@ -157,11 +157,22 @@ class Instagram {
  	 * @param string $username Username of the user to retrieve
  	 * @return \Instagram\User
  	 * @access public
+ 	 * @throws \Instagram\ApiException
  	 */
 	public function getUserByUsername( $username ) {
-		return $this->searchUsers( $username, array( 'count' => 1 ) )->getItem( 1 );
+		$user = $this->searchUsers( $username, array( 'count' => 1 ) )->getItem( 1 );
+		if ( $user ) {
+			return $user;
+		}
+		throw new \Instagram\Core\ApiException( 'username not found', 400, 'InvalidUsername' );
 	}
 
+	/**
+	 * Check if a user is private
+	 *
+	 * @return bool
+	 * @access public
+	 */
 	public function isUserPrivate( $user_id ) {
 		$relationship = $this->proxy->getRelationshipToCurrentUser( $user_id );
 		return (bool)$relationship->target_user_is_private;

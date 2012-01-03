@@ -9,7 +9,7 @@
 	<dt>Date</dt>
 	<dd><?php echo $media->getCreatedTime( 'M jS Y @ g:ia' ) ?></dd>
 	<dt>Likes (<?php echo $media->getLikesCount() ?>)</dt>
-	<dd><ul class="media_list"><?php foreach( $media->getLikes( false ) as $like ): ?><li><a href="?example=user.php&user=<?php echo $like->getId() ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
+	<dd><ul class="media_list"><?php foreach( $media->getLikes( false ) as $like ): ?><li><a href="?example=user.php&user=<?php echo $like ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
 	<dt>Tags</dt>
 	<dd><?php echo $media->getTags()->implode( function( $t ){ return sprintf( '<a href="?example=tag.php&tag=%1$s">#%1$s</a>', $t ); } ) ?></dd>
 	<dt>Filter</dt>
@@ -28,7 +28,7 @@
 <h3>Comments</h3>
 <?php if( count( $comments ) ): ?>
 <?php foreach( $comments as $comment ): ?>
-<p><strong><a href="?example=user.php&user=<?php echo $comment->getUser()->getId() ?>"><?php echo $comment->getUser() ?></a>: </strong><?php echo \Instagram\Helper::parseTagsAndMentions( $comment->getText(), $tags_closure, $mentions_closure ) ?><?php if( $comment->getUSer()->getId() == $current_user->getId() ): ?>
+<p><strong><a href="?example=user.php&user=<?php echo $comment->getUser() ?>"><?php echo $comment->getUser() ?></a>: </strong><?php echo \Instagram\Helper::parseTagsAndMentions( $comment->getText(), $tags_closure, $mentions_closure ) ?><?php if( \Instagram\Helper::commentIsDeletable( $comment, $media, $current_user ) ): ?>
 <form action="#comments" method="post">
 <input type="submit" value="X">
 <input type="hidden" name="example" value="media.php">
