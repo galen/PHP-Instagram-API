@@ -32,7 +32,10 @@
 		.map_wrapper .crosshairs {position:absolute;z-index: 999;top: 90px;left:140px;}
 		#search_results { position:absolute; top:0;right:0; width: 500px; }
 		#search_results .list { margin-left: 20px}
-		form { padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #d9d1c2; width: 350px; }
+		#search_forms { width:350px; }
+		.search_form_wrapper { padding:10px;border-bottom: 1px solid #d9d1c2; }
+		.search_form_wrapper.active { background: #f5f0e7; }
+		.search_form_wrapper h2 { margin:0; }
 	</style>
 </head>
 <body>

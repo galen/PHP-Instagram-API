@@ -20,7 +20,9 @@ if ( isset(  $_GET['search_type'] ) && in_array( $_GET['search_type'], $valid_se
 			$results_view = 'search_locations.php';
 			break;
 		case 'media':
-			$media = $instagram->searchMedia( $_GET['lat'], $_GET['lng'] );
+			$params['distance'] = array( 'distance' => (int)$_GET['distance'] );
+			$params['max_timestamp'] = isset( $_GET['max_timestamp'] ) ? $_GET['max_timestamp'] : null;
+			$media = $instagram->searchMedia( $_GET['lat'], $_GET['lng'], $params );
 			$results_view = 'search_media.php';
 			break;
 	}
