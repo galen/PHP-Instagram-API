@@ -4,9 +4,9 @@
 <script type="text/javascript">
   function initialize() {
 
-    var latlng_media = new google.maps.LatLng(<?php if( isset( $medi ) ): ?><?php echo $_GET['lat'] ?>, <?php echo $_GET['lng'] ?><?php else: ?>32.7153292, -117.1572551<?php endif; ?>);
+    var latlng_media = new google.maps.LatLng(<?php if( isset( $media ) ): ?><?php echo $_GET['lat'] ?>, <?php echo $_GET['lng'] ?><?php else: ?>32.7153292, -117.1572551<?php endif; ?>);
     var myOptions_media = {
-      zoom: 8,
+      zoom: <?php if( isset( $media ) ): ?>14<?php else: ?>8<?php endif; ?>,
       center: latlng_media,
       streetViewControl: false,
       mapTypeControl: false,
@@ -15,7 +15,7 @@
 
     var latlng_locations = new google.maps.LatLng(<?php if( isset( $locations ) ): ?><?php echo $_GET['lat'] ?>, <?php echo $_GET['lng'] ?><?php else: ?>40.7746431, -73.9701962<?php endif; ?>);
     var myOptions_locations = {
-      zoom: 8,
+      zoom: <?php if( isset( $locations ) ): ?>14<?php else: ?>8<?php endif; ?>,
       center: latlng_locations,
       streetViewControl: false,
       mapTypeControl: false,
@@ -51,22 +51,22 @@ google.maps.event.addDomListener(window, "load", initialize );
 	<div id="users_wrapper" class="search_form_wrapper<?php if( isset( $users ) ): ?> active<?php endif; ?>">
 		<h2>Search Users</h2>
 		<form action="">
-		<input type="hidden" name="example" value="search.php">
-		<input type="hidden" name="search_type" value="users">
-		<label for="user">Search string</label>
-		<input id="user" type="text" name="user" value="<?php if( isset( $users ) ): ?><?php echo $_GET['user'] ?><?php endif; ?>"><br>
-		<input type="submit" value="Search Users">
+			<input type="hidden" name="example" value="search.php">
+			<input type="hidden" name="search_type" value="users">
+			<label for="user">Search string</label>
+			<input id="user" type="text" name="user" value="<?php if( isset( $users ) ): ?><?php echo $_GET['user'] ?><?php endif; ?>"><br>
+			<input type="submit" value="Search Users">
 		</form>
 	</div>
 
 	<div id="users_wrapper" class="search_form_wrapper<?php if( isset( $tags ) ): ?> active<?php endif; ?>">
 		<h2>Search Tags</h2>
 		<form action="">
-		<input type="hidden" name="example" value="search.php">
-		<input type="hidden" name="search_type" value="tags">
-		<label for="tag">Search string</label>
-		<input id="tag" type="text" name="tag" value="<?php if( isset( $tags ) ): ?><?php echo $_GET['tag'] ?><?php endif; ?>"><br>
-		<input type="submit" value="Search Tags">
+			<input type="hidden" name="example" value="search.php">
+			<input type="hidden" name="search_type" value="tags">
+			<label for="tag">Search string</label>
+			<input id="tag" type="text" name="tag" value="<?php if( isset( $tags ) ): ?><?php echo $_GET['tag'] ?><?php endif; ?>"><br>
+			<input type="submit" value="Search Tags">
 		</form>
 	</div>	
 
@@ -74,15 +74,15 @@ google.maps.event.addDomListener(window, "load", initialize );
 		<h2>Search Media</h2>
 		<div class="map_wrapper"><div id="map_media" class="map"></div><img src="/projects/instagram/system/lib/Instagram/Examples/_images/crosshair.gif" class="crosshairs"></div>
 		<form action="">
-		<input type="hidden" name="example" value="search.php">
-		<input type="hidden" name="search_type" value="media">
-		<label for="lat">Latitude</label>
-		<input id="media_lat" type="text" name="lat" value="<?php if( isset( $media ) ): ?><?php echo $_GET['lat'] ?><?php endif; ?>"><br>
-		<label for="lng">Longitude</label>
-		<input id="media_lng" type="text" name="lng" value="<?php if( isset( $media ) ): ?><?php echo $_GET['lng'] ?><?php endif; ?>"><br>
-		<label for="distance">Distance</label>
-		<input id="distance" type="text" name="distance" value="<?php if( isset( $_GET['distance'] ) ): ?><?php echo (int)$_GET['distance'] ?><?php else: ?>1000<?php endif; ?>"> <span>meters</span><br>
-		<input type="submit" value="Search Media">
+			<input type="hidden" name="example" value="search.php">
+			<input type="hidden" name="search_type" value="media">
+			<label for="lat">Latitude</label>
+			<input id="media_lat" type="text" name="lat" value="<?php if( isset( $media ) ): ?><?php echo $_GET['lat'] ?><?php endif; ?>"><br>
+			<label for="lng">Longitude</label>
+			<input id="media_lng" type="text" name="lng" value="<?php if( isset( $media ) ): ?><?php echo $_GET['lng'] ?><?php endif; ?>"><br>
+			<label for="distance">Distance</label>
+			<input id="distance" type="text" name="distance" value="<?php if( isset( $_GET['distance'] ) ): ?><?php echo (int)$_GET['distance'] ?><?php else: ?>1000<?php endif; ?>"> <span>meters</span><br>
+			<input type="submit" value="Search Media">
 		</form>
 	</div>
 
@@ -90,15 +90,15 @@ google.maps.event.addDomListener(window, "load", initialize );
 		<h2>Search Locations</h2>
 		<div class="map_wrapper"><div id="map_locations" class="map"></div><img src="/projects/instagram/system/lib/Instagram/Examples/_images/crosshair.gif" class="crosshairs"></div>
 		<form action="">
-		<input type="hidden" name="example" value="search.php">
-		<input type="hidden" name="search_type" value="locations">
-		<label for="lat">Latitude</label>
-		<input id="locations_lat" type="text" name="lat" value="<?php if( isset( $locations ) ): ?><?php echo $_GET['lat'] ?><?php endif; ?>"><br>
-		<label for="lng">Longitude</label>
-		<input id="locations_lng" type="text" name="lng" value="<?php if( isset( $locations ) ): ?><?php echo $_GET['lng'] ?><?php endif; ?>"><br>
-		<label for="distance">Distance</label>
-		<input id="distance" type="text" name="distance" value="<?php if( isset( $_GET['distance'] ) ): ?><?php echo (int)$_GET['distance'] ?><?php else: ?>1000<?php endif; ?>"> <span>meters</span><br>
-		<input type="submit" value="Search Locations">
+			<input type="hidden" name="example" value="search.php">
+			<input type="hidden" name="search_type" value="locations">
+			<label for="lat">Latitude</label>
+			<input id="locations_lat" type="text" name="lat" value="<?php if( isset( $locations ) ): ?><?php echo $_GET['lat'] ?><?php endif; ?>"><br>
+			<label for="lng">Longitude</label>
+			<input id="locations_lng" type="text" name="lng" value="<?php if( isset( $locations ) ): ?><?php echo $_GET['lng'] ?><?php endif; ?>"><br>
+			<label for="distance">Distance</label>
+			<input id="distance" type="text" name="distance" value="<?php if( isset( $_GET['distance'] ) ): ?><?php echo (int)$_GET['distance'] ?><?php else: ?>1000<?php endif; ?>"> <span>meters</span><br>
+			<input type="submit" value="Search Locations">
 		</form>
 	</div>
 

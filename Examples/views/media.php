@@ -19,7 +19,7 @@
 	<?php if( $media->hasNamedLocation() ): ?>
 		<a href="?example=location.php&location=<?php echo $media->getLocation()->getId() ?>"><?php echo $media->getLocation() ?></a>
 	<?php elseif( $media->hasLocation() ): ?>
-		<a href="?example=search.php&search_type=media&lat=<?php echo $media->getLocation()->getLat() ?>&lng=<?php echo $media->getLocation()->getLng() ?>">Search nearby media</a
+		<a href="?example=search.php&search_type=media&lat=<?php echo $media->getLocation()->getLat() ?>&lng=<?php echo $media->getLocation()->getLng() ?>&distance=100">Search nearby media</a
 	<?php endif; ?>
 	</dd>
 </dl>
