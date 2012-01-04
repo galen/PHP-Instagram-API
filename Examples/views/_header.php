@@ -9,7 +9,7 @@
 		#breadcrumbs { background: #d9d1c2; padding: 6px; font-size: 14px; }
 		#breadcrumbs a { color: #aa0000;text-decoration:none }
 		#breadcrumbs a:hover { text-decoration:underline; }
-		#content { padding: 6px; width:700px; }
+		#content { padding: 6px; width:900px; position:relative; }
 		a { color: #aa0000;text-decoration:none }
 		a:hover { text-decoration:underline; }
 		h2, h3, h4 { margin: 10px 0 }
@@ -27,6 +27,12 @@
 		#like { padding: 8px 0; text-align:center; width: 612px; background: #eee; margin-bottom: 10px }
 		#comment_form{ margin-top: 20px; }
 		#comment_text { width: 400px }
+		.map {width:300px;height:200px}
+		.map_wrapper { position:relative;width: 300px }
+		.map_wrapper .crosshairs {position:absolute;z-index: 999;top: 90px;left:140px;}
+		#search_results { position:absolute; top:0;right:0; width: 500px; }
+		#search_results .list { margin-left: 20px}
+		form { padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #d9d1c2; width: 350px; }
 	</style>
 </head>
 <body>
