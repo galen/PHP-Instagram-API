@@ -9,7 +9,7 @@
 	<dt>Bio</dt>
 	<dd><?php echo $user->getBio() ?></dd>
 	<dt>Relationship</dt>
-	<dd><?php if( $current_user->isFollowing( $user ) ): ?>Following<a href="?example=user.php&user=<?php echo $user ?>&action=unfollow">X</a><?php else: ?><a href="?example=user.php&user=<?php echo $user ?>&action=follow">Follow</a><?php endif; ?> <?php if( $current_user->isFollowedBy( $user ) ): ?>Followed by<?php endif; ?></dd>
+	<dd><?php if( $current_user->isFollowing( $user ) ): ?>Following<a href="?example=user.php&user=<?php echo $user ?>&action=unfollow">X</a><?php else: ?><a href="?example=user.php&user=<?php echo $user ?>&action=follow">Follow</a><?php endif; ?> <?php echo $incoming_relationship ?></dd>
 </dl>
 
 <a name="recent_media"></a>

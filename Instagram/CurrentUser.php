@@ -199,6 +199,17 @@ class CurrentUser extends \Instagram\User {
 	}
 
 	/**
+	 * Get follow request
+	 *
+	 * Get the users that have requested to follow the current user
+	 *
+	 * @return \Instagram\Collection\UserCollection
+	 */
+	public function getFollowRequests() {
+		return $this->proxy->getFollowRequests();
+	}
+
+	/**
 	 * Check following status
 	 *
 	 * Check if hte current user is following a user

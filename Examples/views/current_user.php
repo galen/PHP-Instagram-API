@@ -42,3 +42,11 @@
 <li><a href="?example=media.php&media=<?php echo $f->getId() ?>"><img src="<?php echo $f->getThumbnail()->url ?>" title="Posted by <?php echo $f->getUser() ?>"></a></li>
 <?php endforeach; ?>
 </ul>
+
+<a name="follower_requests"></a>
+<h4>Follow Requests <?php if( $follow_requests->getNextCursor() ): ?><a href="?example=current_user.php&follow_requests_cursor=<?php echo $follow_requests->getNextCursor() ?>#follow_requests" class="next_page">Next page</a><?php endif; ?></h4>
+<ul class="media_list">
+<?php foreach( $follow_requests as $follow_request ): ?>
+<li><a href="?example=user.php&user=<?php echo $follow_request ?>"><img src="<?php echo $follow_request->getProfilePicture() ?>" title="<?php echo $follow_request ?>"></a></li>
+<?php endforeach; ?>
+</ul>

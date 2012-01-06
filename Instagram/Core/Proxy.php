@@ -174,6 +174,15 @@ class Proxy {
 		return new \Instagram\Collection\MediaCollection( $response->getRawData() );
 	}
 
+	public function getFollowRequests( array $params = null ) {
+		$response = $this->apiCall(
+			'get',
+			$this->api_url . '/users/self/requested-by',
+			$params
+		);
+		return new \Instagram\Collection\UserCollection( $response->getRawData() );
+	}
+
 	public function getLikedMedia( array $params = null ) {
 		$response = $this->apiCall(
 			'get',
