@@ -25,7 +25,7 @@ class Tag extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function getMedia( array $params = null ) {
-		return $this->proxy->getTagMedia( $this->getApiId(), $params );
+		return new \Instagram\Collection\TagMediaCollection( $this->proxy->getTagMedia( $this->getApiId(), $params ) );
 	}
 
 	/**

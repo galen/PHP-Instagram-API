@@ -28,7 +28,7 @@ class Location extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function getMedia( array $params = null ) {
-		return $this->proxy->getLocationMedia( $this->getApiId(), $params );
+		return new \Instagram\Collection\MediaCollection( $this->proxy->getLocationMedia( $this->getApiId(), $params ) );
 	}
 
 	/**

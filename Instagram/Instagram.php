@@ -144,7 +144,7 @@ class Instagram {
  	 * @access public
  	 */
 	public function getUser( $id ) {
-		$user = $this->proxy->getUser( $id );
+		$user = new \Instagram\User( $this->proxy->getUser( $id ) );
 		$user->setProxy( $this->proxy );
 		return $user;
 	}
@@ -188,7 +188,7 @@ class Instagram {
  	 * @access public
  	 */
 	public function getMedia( $id ) {
-		$media = $this->proxy->getMedia( $id );
+		$media = new \Instagram\Media( $this->proxy->getMedia( $id ) );
 		$media->setProxy( $this->proxy );
 		return $media;
 	}
@@ -201,7 +201,7 @@ class Instagram {
  	 * @access public
  	 */
 	public function getTag( $tag ) {
-		$tag = $this->proxy->getTag( $tag );
+		$tag = new \Instagram\Tag( $this->proxy->getTag( $tag ) );
 		$tag->setProxy( $this->proxy );
 		return $tag;
 	}
@@ -216,7 +216,7 @@ class Instagram {
  	 * @access public
  	 */
 	public function getLocation( $id ) {
-		$location = $this->proxy->getLocation( $id );
+		$location = new \Instagram\Location( $this->proxy->getLocation( $id ) );
 		$location->setProxy( $this->proxy );
 		return $location;
 	}
@@ -230,7 +230,7 @@ class Instagram {
  	 * @access public
  	 */
 	public function getCurrentUser() {
-		$current_user = $this->proxy->getCurrentUser();
+		$current_user = new \Instagram\CurrentUser( $this->proxy->getCurrentUser() );
 		$current_user->setProxy( $this->proxy );
 		return $current_user;
 	}
@@ -244,7 +244,7 @@ class Instagram {
  	 * @access public
  	 */
 	public function getPopularMedia() {
-		$popular_media = $this->proxy->getPopularMedia();
+		$popular_media = new \Instagram\Collection\MediaCollection( $this->proxy->getPopularMedia() );
 		$popular_media->setProxy( $this->proxy );
 		return $popular_media;
 	}
@@ -262,7 +262,7 @@ class Instagram {
 	public function searchUsers( $query, array $params = null ) {
 		$params = (array)$params;
 		$params['q'] = $query;
-		$user_collection = $this->proxy->searchUsers( $params );
+		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->searchUsers( $params ) );
 		$user_collection->setProxy( $this->proxy );
 		return $user_collection;
 	}
@@ -286,7 +286,7 @@ class Instagram {
 		$params = (array)$params;
 		$params['lat'] = (float)$lat;
 		$params['lng'] = (float)$lng;
-		$media_collection = $this->proxy->searchMedia( $params );
+		$media_collection =  new \Instagram\Collection\MediaSearchCollection( $this->proxy->searchMedia( $params ) );
 		$media_collection->setProxy( $this->proxy );
 		return $media_collection;
 	}
@@ -302,7 +302,7 @@ class Instagram {
 	public function searchTags( $query, array $params = null ) {
 		$params = (array)$params;
 		$params['q'] = $query;
-		$tag_collection = $this->proxy->searchTags( $params );
+		$tag_collection =  new \Instagram\Collection\TagCollection( $this->proxy->searchTags( $params ) );
 		$tag_collection->setProxy( $this->proxy );
 		return $tag_collection;
 	}
@@ -326,7 +326,7 @@ class Instagram {
 		$params = (array)$params;
 		$params['lat'] = (float)$lat;
 		$params['lng'] = (float)$lng;
-		$location_collection = $this->proxy->searchLocations( $params );
+		$location_collection = new \Instagram\Collection\LocationCollection( $this->proxy->searchLocations( $params ) );
 		$location_collection->setProxy( $this->proxy );
 		return $location_collection;
 	}

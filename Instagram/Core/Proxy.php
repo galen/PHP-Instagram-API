@@ -23,27 +23,25 @@ class Proxy {
 		return $response;
 	}
 
-	private function getObjectMedia( $api_endpoint, $id, \Instagram\Collection\CollectionAbstract $collection, array $params = null ) {
+	private function getObjectMedia( $api_endpoint, $id, array $params = null ) {
 		$response = $this->apiCall(
 			'get',
 			sprintf( '%s/%s/%s/media/recent', $this->api_url, strtolower( $api_endpoint ), $id  ),
 			$params
 		);
-		$collection->setData( $response->getRawData() );
-		return $collection;
+		return $response->getRawData();
 	}
 
 	public function getLocationMedia( $id, array $params = null ) {
-		$collection = $this->getObjectMedia( 'Locations', $id, new \Instagram\Collection\MediaCollection, $params );
-		return $collection;
+		return $this->getObjectMedia( 'Locations', $id, $params );
 	}
 
 	public function getTagMedia( $id, array $params = null ) {
-		return $this->getObjectMedia( 'Tags', $id, new \Instagram\Collection\TagMediaCollection, $params );
+		return $this->getObjectMedia( 'Tags', $id, $params );
 	}
 
 	public function getUserMedia( $id, array $params = null ) {
-		return $this->getObjectMedia( 'Users', $id, new \Instagram\Collection\MediaCollection, $params );
+		return $this->getObjectMedia( 'Users', $id, $params );
 	}
 
 	public function getUser( $id ) {
@@ -51,7 +49,7 @@ class Proxy {
 			'get',
 			sprintf( '%s/users/%s', $this->api_url, $id )
 		);
-		return new \Instagram\User( $response->getData() );
+		return $response->getData();
 	}
 
 	public function getUserFollows( $id, array $params = null ) {
@@ -60,16 +58,16 @@ class Proxy {
 			sprintf( '%s/users/%s/follows', $this->api_url, $id ),
 			$params
 		);
-		return new \Instagram\Collection\UserCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
-	public function getUserFollowedBy( $id, array $params = null ) {
+	public function getUserFollowers( $id, array $params = null ) {
 		$response = $this->apiCall(
 			'get',
 			sprintf( '%s/users/%s/followed-by', $this->api_url, $id ),
 			$params
 		);
-		return new \Instagram\Collection\UserCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getMediaComments( $id ) {
@@ -77,7 +75,7 @@ class Proxy {
 			'get',
 			sprintf( '%s/media/%s/comments', $this->api_url, $id )
 		);
-		return new \Instagram\Collection\CommentCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getMediaLikes( $id ) {
@@ -85,7 +83,7 @@ class Proxy {
 			'get',
 			sprintf( '%s/media/%s/likes', $this->api_url, $id )
 		);
-		return new \Instagram\Collection\UserCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getCurrentUser() {
@@ -93,7 +91,7 @@ class Proxy {
 			'get',
 			sprintf( '%s/users/self', $this->api_url )
 		);
-		return new \Instagram\CurrentUser( $response->getData() );
+		return $response->getData();
 	}
 
 	public function getMedia( $id ) {
@@ -101,7 +99,7 @@ class Proxy {
 			'get',
 			sprintf( '%s/media/%s', $this->api_url, $id )
 		);
-		return new \Instagram\Media( $response->getData() );
+		return $response->getData();
 	}
 
 	public function getTag( $tag ) {
@@ -109,7 +107,7 @@ class Proxy {
 			'get',
 			sprintf( '%s/tags/%s', $this->api_url, $tag )
 		);
-		return new \Instagram\Tag( $response->getData() );
+		return $response->getData();
 	}
 
 	public function getLocation( $id ) {
@@ -117,7 +115,7 @@ class Proxy {
 			'get',
 			sprintf( '%s/locations/%s', $this->api_url, $id )
 		);
-		return new \Instagram\Location( $response->getData() );
+		return $response->getData();
 	}
 
 	public function searchUsers( array $params = null ) {
@@ -126,7 +124,7 @@ class Proxy {
 			$this->api_url . '/users/search',
 			$params
 		);
-		return new \Instagram\Collection\UserCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function searchTags( array $params = null ) {
@@ -135,7 +133,7 @@ class Proxy {
 			$this->api_url . '/tags/search',
 			$params
 		);
-		return new \Instagram\Collection\TagCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function searchMedia( array $params = null ) {
@@ -144,7 +142,7 @@ class Proxy {
 			$this->api_url . '/media/search',
 			$params
 		);
-		return new \Instagram\Collection\MediaSearchCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function searchLocations( array $params = null ) {
@@ -153,7 +151,7 @@ class Proxy {
 			$this->api_url . '/locations/search',
 			$params
 		);
-		return new \Instagram\Collection\LocationCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getPopularMedia( array $params = null ) {
@@ -162,7 +160,7 @@ class Proxy {
 			$this->api_url . '/media/popular',
 			$params
 		);
-		return new \Instagram\Collection\MediaCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getFeed( array $params = null ) {
@@ -171,7 +169,7 @@ class Proxy {
 			$this->api_url . '/users/self/feed',
 			$params
 		);
-		return new \Instagram\Collection\MediaCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getFollowRequests( array $params = null ) {
@@ -180,7 +178,7 @@ class Proxy {
 			$this->api_url . '/users/self/requested-by',
 			$params
 		);
-		return new \Instagram\Collection\UserCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getLikedMedia( array $params = null ) {
@@ -189,7 +187,7 @@ class Proxy {
 			$this->api_url . '/users/self/media/liked',
 			$params
 		);
-		return new \Instagram\Collection\LikedMediaCollection( $response->getRawData() );
+		return $response->getRawData();
 	}
 
 	public function getRelationshipToCurrentUser( $user_id ) {

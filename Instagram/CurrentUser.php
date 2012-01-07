@@ -206,7 +206,7 @@ class CurrentUser extends \Instagram\User {
 	 * @return \Instagram\Collection\UserCollection
 	 */
 	public function getFollowRequests() {
-		return $this->proxy->getFollowRequests();
+		return new \Instagram\Collection\UserCollection( $this->proxy->getFollowRequests() );
 	}
 
 	/**
@@ -249,7 +249,7 @@ class CurrentUser extends \Instagram\User {
 	 * @access public
 	 */
 	public function getFeed( array $params = null ) {
-		return $this->proxy->getFeed( $params );
+		return new \Instagram\Collection\MediaCollection( $this->proxy->getFeed( $params ) );
 	}
 
 	/**
@@ -262,7 +262,7 @@ class CurrentUser extends \Instagram\User {
 	 * @access public
 	 */
 	public function getLikedMedia( array $params = null ) {
-		return $this->proxy->getLikedMedia( $params );
+		return  new \Instagram\Collection\LikedMediaCollection( $this->proxy->getLikedMedia( $params ) );
 	}
 
 }

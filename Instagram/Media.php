@@ -118,7 +118,7 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 		if ( !$fetch_from_api ) {
 			return $this->proxy->getMediaComments( $this->getApiId() );
 		}
-		$this->comments = $this->proxy->getMediaComments( $this->getApiId() );
+		$this->comments = new \Instagram\Collection\CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ) );
 		return $this->comments;
 	}
 
@@ -181,7 +181,7 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 		if ( !$fetch_from_api ) {
 			return new \Instagram\Collection\UserCollection( $this->data->likes );
 		}
-		$user_collection = $this->proxy->getMediaLikes( $this->getApiId() );
+		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->getMediaLikes( $this->getApiId() ) );
 		$user_collection->setProxy( $this->proxy );
 		$this->likes = $user_collection;
 		return $this->likes;
