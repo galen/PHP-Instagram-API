@@ -7,7 +7,6 @@ $current_user = $instagram->getCurrentUser();
 try{
 	$username = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
 	$user = $instagram->getUserByUsername( $username );
-	$incoming_relationship = $current_user->getRelationship( $user )->incoming_status;
 
 	if ( isset( $_GET['action'] ) ) {
 		switch( $_GET['action'] ) {
@@ -17,9 +16,18 @@ try{
 			case 'unfollow':
 				$current_user->unFollow( $user );
 				break;
+			case 'approve_follower':
+				$current_user->approveFollower( $user );
+				break;
+			case 'ignore_follower':
+				$current_user->ignoreFollower( $user );
+				break;
 		}
+		header( 'Location: ?example=user.php&user=' . $username );
+		exit;
 	}
-
+	$outgoing_relationship = $current_user->getRelationship( $user )->outgoing_status;
+	$incoming_relationship = $current_user->getRelationship( $user )->incoming_status;
 	$media = $user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 	$follows = $user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );
 	$followers = $user->getFollowers( isset( $_GET['followers_cursor'] ) ? array( 'cursor' => $_GET['followers_cursor'] ) : null );

@@ -165,6 +165,42 @@ class CurrentUser extends \Instagram\User {
 	}
 
 	/**
+	 * Approve follower
+	 *
+	 * @param \Instagram\User|string $user User object or user id who should be approved for following
+	 * @return boolean
+	 */
+	public function approveFollower( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
+		$this->updateRelationship( $user ); 
+		$response = $this->proxy->modifyRelationship( $user, 'approve' );
+		foreach( $response as $r => $v ) {
+			$this->relationships[ $user ]->$r = $v;
+		}
+		return true;
+	}
+
+	/**
+	 * Ignore follower
+	 *
+	 * @param \Instagram\User|string $user User object or user id who should be ignored
+	 * @return boolean
+	 */
+	public function ignoreFollower( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
+		$this->updateRelationship( $user ); 
+		$response = $this->proxy->modifyRelationship( $user, 'ignore' );
+		foreach( $response as $r => $v ) {
+			$this->relationships[ $user ]->$r = $v;
+		}
+		return true;
+	}
+
+	/**
 	 * Unfollow user
 	 *
 	 * @param \Instagram\User|string $user User object or user id who should be unfollowed

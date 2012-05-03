@@ -8,8 +8,10 @@
 	<dd><a href="<?php echo $user->getWebsite() ?>"><?php echo $user->getWebsite() ?></a></dd>
 	<dt>Bio</dt>
 	<dd><?php echo $user->getBio() ?></dd>
-	<dt>Relationship</dt>
-	<dd><?php if( $current_user->isFollowing( $user ) ): ?>Following<a href="?example=user.php&user=<?php echo $user ?>&action=unfollow">X</a><?php else: ?><a href="?example=user.php&user=<?php echo $user ?>&action=follow">Follow</a><?php endif; ?> <?php echo $incoming_relationship ?></dd>
+	<dt>Outgoing Relationship</dt>
+	<dd><?php if( $current_user->isFollowing( $user ) ): ?>Following<a href="?example=user.php&user=<?php echo $user ?>&action=unfollow">X</a><?php else: ?><a href="?example=user.php&user=<?php echo $user ?>&action=follow">Follow</a><?php endif; ?></dd>
+	<dt>Incoming Relationship</dt>
+	<dd><?php if( $incoming_relationship == 'requested_by' ): ?>Requested By: <a href="?example=user.php&user=<?php echo $user ?>&action=approve_follower">Approve</a>, <a href="?example=user.php&user=<?php echo $user ?>&action=ignore_follower">Ignore</a><?php else: ?><?php echo ucfirst( str_replace( '_', ' ', $incoming_relationship ) ) ?><?php endif; ?></dd>
 </dl>
 
 <a name="recent_media"></a>
