@@ -4,14 +4,6 @@ require( '_SplClassLoader.php' );
 $loader = new SplClassLoader( 'Instagram', dirname( __DIR__ )  );
 $loader->register();
 
-// Example auth config
-$auth_config = array(
-	'client_id'			=> '',
-	'client_secret'		=> '',
-	'callback_url'		=> '',
-	'scope'				=> array( 'likes', 'comments', 'relationships' )
-);
-
 $instagram = new Instagram\Instagram( $auth_config );
 
 // If a code is present try and get the access token
