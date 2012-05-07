@@ -1,10 +1,10 @@
 <h2>Currently Logged In User</h2>
 
-<h3><?php echo $user ?></h3>
-<img src="<?php echo $user->getProfilePicture() ?>">
+<h3><?php echo $current_user ?></h3>
+<img src="<?php echo $current_user->getProfilePicture() ?>">
 
 <a name="recent_media"></a>
-<h4>Recent Media (<?php echo $user->getMediaCount() ?>) <?php if( $media->getNextMaxId() ): ?><a href="?example=current_user.php&max_id=<?php echo $media->getNextMaxId() ?>#recent_media" class="next_page">Next page</a><?php endif; ?></h4>
+<h4>Recent Media (<?php echo $current_user->getMediaCount() ?>) <?php if( $media->getNextMaxId() ): ?><a href="?example=current_user.php&max_id=<?php echo $media->getNextMaxId() ?>#recent_media" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $media as $m ): ?>
 <li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a></li>
@@ -12,7 +12,7 @@
 </ul>
 
 <a name="follows"></a>
-<h4>Follows (<?php echo $user->getFollowsCount() ?>) <?php if( $follows->getNextCursor() ): ?><a href="?example=current_user.php&follows_cursor=<?php echo $follows->getNextCursor() ?>#follows" class="next_page">Next page</a><?php endif; ?></h4>
+<h4>Follows (<?php echo $current_user->getFollowsCount() ?>) <?php if( $follows->getNextCursor() ): ?><a href="?example=current_user.php&follows_cursor=<?php echo $follows->getNextCursor() ?>#follows" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $follows as $follow ): ?>
 <li><a href="?example=user.php&user=<?php echo $follow ?>"><img src="<?php echo $follow->getProfilePicture() ?>" title="<?php echo $follow ?>"></a></li>
@@ -20,7 +20,7 @@
 </ul>
 
 <a name="followers"></a>
-<h4>Followers (<?php echo $user->getFollowersCount() ?>) <?php if( $followers->getNextCursor() ): ?><a href="?example=current_user.php&followers_cursor=<?php echo $followers->getNextCursor() ?>#followers" class="next_page">Next page</a><?php endif; ?></h4>
+<h4>Followers (<?php echo $current_user->getFollowersCount() ?>) <?php if( $followers->getNextCursor() ): ?><a href="?example=current_user.php&followers_cursor=<?php echo $followers->getNextCursor() ?>#followers" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $followers as $follower ): ?>
 <li><a href="?example=user.php&user=<?php echo $follower ?>"><img src="<?php echo $follower->getProfilePicture() ?>" title="<?php echo $follower ?>"></a></li>

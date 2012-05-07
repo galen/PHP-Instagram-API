@@ -219,6 +219,42 @@ class CurrentUser extends \Instagram\User {
 	}
 
 	/**
+	 * Block user
+	 *
+	 * @param \Instagram\User|string $user User object or user id who should be blocked
+	 * @return boolean
+	 */
+	public function block( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
+		$this->updateRelationship( $user ); 
+		$response = $this->proxy->modifyRelationship( $user, 'block' );
+		foreach( $response as $r => $v ) {
+			$this->relationships[ $user ]->$r = $v;
+		}
+		return true;
+	}
+
+	/**
+	 * Unblock user
+	 *
+	 * @param \Instagram\User|string $user User object or user id who should be unblocked
+	 * @return boolean
+	 */
+	public function unblock( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
+		$this->updateRelationship( $user ); 
+		$response = $this->proxy->modifyRelationship( $user, 'unblock' );
+		foreach( $response as $r => $v ) {
+			$this->relationships[ $user ]->$r = $v;
+		}
+		return true;
+	}
+
+	/**
 	 * Get relationship
 	 *
 	 * Get the complete relationship to a user
@@ -253,6 +289,21 @@ class CurrentUser extends \Instagram\User {
 	 * @param \Instagram\User|string $user User object or user id to check the following status of
 	 * @return boolean
 	 */
+	public function isBlocking( $user ) {
+		if ( $user instanceof \Instagram\User ) {
+			$user = $user->getId();
+		}
+		return $this->getRelationship( $user )->incoming_status == 'blocked_by_you';
+	}
+
+	/**
+	 * Check following status
+	 *
+	 * Check if hte current user is following a user
+	 *
+	 * @param \Instagram\User|string $user User object or user id to check the following status of
+	 * @return boolean
+	 */
 	public function isFollowing( $user ) {
 		if ( $user instanceof \Instagram\User ) {
 			$user = $user->getId();
@@ -261,7 +312,7 @@ class CurrentUser extends \Instagram\User {
 	}
 
 	/**
-	 * Check following status
+	 * Check followed by status
 	 *
 	 * Check if the current user is followed by a user
 	 *

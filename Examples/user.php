@@ -1,13 +1,8 @@
 <?php
 
-require( '_common.php' );
-
-$current_user = $instagram->getCurrentUser();
-
 try{
 	$username = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
 	$user = $instagram->getUserByUsername( $username );
-
 	if ( isset( $_GET['action'] ) ) {
 		switch( $_GET['action'] ) {
 			case 'follow':
@@ -21,6 +16,12 @@ try{
 				break;
 			case 'ignore_follower':
 				$current_user->ignoreFollower( $user );
+				break;
+			case 'block':
+				$current_user->block( $user );
+				break;
+			case 'unblock':
+				$current_user->unblock( $user );
 				break;
 		}
 		header( 'Location: ?example=user.php&user=' . $username );

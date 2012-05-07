@@ -1,6 +1,5 @@
 <?php
 
-require( '_common.php' );
 $view = 'views/search.php';
 $valid_searches = array( 'tags', 'users', 'media', 'locations' );
 

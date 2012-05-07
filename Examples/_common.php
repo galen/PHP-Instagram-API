@@ -11,3 +11,4 @@ $instagram_config = array(
 	'access_token'	=> $_SESSION['instagram_access_token'] . ( isset( $_GET['test_token'] ) ? '!' : '' )
 );
 $instagram = new Instagram\Instagram( $instagram_config );
+$current_user = $instagram->getCurrentUser();

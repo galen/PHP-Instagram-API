@@ -23,6 +23,10 @@ class Proxy {
 		return $response;
 	}
 
+	public function logout() {
+		$this->client->get( 'https://instagram.com/accounts/logout/', array() );
+	}
+
 	private function getObjectMedia( $api_endpoint, $id, array $params = null ) {
 		$response = $this->apiCall(
 			'get',

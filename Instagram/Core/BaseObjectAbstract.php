@@ -26,4 +26,8 @@ abstract class BaseObjectAbstract {
 		return $this->data;
 	}
 
+	public function __get( $var ) {
+		return isset( $this->data->$var ) ? $this->data->$var : null;
+	}
+
 }

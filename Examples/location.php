@@ -1,7 +1,5 @@
 <?php
 
-require( '_common.php' );
-
 $location = $instagram->getLocation( isset( $_GET['location'] ) ? $_GET['location'] : 3001881 );
 $media = $location->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 

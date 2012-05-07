@@ -124,6 +124,10 @@ class Instagram {
 		throw new \Instagram\Core\ApiException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
 	}
 
+	function logout() {
+		$this->proxy->logout();
+	}
+
 	/**
 	 * Set the proxy
 	 *

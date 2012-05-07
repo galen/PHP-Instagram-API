@@ -1,7 +1,5 @@
 <?php
 
-require( '_common.php' );
-
 if ( isset( $_GET['lat'], $_GET['lng'] ) ) {
 	$search = true;
 	$lat = $_GET['lat'];

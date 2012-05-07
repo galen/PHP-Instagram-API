@@ -1,7 +1,5 @@
 <?php
 
-require( '_common.php' );
-
 $media = $instagram->getPopularMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 
 require( 'views/_header.php' );

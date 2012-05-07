@@ -6,6 +6,7 @@
 		* { margin:0; padding:0 }
 		body { font-family: arial, verdana, sans-serif; padding-bottom: 100px; background:#f9f6f1 }
 		h1 { background: #675548; color:#fff; padding: 6px; font-size: 18px; }
+		h1 a { font-size: 10px; color: #00ff00; }
 		#breadcrumbs { background: #d9d1c2; padding: 6px; font-size: 14px; }
 		#breadcrumbs a { color: #aa0000;text-decoration:none }
 		#breadcrumbs a:hover { text-decoration:underline; }
