@@ -13,50 +13,25 @@ namespace Instagram;
  *
  * All objects are created through this object
  *
- * Authorization is done through this object as well
  */
 
-class Instagram {
+class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 
 	/**
 	 * Configuration array
 	 *
 	 * Contains a default client and proxy
 	 *
-	 ** Authorization only config options:
-	 *
-	 * client_secret:
-	 * client_id:		These three items are required for authorization
-	 * redirect_url:
-	 *
-	 * access_token:	Instagram access token. This is the only required element for normal operation.
 	 * client:			Class that performs all the HTTP actions. Must implement \Instagram\Net\ClientInterface
 	 * proxy:			Uses the client to call the API methods
-	 * grant_type:		Grant type from teh Instagram API. Only authorization_code is accepted right now.
-	 * scope:			{@link http://instagram.com/developer/auth/#scope}
-	 * display:			Pass in "touch" if you'd like your authenticating users to see a mobile-optimized
-	 *					version of the authenticate page and the sign-in page. 
 	 *
 	 * @var array
 	 * @access protected
 	 */
 	protected $config = array(
 		'client'			=> 'Instagram\Net\CurlClient',
-		'proxy'				=> 'Instagram\Core\Proxy',
-		'grant_type'		=> 'authorization_code',
-		'scope'				=> array( 'basic' ),
-		'display'			=> ''
+		'proxy'				=> 'Instagram\Core\Proxy'
 	);
-
-	/**
-	 * Proxy object
-	 *
-	 * The proxy object does all the fetching of the API data
-	 *
-	 * @var \Instagram\Core\Proxy
-	 * @access protected
-	 */
-	protected $proxy;
 
 	/**
 	 * Constructor
@@ -68,74 +43,32 @@ class Instagram {
 	 * @param array $config Configuration array
 	 * @access public
 	 */
-	public function __construct( array $config ) {
-		if (
-			!isset( $config['client_id'], $config['client_secret'], $config['callback_url'] ) &&
-			!isset( $config['access_token'] )
-		)
-		{
-			throw new \Instagram\Core\ApiException( 'Invalid $config params: You must supply auth info or an access_token' );
-		}
+	public function __construct( array $config = null ) {
 		$this->config = (array) $config + $this->config;
 		$proxy = $this->config['proxy'];
 		$this->setProxy( new $proxy( new $this->config['client'], isset( $this->config['access_token'] ) ? $this->config['access_token'] : null ) );
 	}
 
 	/**
-	 * Authorize
+	 * Set the access token
 	 *
-	 * Redirects the user to the Instagram authorization url
+	 * @param string $access_token
 	 * @access public
 	 */
-	public function authorize() {
-		header(
-			sprintf(
-				'Location:https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code&scope=%s',
-				$this->config['client_id'],
-				$this->config['callback_url'],
-				implode( '+', $this->config['scope'] )
-			)
-		);
-		exit;
+	public function setAccessToken( $access_token ) {
+		$this->config['access_token'] = $access_token;
+		$this->proxy->setAccessToken( $this->config['access_token'] );
 	}
 
 	/**
-	 * Get the access token
+	 * Logout
 	 *
-	 * POSTs to the Instagram API and obtains and access key
+	 * This doesn't actually work yet, waiting for Instagram to implement it in their API
 	 *
-	 * @param string $code Code supplied by Instagram
-	 * @return string Returns the access token
-	 * @throws \Instagram\Core\ApiException
 	 * @access public
 	 */
-	public function getAccessToken( $code ) {
-		$post_data = array(
-			'client_id'			=> $this->config['client_id'],
-			'client_secret'		=> $this->config['client_secret'],
-			'grant_type'		=> $this->config['grant_type'],
-			'redirect_uri'		=> $this->config['callback_url'],
-			'code'				=> $code
-		);
-		$response = $this->proxy->getAccessToken( $post_data );
-		if ( isset( $response->getRawData()->access_token ) ) {
-			return $response->getRawData()->access_token;
-		}
-		throw new \Instagram\Core\ApiException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
-	}
-
-	function logout() {
+	public function logout() {
 		$this->proxy->logout();
-	}
-
-	/**
-	 * Set the proxy
-	 *
-	 * @param \Instagram\Core\Proxy $proxy Proxy object
-	 * @access public
-	 */
-	public function setProxy( \Instagram\Core\Proxy $proxy ) {
-		$this->proxy = $proxy;
 	}
 
  	/**

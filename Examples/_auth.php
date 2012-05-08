@@ -4,21 +4,25 @@ require( '_SplClassLoader.php' );
 $loader = new SplClassLoader( 'Instagram', dirname( __DIR__ )  );
 $loader->register();
 
-$instagram = new Instagram\Instagram( $auth_config );
+$auth = new Instagram\Auth( $auth_config );
 
 // If a code is present try and get the access token
 // otherwise redirect to the Instagram auth page to get the code
 if ( isset( $_GET['code'] ) ) {
 	try {
-		$_SESSION['instagram_access_token'] = $instagram->getAccessToken( $_GET['code'] );
+		$_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] );
 		$redirect = '/projects/instagram/';
 		header( 'Location: ' . $redirect );
 		exit;
 	}
 	catch ( \Instagram\Core\ApiException $e ) {
-		die( $e->getMessage() );
+		$error = ucwords( $e->getMessage() );
+		require( EXAMPLES_DIR . '/views/_header.php' );
+		require( EXAMPLES_DIR . '/views/_error.php' );
+		require( EXAMPLES_DIR . '/views/_footer.php' );
+		exit;
 	}
 }
 else {
-	$instagram->authorize();
+	$auth->authorize();
 }

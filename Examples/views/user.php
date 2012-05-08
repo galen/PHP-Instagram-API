@@ -14,12 +14,14 @@
 	<dt>Incoming Relationship</dt>
 	<dd><?php if( $incoming_relationship == 'requested_by' ): ?>Requested By: <a href="?example=user.php&user=<?php echo $user ?>&action=approve_follower">Approve</a>, <a href="?example=user.php&user=<?php echo $user ?>&action=ignore_follower">Ignore</a><?php else: ?><?php echo ucfirst( str_replace( '_', ' ', $incoming_relationship ) ) ?><?php endif; ?></dd>
 	<?php endif; ?>
+	<?php if( $user->username != $current_user->username ): ?>
 	<dt>Block</dt>
 	<?php if( $current_user->isBlocking( $user ) ): ?>
 	<dd><a href="?example=user.php&user=<?php echo $user ?>&action=unblock">Unblock this user</a></dd>
 	<?php else: ?>
 	<dd><a href="?example=user.php&user=<?php echo $user ?>&action=block">Block this user</a></dd>
-<?php endif; ?>
+	<?php endif; ?>
+	<?php endif; ?>
 </dl>
 <?php if( $user->username == $current_user->username ): ?><p>This is you</p><?php endif; ?>
 

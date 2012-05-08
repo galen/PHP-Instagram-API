@@ -23,6 +23,10 @@ class Proxy {
 		return $response;
 	}
 
+	public function setAccessToken( $access_token ) {
+		$this->access_token = $access_token;
+	}
+
 	public function logout() {
 		$this->client->get( 'https://instagram.com/accounts/logout/', array() );
 	}

@@ -43,7 +43,7 @@
 
 <h1>Instagram PHP Wrapper Examples</h1>
 <?php if( isset( $_GET['example'] ) ): ?>
-<p id="breadcrumbs"><a href="./">Home</a> \ <?php echo ucwords( str_replace( '_', ' ', basename( $_GET['example'], '.php' ) ) ) ?> Example &rarr; <a href="<?php echo $github_url ?>">github</a></p>
+<p id="breadcrumbs"><a href="./">Home</a> \ <?php echo ucwords( str_replace( '_', ' ', basename( $_GET['example'], '.php' ) ) ) ?> Example</p>
 <?php endif; ?>
 
 <div id="content">

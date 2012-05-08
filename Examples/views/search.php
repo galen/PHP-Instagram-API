@@ -72,7 +72,7 @@ google.maps.event.addDomListener(window, "load", initialize );
 
 	<div id="users_wrapper" class="search_form_wrapper<?php if( isset( $media ) ): ?> active<?php endif; ?>">
 		<h2>Search Media</h2>
-		<div class="map_wrapper"><div id="map_media" class="map"></div><img src="/projects/instagram/system/lib/Instagram/Examples/_images/crosshair.gif" class="crosshairs"></div>
+		<div class="map_wrapper"><div id="map_media" class="map"></div><img src="/projects/instagram/system/lib/PHP-Instagram-API/Examples/_images/crosshair.gif" class="crosshairs"></div>
 		<form action="">
 			<input type="hidden" name="example" value="search.php">
 			<input type="hidden" name="search_type" value="media">
@@ -88,7 +88,7 @@ google.maps.event.addDomListener(window, "load", initialize );
 
 	<div id="users_wrapper" class="search_form_wrapper<?php if( isset( $locations ) ): ?> active<?php endif; ?>">
 		<h2>Search Locations</h2>
-		<div class="map_wrapper"><div id="map_locations" class="map"></div><img src="/projects/instagram/system/lib/Instagram/Examples/_images/crosshair.gif" class="crosshairs"></div>
+		<div class="map_wrapper"><div id="map_locations" class="map"></div><img src="/projects/instagram/system/lib/PHP-Instagram-API/Examples/_images/crosshair.gif" class="crosshairs"></div>
 		<form action="">
 			<input type="hidden" name="example" value="search.php">
 			<input type="hidden" name="search_type" value="locations">
