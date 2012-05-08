@@ -1,5 +1,8 @@
 <?php
 
+$instagram = new Instagram\Instagram;
+$instagram->setAccessToken( $_SESSION['instagram_access_token'] );
+
 if ( isset( $_GET['lat'], $_GET['lng'] ) ) {
 	$search = true;
 	$lat = $_GET['lat'];

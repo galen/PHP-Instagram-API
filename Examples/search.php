@@ -1,5 +1,8 @@
 <?php
 
+$instagram = new Instagram\Instagram;
+$instagram->setAccessToken( $_SESSION['instagram_access_token'] );
+
 $view = 'views/search.php';
 $valid_searches = array( 'tags', 'users', 'media', 'locations' );
 

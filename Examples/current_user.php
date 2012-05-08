@@ -1,5 +1,8 @@
 <?php
 
+$instagram = new Instagram\Instagram;
+$instagram->setAccessToken( $_SESSION['instagram_access_token'] );
+
 $current_user = $instagram->getCurrentUser();
 $media = $current_user->getMedia( isset( $_GET['max_id'] ) ? array( 'max_id' => $_GET['max_id'] ) : null );
 $follows = $current_user->getFollows( isset( $_GET['follows_cursor'] ) ? array( 'cursor' => $_GET['follows_cursor'] ) : null );

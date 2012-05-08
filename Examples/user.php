@@ -1,5 +1,9 @@
 <?php
 
+$instagram = new Instagram\Instagram;
+$instagram->setAccessToken( $_SESSION['instagram_access_token'] );
+$current_user = $instagram->getCurrentUser();
+
 try{
 	$username = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
 	$user = $instagram->getUserByUsername( $username );

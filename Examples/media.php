@@ -1,5 +1,8 @@
 <?php
 
+$instagram = new Instagram\Instagram;
+$instagram->setAccessToken( $_SESSION['instagram_access_token'] );
+
 $media_id = isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611';
 $current_user = $instagram->getCurrentUser();
 $media = $instagram->getMedia( $media_id );
