@@ -95,37 +95,6 @@ class CurrentUser extends \Instagram\User {
 	}
 
 	/**
-	 * Add a media comment
-	 *
-	 * @param int|\Instagram\Media ID of media or a media object
-	 * @param string $text Comment text
-	 * @access public
-	 */
-	public function addMediaComment( $media, $text ) {
-		if ( $media instanceof \Instagram\Media ) {
-			$media = $media->getId();
-		}
-		$this->proxy->addMediaComment( $media, $text );
-	}
-
-	/**
-	 * Delete a media comment
-	 *
-	 * @param int|\Instagram\Media ID of media or a media object
-	 * @param string $text Comment text
-	 * @access public
-	 */
-	public function deleteMediaComment( $media, $comment ) {
-		if ( $media instanceof \Instagram\Media ) {
-			$media = $media->getId();
-		}
-		if ( $comment instanceof \Instagram\Comment ) {
-			$comment = $comment->getId();
-		}
-		$this->proxy->deleteMediaComment( $media, $comment );
-	}
-
-	/**
 	 * Update relationship with a user
 	 *
 	 * Internal function that updates relationships

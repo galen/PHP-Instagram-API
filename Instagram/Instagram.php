@@ -36,9 +36,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 	/**
 	 * Constructor
 	 *
-	 * When authorizing you will need to supply a client_id, client_secret, and redirect_url
-	 *
-	 * After authenticating you only need to supply access_token
+	 * You can supply a client, proxy, and an access token via the config array
 	 *
 	 * @param array $config Configuration array
 	 * @access public
