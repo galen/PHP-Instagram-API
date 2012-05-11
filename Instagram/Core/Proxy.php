@@ -5,7 +5,7 @@ namespace Instagram\Core;
 class Proxy {
 
 	protected $client;
-	protected $access_token;
+	protected $access_token = null;
 	protected $api_url = 'https://api.instagram.com/v1';
 
 	function __construct( \Instagram\Net\ClientInterface $client, $access_token = null ) {

@@ -22,7 +22,8 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 	 *
 	 * You can supply a client, proxy, and an access token via the config array
 	 *
-	 * @param array $config Configuration array
+	 * @param string $access_token Instagram access token obtained through authentication
+	 * @param \Instagram\Net\ClientInterface $client Client object used to connect to the API
 	 * @access public
 	 */
 	public function __construct( $access_token = null, \Instagram\Net\ClientInterface $client = null ) {

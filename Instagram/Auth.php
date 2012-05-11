@@ -12,7 +12,7 @@ namespace Instagram;
  * Auth class
  */
 
-class Auth extends \Instagram\Core\ProxyObjectAbstract {
+class Auth {
 
 	/**
 	 * Configuration array
@@ -20,9 +20,7 @@ class Auth extends \Instagram\Core\ProxyObjectAbstract {
 	 * Contains a default client and proxy
 	 *
 	 * client_id:		These three items are required for authorization
-	 * redirect_url:	URL that the Instagram API shoudl redirect to
-	 * client:			Class that performs all the HTTP actions. Must implement \Instagram\Net\ClientInterface
-	 * proxy:			Uses the client to call the API methods
+	 * callback_url:	URL that the Instagram API shoudl redirect to
 	 * grant_type:		Grant type from the Instagram API. Only authorization_code is accepted right now.
 	 * scope:			{@link http://instagram.com/developer/auth/#scope}
 	 * display:			Pass in "touch" if you'd like your authenticating users to see a mobile-optimized
@@ -32,8 +30,9 @@ class Auth extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access protected
 	 */
 	protected $config = array(
-		'client'			=> 'Instagram\Net\CurlClient',
-		'proxy'				=> 'Instagram\Core\Proxy',
+		'client_id'			=> '',
+		'client_secret'		=> '',
+		'callback_url'		=> '',
 		'grant_type'		=> 'authorization_code',
 		'scope'				=> array( 'basic' ),
 		'display'			=> ''
@@ -43,12 +42,12 @@ class Auth extends \Instagram\Core\ProxyObjectAbstract {
 	 * Constructor
 	 *
 	 * @param array $config Configuration array
+	 * @param \Instagram\Net\ClientInterface $client Client object used to connect to the API
 	 * @access public
 	 */
-	public function __construct( array $config = null) {
+	public function __construct( array $config = null, \Instagram\Net\ClientInterface $client = null ) {
 		$this->config = (array) $config + $this->config;
-		$proxy = $this->config['proxy'];
-		$this->setProxy( new $proxy( new $this->config['client'] ) );
+		$this->setProxy( new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient ) );
 	}
 
 	/**
