@@ -139,7 +139,7 @@ class CurrentUser extends \Instagram\User {
 	 * @param \Instagram\User|string $user User object or user id who should be approved for following
 	 * @return boolean
 	 */
-	public function approveFollower( $user ) {
+	public function approveFollowRequest( $user ) {
 		if ( $user instanceof \Instagram\User ) {
 			$user = $user->getId();
 		}
@@ -157,7 +157,7 @@ class CurrentUser extends \Instagram\User {
 	 * @param \Instagram\User|string $user User object or user id who should be ignored
 	 * @return boolean
 	 */
-	public function ignoreFollower( $user ) {
+	public function ignoreFollowRequest( $user ) {
 		if ( $user instanceof \Instagram\User ) {
 			$user = $user->getId();
 		}

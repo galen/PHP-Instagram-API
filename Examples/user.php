@@ -17,10 +17,10 @@ try{
 				$current_user->unFollow( $user );
 				break;
 			case 'approve_follower':
-				$current_user->approveFollower( $user );
+				$current_user->approveFollowRequest( $user );
 				break;
 			case 'ignore_follower':
-				$current_user->ignoreFollower( $user );
+				$current_user->ignoreFollowRequest( $user );
 				break;
 			case 'block':
 				$current_user->block( $user );

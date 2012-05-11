@@ -121,12 +121,12 @@ class User extends \Instagram\Core\BaseObjectAbstract {
 	/**
 	 * Return if the user is complete
 	 *
-	 * @see User::updateData
+	 * @see User::updateData()
 	 *
 	 * @return bool
-	 * @access public
+	 * @access protected
 	 */
-	public function isCompleteUser() {
+	protected function isCompleteUser() {
 		return isset( $this->data->counts );
 	}
 
