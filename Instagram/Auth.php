@@ -20,7 +20,7 @@ class Auth {
 	 * Contains a default client and proxy
 	 *
 	 * client_id:		These three items are required for authorization
-	 * callback_url:	URL that the Instagram API shoudl redirect to
+	 * redirect_uri:	URL that the Instagram API shoudl redirect to
 	 * grant_type:		Grant type from the Instagram API. Only authorization_code is accepted right now.
 	 * scope:			{@link http://instagram.com/developer/auth/#scope}
 	 * display:			Pass in "touch" if you'd like your authenticating users to see a mobile-optimized
@@ -32,7 +32,7 @@ class Auth {
 	protected $config = array(
 		'client_id'			=> '',
 		'client_secret'		=> '',
-		'callback_url'		=> '',
+		'redirect_uri'		=> '',
 		'grant_type'		=> 'authorization_code',
 		'scope'				=> array( 'basic' ),
 		'display'			=> ''
@@ -61,7 +61,7 @@ class Auth {
 			sprintf(
 				'Location:https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code&scope=%s',
 				$this->config['client_id'],
-				$this->config['callback_url'],
+				$this->config['redirect_uri'],
 				implode( '+', $this->config['scope'] )
 			)
 		);
@@ -83,7 +83,7 @@ class Auth {
 			'client_id'			=> $this->config['client_id'],
 			'client_secret'		=> $this->config['client_secret'],
 			'grant_type'		=> $this->config['grant_type'],
-			'redirect_uri'		=> $this->config['callback_url'],
+			'redirect_uri'		=> $this->config['redirect_uri'],
 			'code'				=> $code
 		);
 		$response = $this->proxy->getAccessToken( $post_data );

@@ -16,7 +16,7 @@ if ( !isset( $_SESSION['instagram_access_token'] ) ) {
 	$auth_config = array(
 		'client_id'			=> '',
 		'client_secret'		=> '',
-		'callback_url'		=> '',
+		'redirect_uri'		=> '',
 		'scope'				=> array( 'likes', 'comments', 'relationships' )
 	);
 	require( EXAMPLES_DIR . '/_auth.php' );
