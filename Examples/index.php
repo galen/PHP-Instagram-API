@@ -2,6 +2,8 @@
 
 define( 'GITHUB_URL',			'https://github.com/galen/PHP-Instagram-API/blob/master/Examples/' );
 define( 'EXAMPLES_DIR',			__DIR__ );
+// Where to redirect after authentication is complete
+define( 'REDIRECT_AFTER_AUTH',	'/projects/PHP-Instagram-API/Examples/' . ( isset( $_GET['example'] ) ? '?example='.$_GET['example'] : '' ) );
 
 // Turn on error reporting
 error_reporting( E_ALL );

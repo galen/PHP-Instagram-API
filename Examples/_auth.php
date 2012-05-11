@@ -11,8 +11,7 @@ $auth = new Instagram\Auth( $auth_config );
 if ( isset( $_GET['code'] ) ) {
 	try {
 		$_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] );
-		$redirect = '/projects/instagram/';
-		header( 'Location: ' . $redirect );
+		header( 'Location: ' . REDIRECT_AFTER_AUTH );
 		exit;
 	}
 	catch ( \Instagram\Core\ApiException $e ) {

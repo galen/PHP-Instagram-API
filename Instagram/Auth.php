@@ -47,7 +47,7 @@ class Auth {
 	 */
 	public function __construct( array $config = null, \Instagram\Net\ClientInterface $client = null ) {
 		$this->config = (array) $config + $this->config;
-		$this->setProxy( new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient ) );
+		$this->proxy = new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient );
 	}
 
 	/**
