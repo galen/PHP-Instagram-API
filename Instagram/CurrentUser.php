@@ -67,7 +67,7 @@ class CurrentUser extends \Instagram\User {
 	/**
 	 * Add like from current user
 	 *
-	 * @param \Instagram\Media $media Media to add a like to from the current user
+	 * @param \Instagram\Media|string $media Media to add a like to from the current user
 	 * @access public
 	 */
 	public function addLike( $media ) {
@@ -82,7 +82,7 @@ class CurrentUser extends \Instagram\User {
 	/**
 	 * Delete like from current user
 	 *
-	 * @param \Instagram\Media $media Media to delete a like to from the current user
+	 * @param \Instagram\Media|string $media Media to delete a like to from the current user
 	 * @access public
 	 */
 	public function deleteLike( $media ) {
@@ -97,7 +97,7 @@ class CurrentUser extends \Instagram\User {
 	/**
 	 * Add a comment
 	 *
-	 * @param int|\Instagram\Media ID of media or a media object
+	 * @param \Instagram\Media|string Media to add a comment to
 	 * @param string $text Comment text
 	 * @access public
 	 */
@@ -111,7 +111,7 @@ class CurrentUser extends \Instagram\User {
 	/**
 	 * Delete a comment
 	 *
-	 * @param int|\Instagram\Media ID of media or a media object
+	 * @param \Instagram\Media|string Media to delete a comment from
 	 * @param string $text Comment text
 	 * @access public
 	 */
