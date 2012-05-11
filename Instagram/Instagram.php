@@ -18,22 +18,6 @@ namespace Instagram;
 class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 
 	/**
-	 * Configuration array
-	 *
-	 * Contains a default client and proxy
-	 *
-	 * client:			Class that performs all the HTTP actions. Must implement \Instagram\Net\ClientInterface
-	 * proxy:			Uses the client to call the API methods
-	 *
-	 * @var array
-	 * @access protected
-	 */
-	protected $config = array(
-		'client'			=> 'Instagram\Net\CurlClient',
-		'proxy'				=> 'Instagram\Core\Proxy'
-	);
-
-	/**
 	 * Constructor
 	 *
 	 * You can supply a client, proxy, and an access token via the config array
@@ -41,10 +25,8 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 	 * @param array $config Configuration array
 	 * @access public
 	 */
-	public function __construct( array $config = null ) {
-		$this->config = (array) $config + $this->config;
-		$proxy = $this->config['proxy'];
-		$this->setProxy( new $proxy( new $this->config['client'], isset( $this->config['access_token'] ) ? $this->config['access_token'] : null ) );
+	public function __construct( $access_token = null, \Instagram\Net\ClientInterface $client = null ) {
+		$this->setProxy( new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient, $access_token ? $access_token : null ) );
 	}
 
 	/**
@@ -54,8 +36,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function setAccessToken( $access_token ) {
-		$this->config['access_token'] = $access_token;
-		$this->proxy->setAccessToken( $this->config['access_token'] );
+		$this->proxy->setAccessToken( $access_token );
 	}
 
 	/**
