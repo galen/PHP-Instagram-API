@@ -39,7 +39,7 @@ All methods that access the API can throw exceptions. If the API request fails f
 
     $_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] );
 
-See the examples on github for a full example.
+See examples for a full example
 
 
 ##Basic Usage
