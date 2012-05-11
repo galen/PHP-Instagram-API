@@ -50,7 +50,7 @@ class Comment extends \Instagram\Core\BaseObjectAbstract {
 	 * @return \Instagram\User
 	 */
 	public function getUser() {
-		return new \Instagram\User( $this->data->from );
+		return new \Instagram\User( $this->data->from, $this->proxy );
 	}
 
 	/**

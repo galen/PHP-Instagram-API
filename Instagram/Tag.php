@@ -11,7 +11,7 @@ namespace Instagram;
 /**
  * Tag class
  */
-class Tag extends \Instagram\Core\ProxyObjectAbstract {
+class Tag extends \Instagram\Core\BaseObjectAbstract {
 
 	/**
 	 * Get tag media
@@ -25,7 +25,7 @@ class Tag extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function getMedia( array $params = null ) {
-		return new \Instagram\Collection\TagMediaCollection( $this->proxy->getTagMedia( $this->getApiId(), $params ) );
+		return new \Instagram\Collection\TagMediaCollection( $this->proxy->getTagMedia( $this->getApiId(), $params ), $this->proxy );
 	}
 
 	/**

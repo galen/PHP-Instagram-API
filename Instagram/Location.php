@@ -14,7 +14,7 @@ namespace Instagram;
  * Some media has a location associated to it. This location will have an ID and a name.
  * Some media has no location associated, but has a lat/lng. These location objects will return null or '' for certain method calls
  */
-class Location extends \Instagram\Core\ProxyObjectAbstract {
+class Location extends \Instagram\Core\BaseObjectAbstract {
 
 	/**
 	 * Get location media
@@ -28,7 +28,7 @@ class Location extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function getMedia( array $params = null ) {
-		return new \Instagram\Collection\MediaCollection( $this->proxy->getLocationMedia( $this->getApiId(), $params ) );
+		return new \Instagram\Collection\MediaCollection( $this->proxy->getLocationMedia( $this->getApiId(), $params ), $this->proxy );
 	}
 
 	/**

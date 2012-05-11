@@ -15,7 +15,7 @@ namespace Instagram;
  *
  */
 
-class Instagram extends \Instagram\Core\ProxyObjectAbstract {
+class Instagram extends \Instagram\Core\BaseObjectAbstract {
 
 	/**
 	 * Constructor
@@ -27,7 +27,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function __construct( $access_token = null, \Instagram\Net\ClientInterface $client = null ) {
-		$this->setProxy( new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient, $access_token ? $access_token : null ) );
+		$this->proxy = new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient, $access_token ? $access_token : null );
 	}
 
 	/**
@@ -61,8 +61,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
  	 * @access public
  	 */
 	public function getUser( $id ) {
-		$user = new \Instagram\User( $this->proxy->getUser( $id ) );
-		$user->setProxy( $this->proxy );
+		$user = new \Instagram\User( $this->proxy->getUser( $id ), $this->proxy );
 		return $user;
 	}
 
@@ -77,7 +76,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
  	 * @throws \Instagram\ApiException
  	 */
 	public function getUserByUsername( $username ) {
-		$user = $this->searchUsers( $username, array( 'count' => 1 ) )->getItem( 1 );
+		$user = $this->searchUsers( $username, array( 'count' => 1 ) )->getItem( 0 );
 		if ( $user ) {
 			return $user;
 		}
@@ -105,8 +104,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
  	 * @access public
  	 */
 	public function getMedia( $id ) {
-		$media = new \Instagram\Media( $this->proxy->getMedia( $id ) );
-		$media->setProxy( $this->proxy );
+		$media = new \Instagram\Media( $this->proxy->getMedia( $id ), $this->proxy );
 		return $media;
 	}
 
@@ -118,8 +116,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
  	 * @access public
  	 */
 	public function getTag( $tag ) {
-		$tag = new \Instagram\Tag( $this->proxy->getTag( $tag ) );
-		$tag->setProxy( $this->proxy );
+		$tag = new \Instagram\Tag( $this->proxy->getTag( $tag ), $this->proxy );
 		return $tag;
 	}
 
@@ -133,8 +130,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
  	 * @access public
  	 */
 	public function getLocation( $id ) {
-		$location = new \Instagram\Location( $this->proxy->getLocation( $id ) );
-		$location->setProxy( $this->proxy );
+		$location = new \Instagram\Location( $this->proxy->getLocation( $id ), $this->proxy );
 		return $location;
 	}
 
@@ -147,8 +143,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
  	 * @access public
  	 */
 	public function getCurrentUser() {
-		$current_user = new \Instagram\CurrentUser( $this->proxy->getCurrentUser() );
-		$current_user->setProxy( $this->proxy );
+		$current_user = new \Instagram\CurrentUser( $this->proxy->getCurrentUser(), $this->proxy );
 		return $current_user;
 	}
 
@@ -161,8 +156,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
  	 * @access public
  	 */
 	public function getPopularMedia() {
-		$popular_media = new \Instagram\Collection\MediaCollection( $this->proxy->getPopularMedia() );
-		$popular_media->setProxy( $this->proxy );
+		$popular_media = new \Instagram\Collection\MediaCollection( $this->proxy->getPopularMedia(), $this->proxy );
 		return $popular_media;
 	}
 
@@ -179,8 +173,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 	public function searchUsers( $query, array $params = null ) {
 		$params = (array)$params;
 		$params['q'] = $query;
-		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->searchUsers( $params ) );
-		$user_collection->setProxy( $this->proxy );
+		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->searchUsers( $params ), $this->proxy );
 		return $user_collection;
 	}
 
@@ -203,8 +196,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 		$params = (array)$params;
 		$params['lat'] = (float)$lat;
 		$params['lng'] = (float)$lng;
-		$media_collection =  new \Instagram\Collection\MediaSearchCollection( $this->proxy->searchMedia( $params ) );
-		$media_collection->setProxy( $this->proxy );
+		$media_collection =  new \Instagram\Collection\MediaSearchCollection( $this->proxy->searchMedia( $params ), $this->proxy );
 		return $media_collection;
 	}
 
@@ -219,8 +211,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 	public function searchTags( $query, array $params = null ) {
 		$params = (array)$params;
 		$params['q'] = $query;
-		$tag_collection =  new \Instagram\Collection\TagCollection( $this->proxy->searchTags( $params ) );
-		$tag_collection->setProxy( $this->proxy );
+		$tag_collection =  new \Instagram\Collection\TagCollection( $this->proxy->searchTags( $params ), $this->proxy );
 		return $tag_collection;
 	}
 
@@ -243,8 +234,7 @@ class Instagram extends \Instagram\Core\ProxyObjectAbstract {
 		$params = (array)$params;
 		$params['lat'] = (float)$lat;
 		$params['lng'] = (float)$lng;
-		$location_collection = new \Instagram\Collection\LocationCollection( $this->proxy->searchLocations( $params ) );
-		$location_collection->setProxy( $this->proxy );
+		$location_collection = new \Instagram\Collection\LocationCollection( $this->proxy->searchLocations( $params ), $this->proxy );
 		return $location_collection;
 	}
 

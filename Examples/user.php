@@ -7,6 +7,7 @@ $current_user = $instagram->getCurrentUser();
 try{
 	$username = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
 	$user = $instagram->getUserByUsername( $username );
+
 	if ( isset( $_GET['action'] ) ) {
 		switch( $_GET['action'] ) {
 			case 'follow':

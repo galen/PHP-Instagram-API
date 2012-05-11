@@ -11,7 +11,7 @@ namespace Instagram;
 /**
  * User class
  */
-class User extends \Instagram\Core\ProxyObjectAbstract {
+class User extends \Instagram\Core\BaseObjectAbstract {
 
 	/**
 	 * Get the user's username
@@ -139,7 +139,7 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function getMedia( array $params = null ) {
-		return new \Instagram\Collection\MediaCollection( $this->proxy->getUserMedia( $this->getApiId(), $params ) );
+		return new \Instagram\Collection\MediaCollection( $this->proxy->getUserMedia( $this->getApiId(), $params ), $this->proxy );
 	}
 
 	/**
@@ -151,7 +151,7 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function getFollows( array $params = null ) {
-		return new \Instagram\Collection\UserCollection( $this->proxy->getUserFollows( $this->getApiId(), $params ) );
+		return new \Instagram\Collection\UserCollection( $this->proxy->getUserFollows( $this->getApiId(), $params ), $this->proxy );
 	}
 
 	/**
@@ -163,7 +163,7 @@ class User extends \Instagram\Core\ProxyObjectAbstract {
 	 * @access public
 	 */
 	public function getFollowers( array $params = null ) {
-		return new \Instagram\Collection\UserCollection( $this->proxy->getUserFollowers( $this->getApiId(), $params ) );
+		return new \Instagram\Collection\UserCollection( $this->proxy->getUserFollowers( $this->getApiId(), $params ), $this->proxy );
 	}
 
 	/**

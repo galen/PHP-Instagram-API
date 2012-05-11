@@ -5,6 +5,7 @@ namespace Instagram\Core;
 abstract class BaseObjectAbstract {
 
 	protected $data;
+	protected $proxy = null;
 
 	public function getId() {
 		return $this->data->id;
@@ -14,8 +15,9 @@ abstract class BaseObjectAbstract {
 		return $this->getId();
 	}
 
-	public function __construct( $data ) {
+	public function __construct( $data, \Instagram\Core\Proxy $proxy = null ) {
 		$this->setData( $data );
+		$this->proxy = $proxy;
 	}
 	
 	public function setData( $data ) {
@@ -28,6 +30,10 @@ abstract class BaseObjectAbstract {
 
 	public function __get( $var ) {
 		return isset( $this->data->$var ) ? $this->data->$var : null;
+	}
+
+	public function setProxy( \Instagram\Core\Proxy $proxy ) {
+		$this->proxy = $proxy;
 	}
 
 }

@@ -8,9 +8,12 @@ abstract class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable
 	protected $position;
 	protected $data = array();
 
-	public function __construct( $raw_data = null ) {
+	public function __construct( $raw_data = null, \Instagram\Core\Proxy $proxy = null ) {
 		if ( $raw_data ) {
 			$this->setData( $raw_data );
+		}
+		if ( $proxy ) {
+			$this->setProxies( $proxy );
 		}
 	}
 
@@ -21,7 +24,7 @@ abstract class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable
 	}
 
 	public function getItem( $item ) {
-		return isset( $this->data[$item-1] ) ? $this->data[$item-1] : null;
+		return isset( $this->data[$item] ) ? $this->data[$item] : null;
 	}
 
 	public function getSlice( $offset, $length ) {
@@ -41,13 +44,13 @@ abstract class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable
 		);
 	}
 
-	function setProxy( \Instagram\Core\Proxy $proxy ) {
+	public function setProxies( \Instagram\Core\Proxy $proxy ) {
 		foreach( $this->data as $object ) {
 			$object->setProxy( $proxy );
 		}
 	}
 
-	function implode( \Closure $callback = null, $sep = ', ' ) {
+	public function implode( \Closure $callback = null, $sep = ', ' ) {
 		if ( !count( $this->getData() ) ) {
 			return null;
 		}

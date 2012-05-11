@@ -11,7 +11,7 @@ namespace Instagram;
 /**
  * Media class
  */
-class Media extends \Instagram\Core\ProxyObjectAbstract {
+class Media extends \Instagram\Core\BaseObjectAbstract {
 
 	/**
 	 * Comments cache
@@ -118,7 +118,7 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 		if ( !$fetch_from_api ) {
 			return $this->proxy->getMediaComments( $this->getApiId() );
 		}
-		$this->comments = new \Instagram\Collection\CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ) );
+		$this->comments = new \Instagram\Collection\CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ), $this->proxy );
 		return $this->comments;
 	}
 
@@ -173,8 +173,7 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 		if ( $this->tags ) {
 			return $this->tags;
 		}
-		$this->tags = new \Instagram\Collection\TagCollection( $this->data->tags );
-		$this->tags->setProxy( $this->proxy );
+		$this->tags = new \Instagram\Collection\TagCollection( $this->data->tags, $this->proxy );
 		return $this->tags;
 	}
 
@@ -212,7 +211,7 @@ class Media extends \Instagram\Core\ProxyObjectAbstract {
 		if ( !$fetch_from_api ) {
 			return new \Instagram\Collection\UserCollection( $this->data->likes );
 		}
-		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->getMediaLikes( $this->getApiId() ) );
+		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->getMediaLikes( $this->getApiId() ), $this->proxy );
 		$user_collection->setProxy( $this->proxy );
 		$this->likes = $user_collection;
 		return $this->likes;
