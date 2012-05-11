@@ -123,37 +123,6 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 	}
 
 	/**
-	 * Add a comment
-	 *
-	 * @param int|\Instagram\Media ID of media or a media object
-	 * @param string $text Comment text
-	 * @access public
-	 */
-	public function addComment( $media, $text ) {
-		if ( $media instanceof \Instagram\Media ) {
-			$media = $media->getId();
-		}
-		$this->proxy->addMediaComment( $media, $text );
-	}
-
-	/**
-	 * Delete a comment
-	 *
-	 * @param int|\Instagram\Media ID of media or a media object
-	 * @param string $text Comment text
-	 * @access public
-	 */
-	public function deleteComment( $media, $comment ) {
-		if ( $media instanceof \Instagram\Media ) {
-			$media = $media->getId();
-		}
-		if ( $comment instanceof \Instagram\Comment ) {
-			$comment = $comment->getId();
-		}
-		$this->proxy->deleteMediaComment( $media, $comment );
-	}
-
-	/**
 	 * Get the media filter
 	 *
 	 * @return string

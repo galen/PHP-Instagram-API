@@ -5,15 +5,14 @@ $instagram->setAccessToken( $_SESSION['instagram_access_token'] );
 
 $media_id = isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611';
 $current_user = $instagram->getCurrentUser();
-$media = $instagram->getMedia( $media_id );
 
 if ( isset( $_POST['action'] ) ) {
 	switch( $_POST['action'] ) {
 		case 'add_comment':
-			$media->addComment( $media_id, $_POST['comment_text'] );
+			$current_user->addMediaComment( $media_id, $_POST['comment_text'] );
 			break;
 		case 'delete_comment':
-			$media->deleteComment( $media_id, $_POST['comment_id'] );
+			$current_user->deleteMediaComment( $media_id, $_POST['comment_id'] );
 			break;
 	}
 }
@@ -29,6 +28,7 @@ if ( isset( $_GET['action'] ) ) {
 	}
 }
 
+$media = $instagram->getMedia( $media_id );
 $comments = $media->getComments();
 
 $tags_closure = function($m){
