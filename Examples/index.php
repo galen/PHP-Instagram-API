@@ -1,5 +1,6 @@
 <?php
 
+define( 'GITHUB_URL',			'https://github.com/galen/PHP-Instagram-API/blob/master/Examples/' );
 define( 'EXAMPLES_DIR',			__DIR__ );
 
 // Turn on error reporting
@@ -14,7 +15,7 @@ if ( !isset( $_SESSION['instagram_access_token'] ) ) {
 	$auth_config = array(
 		'client_id'			=> '',
 		'client_secret'		=> '',
-		'callback_url'		=> '',
+		'callback_url'		=> '' ),
 		'scope'				=> array( 'likes', 'comments', 'relationships' )
 	);
 	require( EXAMPLES_DIR . '/_auth.php' );
