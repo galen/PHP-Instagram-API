@@ -104,7 +104,7 @@ class CurlClient implements ClientInterface {
 	 *
 	 * Execute the curl object
 	 *
-	 * @return \Instagram\Net\Response
+	 * @return StdClass
 	 * @access protected
 	 * @throws \Instagram\Core\ApiException
 	 */

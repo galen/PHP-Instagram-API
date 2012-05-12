@@ -251,7 +251,7 @@ class Proxy {
 			) + (array) $params
 		);
 
-		$response = new \Instagram\Net\Response( $raw_response );
+		$response = new \Instagram\Net\ApiResponse( $raw_response );
 
 		if ( !$response->isValid() ) {
 			if ( $throw_exception ) {
