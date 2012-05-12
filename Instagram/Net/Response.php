@@ -1,5 +1,11 @@
 <?php
 
+/**
+* Instagram PHP
+* @author Galen Grover <galenjr@gmail.com>
+* @license http://opensource.org/licenses/mit-license.php The MIT License
+*/
+
 namespace Instagram\Net;
 
 class Response {
@@ -37,36 +43,30 @@ class Response {
 		if ( isset( $this->response->error_message ) ) {
 			return $this->response->error_message;
 		}
-		elseif( isset( $this->response->meta->error_message ) ) {
+		if( isset( $this->response->meta->error_message ) ) {
 			return $this->response->meta->error_message;
 		}
-		else {
-			return null;
-		}
+		return null;
 	}
 
 	public function getErrorCode() {
 		if ( isset( $this->response->code ) ) {
 			return $this->response->code;
 		}
-		elseif( isset( $this->response->meta->code ) ) {
+		if( isset( $this->response->meta->code ) ) {
 			return $this->response->meta->code;
 		}
-		else {
-			return null;
-		}
+		return null;
 	}
 
 	public function getErrorType() {
 		if ( isset( $this->response->error_type ) ) {
 			return $this->response->error_type;
 		}
-		elseif( isset( $this->response->meta->error_type ) ) {
+		if( isset( $this->response->meta->error_type ) ) {
 			return $this->response->meta->error_type;
 		}
-		else {
-			return null;
-		}
+		return null;
 	}
 
 	public function __toString() {
