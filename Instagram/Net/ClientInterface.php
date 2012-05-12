@@ -1,6 +1,20 @@
 <?php
 
+/**
+* Instagram PHP
+* @author Galen Grover <galenjr@gmail.com>
+* @license http://opensource.org/licenses/mit-license.php The MIT License
+*/
+
 namespace Instagram\Net;
+
+/**
+ * Client Interface
+ *
+ * All clients must implement this interface
+ *
+ * The 4 http functions just need to return the raw data from the API
+ */
 
 interface ClientInterface {
 

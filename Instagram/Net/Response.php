@@ -1,5 +1,11 @@
 <?php
 
+/**
+* Instagram PHP
+* @author Galen Grover <galenjr@gmail.com>
+* @license http://opensource.org/licenses/mit-license.php The MIT License
+*/
+
 namespace Instagram\Net;
 
 class Response {
