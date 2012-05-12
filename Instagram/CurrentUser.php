@@ -349,7 +349,7 @@ class CurrentUser extends \Instagram\User {
 	 * @access public
 	 */
 	public function getLikedMedia( array $params = null ) {
-		return  new \Instagram\Collection\LikedMediaCollection( $this->proxy->getLikedMedia( $params ), $this->proxy );
+		return new \Instagram\Collection\LikedMediaCollection( $this->proxy->getLikedMedia( $params ), $this->proxy );
 	}
 
 }
