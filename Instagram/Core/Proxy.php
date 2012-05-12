@@ -244,12 +244,15 @@ class Proxy {
 	}
 
 	private function apiCall( $method, $url, array $params = null, $throw_exception = true ){
-		$response = $this->client->$method(
+		$raw_response = $this->client->$method(
 			$url,
 			array(
 				'access_token'	=> $this->access_token
 			) + (array) $params
 		);
+
+		$response = new \Instagram\Net\Response( $raw_response );
+
 		if ( !$response->isValid() ) {
 			if ( $throw_exception ) {
 				if ( $response->getErrorType() == 'OAuthAccessTokenException' ) {
