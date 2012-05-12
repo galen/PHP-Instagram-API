@@ -133,6 +133,10 @@ class CurrentUser extends \Instagram\User {
 	 * @see \Instagram\CurrentUser::follow
 	 * @see \Instagram\CurrentUser::unFollow
 	 * @see \Instagram\CurrentUser::getRelationship
+     * @see \Instagram\CurrentUser::approveFollowRequest
+     * @see \Instagram\CurrentUser::ignoreFollowRequest
+     * @see \Instagram\CurrentUser::block
+     * @see \Instagram\CurrentUser::unblock
 	 *
 	 * @param \Instagram\User|string User object or user id whose relationship you'd like to update
 	 * @access protected
