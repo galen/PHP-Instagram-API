@@ -8,6 +8,16 @@
 
 namespace Instagram;
 
+if(floatval(phpversion()) < 5.3) { 
+	trigger_error('The Instagram Wrapper requires PHP 5.3+');
+}
+if(!function_exists('json_decode')) {
+	trigger_error('The Instagram Wrapper requires JSON to be configured and enabled.');
+}
+if(!function_exists('curl_init')) {
+	trigger_error('The Instagram Wrapper requires cURL to be configured and enabled.');
+}
+
 /**
  * Instagram!
  *
