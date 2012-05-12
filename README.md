@@ -64,7 +64,7 @@ With this object you can:
 <b></b>
 
     $current_user->follow( $user );
-    $current_user->unFollow( $user );
+    $current_user->unfollow( $user );
     $current_user->block( $user );
     $current_user->unblock( $user );
 

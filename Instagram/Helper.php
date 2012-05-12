@@ -70,7 +70,7 @@ class Helper {
 		return $text;
 	}
 
-	
+	//@TODO: Make static and add a comment.
 	public function commentIsDeletable( \Instagram\Comment $comment, \Instagram\Media $media, \Instagram\CurrentUser $current_user ) {
 		return $comment->getUser()->getId() == $current_user->getId() || $media->getUser()->getId() == $current_user->getId();
 	}

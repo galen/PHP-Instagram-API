@@ -8,6 +8,16 @@
 
 namespace Instagram;
 
+if(floatval(phpversion()) < 5.3) { 
+	trigger_error('The Instagram Wrapper requires PHP 5.3+');
+}
+if(!function_exists('json_decode')) {
+	trigger_error('The Instagram Wrapper requires JSON to be configured and enabled.');
+}
+if(!function_exists('curl_init')) {
+	trigger_error('The Instagram Wrapper requires cURL to be configured and enabled.');
+}
+
 /**
  * Instagram!
  *
@@ -27,7 +37,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 	 * @access public
 	 */
 	public function __construct( $access_token = null, \Instagram\Net\ClientInterface $client = null ) {
-		$this->proxy = new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient, $access_token ? $access_token : null );
+		$this->proxy = new \Instagram\Core\Proxy( $client ?: new \Instagram\Net\CurlClient, $access_token ?: null );
 	}
 
 	/**
@@ -66,7 +76,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 	}
 
  	/**
- 	 * Get user
+ 	 * Get user by Username
  	 *
  	 * Retrieve a user given their username
  	 *

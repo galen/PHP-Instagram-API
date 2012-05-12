@@ -23,6 +23,7 @@ class Comment extends \Instagram\Core\BaseObjectAbstract {
 	 * @return string Returns the creation time with optional formatting
 	 * @access public
 	 */
+	//@TODO: Use DateTime construct.
 	public function getCreatedTime( $format = null ) {
 		if ( $format ) {
 			$date = date( $format, $this->data->created_time );
