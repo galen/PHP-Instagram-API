@@ -84,6 +84,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 	 * @return string
 	 * @access public
 	 */
+	//@TODO: Use DateTime construct.
 	public function getCreatedTime( $format = null ) {
 		if ( $format ) {
 			$date = date( $format, $this->data->created_time );
