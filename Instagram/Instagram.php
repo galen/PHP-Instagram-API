@@ -37,7 +37,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 	 * @access public
 	 */
 	public function __construct( $access_token = null, \Instagram\Net\ClientInterface $client = null ) {
-		$this->proxy = new \Instagram\Core\Proxy( $client ? $client : new \Instagram\Net\CurlClient, $access_token ? $access_token : null );
+		$this->proxy = new \Instagram\Core\Proxy( $client ?: new \Instagram\Net\CurlClient, $access_token ?: null );
 	}
 
 	/**
