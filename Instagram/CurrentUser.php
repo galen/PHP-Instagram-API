@@ -8,6 +8,10 @@
 
 namespace Instagram;
 
+use \Instagram\Collection\MediaCollection;
+use \Instagram\Collection\LikedMediaCollection;
+use \Instagram\Collection\UserCollection;
+
 /**
  * Current User
  *
@@ -61,7 +65,13 @@ class CurrentUser extends \Instagram\User {
 	 * @access public
 	 */
 	public function likes( \Instagram\Media $media ) {
-		return isset( $this->liked[$media->getId()] ) || ( isset( $media->getData()->user_has_liked ) && (bool)$media->getData()->user_has_liked === true && !isset( $this->unliked[$media->getId()] ) );
+		return
+			isset( $this->liked[$media->getId()] ) ||
+			(
+				isset( $media->getData()->user_has_liked ) &&
+				(bool)$media->getData()->user_has_liked === true &&
+				!isset( $this->unliked[$media->getId()] )
+			);
 	}
 
 	/**
@@ -282,7 +292,7 @@ class CurrentUser extends \Instagram\User {
 	 * @return \Instagram\Collection\UserCollection
 	 */
 	public function getFollowRequests() {
-		return new \Instagram\Collection\UserCollection( $this->proxy->getFollowRequests(), $this->proxy );
+		return new UserCollection( $this->proxy->getFollowRequests(), $this->proxy );
 	}
 
 	/**
@@ -340,7 +350,7 @@ class CurrentUser extends \Instagram\User {
 	 * @access public
 	 */
 	public function getFeed( array $params = null ) {
-		return new \Instagram\Collection\MediaCollection( $this->proxy->getFeed( $params ), $this->proxy );
+		return new MediaCollection( $this->proxy->getFeed( $params ), $this->proxy );
 	}
 
 	/**
@@ -353,7 +363,7 @@ class CurrentUser extends \Instagram\User {
 	 * @access public
 	 */
 	public function getLikedMedia( array $params = null ) {
-		return  new \Instagram\Collection\LikedMediaCollection( $this->proxy->getLikedMedia( $params ), $this->proxy );
+		return  new LikedMediaCollection( $this->proxy->getLikedMedia( $params ), $this->proxy );
 	}
 
 }

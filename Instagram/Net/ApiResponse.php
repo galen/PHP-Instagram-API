@@ -52,7 +52,10 @@ class ApiResponse {
 	 * @access public
 	 */
 	public function isValid() {
-		return $this->response instanceof \StdClass && !isset( $this->response->meta->error_type ) && !isset( $this->response->error_type );
+		return
+			$this->response instanceof \StdClass &&
+			!isset( $this->response->meta->error_type ) &&
+			!isset( $this->response->error_type );
 	}
 	/**
 	 * Is Valid API Response

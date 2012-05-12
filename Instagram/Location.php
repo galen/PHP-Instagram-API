@@ -8,6 +8,8 @@
 
 namespace Instagram;
 
+use \Instagram\Collection\MediaCollection;
+
 /**
  * Location class
  *
@@ -28,7 +30,7 @@ class Location extends \Instagram\Core\BaseObjectAbstract {
 	 * @access public
 	 */
 	public function getMedia( array $params = null ) {
-		return new \Instagram\Collection\MediaCollection( $this->proxy->getLocationMedia( $this->getApiId(), $params ), $this->proxy );
+		return new MediaCollection( $this->proxy->getLocationMedia( $this->getApiId(), $params ), $this->proxy );
 	}
 
 	/**

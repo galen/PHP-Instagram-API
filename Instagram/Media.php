@@ -8,6 +8,13 @@
 
 namespace Instagram;
 
+use \Instagram\Comment;
+use \Instagram\User;
+use \Instagram\Location;
+use \Instagram\Collection\CommentCollection;
+use \Instagram\Collection\TagCollection;
+use \Instagram\Collection\UserCollection;
+
 /**
  * Media class
  */
@@ -72,7 +79,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 	 */
 	public function getCaption() {
 		if ( $this->data->caption ) {
-			return new \Instagram\Comment( $this->data->caption );
+			return new Comment( $this->data->caption );
 		}
 		return null;
 	}
@@ -101,7 +108,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 	 * @access public
 	 */
 	public function getUser() {
-		return new \Instagram\User( $this->data->user, $this->proxy );
+		return new User( $this->data->user, $this->proxy );
 	}
 
 	/**
@@ -118,7 +125,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 		if ( !$fetch_from_api ) {
 			return $this->proxy->getMediaComments( $this->getApiId() );
 		}
-		$this->comments = new \Instagram\Collection\CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ), $this->proxy );
+		$this->comments = new CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ), $this->proxy );
 		return $this->comments;
 	}
 
@@ -142,7 +149,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 		if ( $this->tags ) {
 			return $this->tags;
 		}
-		$this->tags = new \Instagram\Collection\TagCollection( $this->data->tags, $this->proxy );
+		$this->tags = new TagCollection( $this->data->tags, $this->proxy );
 		return $this->tags;
 	}
 
@@ -178,9 +185,9 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 	 */
 	public function getLikes( $fetch_from_api = true ) {
 		if ( !$fetch_from_api ) {
-			return new \Instagram\Collection\UserCollection( $this->data->likes );
+			return new UserCollection( $this->data->likes );
 		}
-		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->getMediaLikes( $this->getApiId() ), $this->proxy );
+		$user_collection = new UserCollection( $this->proxy->getMediaLikes( $this->getApiId() ), $this->proxy );
 		$user_collection->setProxy( $this->proxy );
 		$this->likes = $user_collection;
 		return $this->likes;
@@ -226,7 +233,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
 			return null;
 		}
 		if ( !$this->location || (bool)$force_fetch ) {
-			$this->location = new \Instagram\Location( $this->data->location, isset( $this->data->location->id ) ? $this->proxy : null );
+			$this->location = new Location( $this->data->location, isset( $this->data->location->id ) ? $this->proxy : null );
 		}
 		return $this->location;
 	}

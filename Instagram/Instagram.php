@@ -8,6 +8,17 @@
 
 namespace Instagram;
 
+use \Instagram\Collection\MediaSearchCollection;
+use \Instagram\Collection\TagCollection;
+use \Instagram\Collection\UserCollection;
+use \Instagram\Collection\MediaCollection;
+use \Instagram\Collection\LocationCollection;
+use \Instagram\CurrentUser;
+use \Instagram\User;
+use \Instagram\Media;
+use \Instagram\Tag;
+use \Instagram\Location;
+
 /**
  * Instagram!
  *
@@ -61,7 +72,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
  	 * @access public
  	 */
 	public function getUser( $id ) {
-		$user = new \Instagram\User( $this->proxy->getUser( $id ), $this->proxy );
+		$user = new User( $this->proxy->getUser( $id ), $this->proxy );
 		return $user;
 	}
 
@@ -104,7 +115,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
  	 * @access public
  	 */
 	public function getMedia( $id ) {
-		$media = new \Instagram\Media( $this->proxy->getMedia( $id ), $this->proxy );
+		$media = new Media( $this->proxy->getMedia( $id ), $this->proxy );
 		return $media;
 	}
 
@@ -116,7 +127,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
  	 * @access public
  	 */
 	public function getTag( $tag ) {
-		$tag = new \Instagram\Tag( $this->proxy->getTag( $tag ), $this->proxy );
+		$tag = new Tag( $this->proxy->getTag( $tag ), $this->proxy );
 		return $tag;
 	}
 
@@ -130,7 +141,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
  	 * @access public
  	 */
 	public function getLocation( $id ) {
-		$location = new \Instagram\Location( $this->proxy->getLocation( $id ), $this->proxy );
+		$location = new Location( $this->proxy->getLocation( $id ), $this->proxy );
 		return $location;
 	}
 
@@ -143,7 +154,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
  	 * @access public
  	 */
 	public function getCurrentUser() {
-		$current_user = new \Instagram\CurrentUser( $this->proxy->getCurrentUser(), $this->proxy );
+		$current_user = new CurrentUser( $this->proxy->getCurrentUser(), $this->proxy );
 		return $current_user;
 	}
 
@@ -156,7 +167,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
  	 * @access public
  	 */
 	public function getPopularMedia() {
-		$popular_media = new \Instagram\Collection\MediaCollection( $this->proxy->getPopularMedia(), $this->proxy );
+		$popular_media = new MediaCollection( $this->proxy->getPopularMedia(), $this->proxy );
 		return $popular_media;
 	}
 
@@ -173,7 +184,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 	public function searchUsers( $query, array $params = null ) {
 		$params = (array)$params;
 		$params['q'] = $query;
-		$user_collection = new \Instagram\Collection\UserCollection( $this->proxy->searchUsers( $params ), $this->proxy );
+		$user_collection = new UserCollection( $this->proxy->searchUsers( $params ), $this->proxy );
 		return $user_collection;
 	}
 
@@ -196,7 +207,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 		$params = (array)$params;
 		$params['lat'] = (float)$lat;
 		$params['lng'] = (float)$lng;
-		$media_collection =  new \Instagram\Collection\MediaSearchCollection( $this->proxy->searchMedia( $params ), $this->proxy );
+		$media_collection =  new MediaSearchCollection( $this->proxy->searchMedia( $params ), $this->proxy );
 		return $media_collection;
 	}
 
@@ -211,7 +222,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 	public function searchTags( $query, array $params = null ) {
 		$params = (array)$params;
 		$params['q'] = $query;
-		$tag_collection =  new \Instagram\Collection\TagCollection( $this->proxy->searchTags( $params ), $this->proxy );
+		$tag_collection =  new TagCollection( $this->proxy->searchTags( $params ), $this->proxy );
 		return $tag_collection;
 	}
 
@@ -234,7 +245,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 		$params = (array)$params;
 		$params['lat'] = (float)$lat;
 		$params['lng'] = (float)$lng;
-		$location_collection = new \Instagram\Collection\LocationCollection( $this->proxy->searchLocations( $params ), $this->proxy );
+		$location_collection = new LocationCollection( $this->proxy->searchLocations( $params ), $this->proxy );
 		return $location_collection;
 	}
 
