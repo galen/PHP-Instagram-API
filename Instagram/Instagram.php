@@ -66,7 +66,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
 	}
 
  	/**
- 	 * Get user
+ 	 * Get user by Username
  	 *
  	 * Retrieve a user given their username
  	 *
