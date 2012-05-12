@@ -201,12 +201,21 @@ class CurrentUser extends \Instagram\User {
 	}
 
 	/**
+	 * Deprecated unfollow()
+	 *
+	 * Renamed to keep standard naming convention.
+	 */
+	public function unFollow( $user ) {
+		$this->unfollow();
+	}
+
+	/**
 	 * Unfollow user
 	 *
 	 * @param \Instagram\User|string $user User object or user id who should be unfollowed
 	 * @return boolean
 	 */
-	public function unFollow( $user ) {
+	public function unfollow( $user ) {
 		if ( $user instanceof \Instagram\User ) {
 			$user = $user->getId();
 		}
