@@ -16,47 +16,47 @@ namespace Instagram\Collection;
 
 class MediaSearchCollection extends \Instagram\Collection\CollectionAbstract {
 
-	/**
-	 * Next max timestamp for use in pagination
-	 *
-	 * @var int
-	 */
-	protected $next_max_timestamp;
+    /**
+     * Next max timestamp for use in pagination
+     *
+     * @var int
+     */
+    protected $next_max_timestamp;
 
-	/**
-	 * Set the collection data
-	 *
-	 * @param StdClass $raw_data
-	 * @access public
-	 */
-	public function setData( $raw_data ) {
-		$this->data = $raw_data->data;
-		$this->convertData( '\Instagram\Media' );
-		$this->next_max_timestamp = count( $this->data ) ? $this->data[ count( $this->data )-1 ]->getCreatedTime() : null;
-	}
+    /**
+     * Set the collection data
+     *
+     * @param StdClass $raw_data
+     * @access public
+     */
+    public function setData( $raw_data ) {
+        $this->data = $raw_data->data;
+        $this->convertData( '\Instagram\Media' );
+        $this->next_max_timestamp = count( $this->data ) ? $this->data[ count( $this->data )-1 ]->getCreatedTime() : null;
+    }
 
-	/**
-	 * Get next max timestamp
-	 *
-	 * Get the next max timestamp for use in pagination
-	 *
-	 * @return string Returns the next max timestamp
-	 * @access public
-	 */
-	public function getNextMaxTimeStamp() {
-		return $this->next_max_timestamp;
-	}
+    /**
+     * Get next max timestamp
+     *
+     * Get the next max timestamp for use in pagination
+     *
+     * @return string Returns the next max timestamp
+     * @access public
+     */
+    public function getNextMaxTimeStamp() {
+        return $this->next_max_timestamp;
+    }
 
-	/**
-	 * Get next max timestamp
-	 *
-	 * Get the next max timestamp for use in pagination
-	 *
-	 * @return string Returns the next max timestamp
-	 * @access public
-	 */
-	public function getNext() {
-		return $this->getNextMaxTimeStamp();
-	}
+    /**
+     * Get next max timestamp
+     *
+     * Get the next max timestamp for use in pagination
+     *
+     * @return string Returns the next max timestamp
+     * @access public
+     */
+    public function getNext() {
+        return $this->getNextMaxTimeStamp();
+    }
 
 }

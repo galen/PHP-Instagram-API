@@ -16,15 +16,15 @@ namespace Instagram\Collection;
 
 class CommentCollection extends \Instagram\Collection\CollectionAbstract {
 
-	/**
-	 * Set the collection data
-	 *
-	 * @param StdClass $raw_data
-	 * @access public
-	 */
-	public function setData( $raw_data ) {
-		$this->data = $raw_data->data;
-		$this->convertData( '\Instagram\Comment' );
-	}
+    /**
+     * Set the collection data
+     *
+     * @param StdClass $raw_data
+     * @access public
+     */
+    public function setData( $raw_data ) {
+        $this->data = $raw_data->data;
+        $this->convertData( '\Instagram\Comment' );
+    }
 
 }

@@ -16,24 +16,24 @@ namespace Instagram\Collection;
 
 class LikedMediaCollection extends \Instagram\Collection\MediaCollection {
 
-	/**
-	 * Get the next max like id
-	 * 
-	 * @return string
-	 * @access public
-	 */
-	public function getNextMaxLikeId() {
-		return isset( $this->pagination->next_max_like_id ) ? $this->pagination->next_max_like_id : null;
-	}
+    /**
+     * Get the next max like id
+     * 
+     * @return string
+     * @access public
+     */
+    public function getNextMaxLikeId() {
+        return isset( $this->pagination->next_max_like_id ) ? $this->pagination->next_max_like_id : null;
+    }
 
-	/**
-	 * Get the next max like id
-	 * 
-	 * @return string
-	 * @access public
-	 */
-	public function getNext() {
-		return $this->getNextMaxLikeId();
-	}
+    /**
+     * Get the next max like id
+     * 
+     * @return string
+     * @access public
+     */
+    public function getNext() {
+        return $this->getNextMaxLikeId();
+    }
 
 }
