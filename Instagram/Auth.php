@@ -29,14 +29,14 @@ class Auth {
      * @var array
      * @access protected
      */
-    protected $config = array(
-        'client_id'         => '',
-        'client_secret'     => '',
-        'redirect_uri'      => '',
-        'grant_type'        => 'authorization_code',
-        'scope'             => array( 'basic' ),
-        'display'           => ''
-    );
+        protected $config = array(
+        'client_id'     => '',
+        'client_secret' => '',
+        'redirect_uri'  => '',
+        'grant_type'    => 'authorization_code',
+        'scope'         => array( 'basic' ),
+        'display'       => ''
+        );
 
     /**
      * Constructor
