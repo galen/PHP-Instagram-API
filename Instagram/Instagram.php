@@ -51,6 +51,10 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
         $this->proxy->setAccessToken( $access_token );
     }
 
+    public function setClientID( $client_id ) {
+        $this->proxy->setClientId( $client_id );
+    }
+
     /**
      * Logout
      *

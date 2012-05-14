@@ -6,6 +6,7 @@ class Proxy {
 
     protected $client;
     protected $access_token = null;
+    protected $client_id = null;
     protected $api_url = 'https://api.instagram.com/v1';
 
     function __construct( \Instagram\Net\ClientInterface $client, $access_token = null ) {
@@ -24,6 +25,10 @@ class Proxy {
 
     public function setAccessToken( $access_token ) {
         $this->access_token = $access_token;
+    }
+
+    public function setClientID( $client_id ) {
+        $this->client_id = $client_id;
     }
 
     public function logout() {
@@ -247,7 +252,8 @@ class Proxy {
         $raw_response = $this->client->$method(
             $url,
             array(
-                'access_token'  => $this->access_token
+                'access_token'  => $this->access_token,
+                'client_id'     => $this->client_id
             ) + (array) $params
         );
 
