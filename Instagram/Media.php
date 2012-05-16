@@ -21,25 +21,32 @@ use \Instagram\Collection\UserCollection;
 class Media extends \Instagram\Core\BaseObjectAbstract {
 
     /**
+     * User cache
+     * 
+     * @var \Instagram\User
+     */
+    protected $user = null;
+
+    /**
      * Comments cache
      *
      * @var \Instagram\Collection\CommentCollection
      */
-    protected $comments;
+    protected $comments = null;
 
     /**
-     * Location
+     * Location cache
      *
      * @var \Instagram\Location
      */
-    protected $location;
+    protected $location = null;
 
     /**
-     * Tags
+     * Tags cache
      *
      * @var \Instagram\Collection\TagCollection
      */
-    protected $tags;
+    protected $tags = null;
 
     /**
      * Get the thumbnail
@@ -108,24 +115,24 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
      * @access public
      */
     public function getUser() {
-        return new User( $this->data->user, $this->proxy );
+        if ( !$this->user ) {
+            $this->user = new User( $this->data->user, $this->proxy );
+        }
+        return $this->user;
     }
 
     /**
      * Get media comments
      *
-     * Media objects contain the first 10 comments. You can get these comments by passing `false`
-     * to this method. Using the internal comments of a media object cause issues when adding/deleting comments on media.
+     * Return all the comments associated with a media
      *
-     * @param bool $fetch_from_api Query the API or use internal
      * @return \Instagram\CommentCollection
      * @access public
      */
-    public function getComments( $fetch_from_api = true ) {
-        if ( !$fetch_from_api ) {
-            return $this->proxy->getMediaComments( $this->getApiId() );
+    public function getComments() {
+        if ( !$this->comments ) {
+            $this->comments = new CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ), $this->proxy );
         }
-        $this->comments = new CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ), $this->proxy );
         return $this->comments;
     }
 
@@ -146,10 +153,9 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
      * @access public
      */
     public function getTags() {
-        if ( $this->tags ) {
-            return $this->tags;
+        if ( !$this->tags ) {
+            $this->tags = new TagCollection( $this->data->tags, $this->proxy );
         }
-        $this->tags = new TagCollection( $this->data->tags, $this->proxy );
         return $this->tags;
     }
 

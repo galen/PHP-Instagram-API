@@ -8,6 +8,8 @@
 
 namespace Instagram;
 
+use \Instagram\User;
+
 /**
  * Comment class
  * 
@@ -15,6 +17,13 @@ namespace Instagram;
  * @see \Instagram\Media::getComments()
  */
 class Comment extends \Instagram\Core\BaseObjectAbstract {
+
+    /**
+     * Cached user
+     * 
+     * @var \Instagram\User
+     */
+    protected $user = null;
 
     /**
      * Get comment creation time
@@ -50,7 +59,10 @@ class Comment extends \Instagram\Core\BaseObjectAbstract {
      * @return \Instagram\User
      */
     public function getUser() {
-        return new \Instagram\User( $this->data->from, $this->proxy );
+        if ( !$this->user ) {
+            $this->user = new User( $this->data->from, $this->proxy );
+        }
+        return $this->user;
     }
 
     /**
