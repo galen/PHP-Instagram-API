@@ -249,11 +249,12 @@ class Proxy {
     }
 
     private function apiCall( $method, $url, array $params = null, $throw_exception = true ){
+
         $raw_response = $this->client->$method(
             $url,
             array(
                 'access_token'  => $this->access_token,
-                'client_id'     => $this->client_id
+                'client_id'     => isset( $params['client_id'] ) ? $params['client_id'] : $this->client_id
             ) + (array) $params
         );
 
