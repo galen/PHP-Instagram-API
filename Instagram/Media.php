@@ -208,7 +208,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
      * @access public
      */
     public function hasLocation() {
-        return isset( $this->data->location );
+        return $this->location->getLat() && $this->location->getLng();
     }
 
     /**

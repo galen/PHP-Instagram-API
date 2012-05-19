@@ -62,7 +62,7 @@ class Location extends \Instagram\Core\BaseObjectAbstract {
      * @access public
      */
     public function getLat() {
-        return is_float( $this->data->latitude ) ? $this->data->latitude : null;
+        return isset( $this->data->latitude ) && is_float( $this->data->latitude ) ? $this->data->latitude : null;
     }
 
     /**
@@ -74,7 +74,7 @@ class Location extends \Instagram\Core\BaseObjectAbstract {
      * @access public
      */
     public function getLng() {
-        return is_float( $this->data->longitude ) ? $this->data->longitude : null;
+        return isset( $this->data->longitude ) &&is_float( $this->data->longitude ) ? $this->data->longitude : null;
     }
 
     /**
