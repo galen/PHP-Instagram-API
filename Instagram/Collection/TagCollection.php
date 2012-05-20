@@ -32,4 +32,12 @@ class TagCollection extends \Instagram\Collection\CollectionAbstract {
         $this->convertData( '\Instagram\Tag' );
     }
 
+    public function toArray() {
+        $tags = array();
+        foreach( $this->data as $tag ) {
+            $tags[] = $tag->getName();
+        }
+        return $tags;
+    }
+
 }

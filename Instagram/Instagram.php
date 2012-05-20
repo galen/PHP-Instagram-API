@@ -93,7 +93,7 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
     public function getUserByUsername( $username ) {
         $user = $this->searchUsers( $username, array( 'count' => 1 ) )->getItem( 0 );
         if ( $user ) {
-            return $user;
+            return $this->getUser( $user->getId() );
         }
         throw new \Instagram\Core\ApiException( 'username not found', 400, 'InvalidUsername' );
     }
