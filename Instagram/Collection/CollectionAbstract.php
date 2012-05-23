@@ -162,11 +162,12 @@ abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \
         return implode( $sep, $items );
     }
 
+    // IteratorAggregate
     public function getIterator(){
         return new \ArrayIterator( $this->data );
     }
 
-    // ArrayAccess stuff
+    // ArrayAccess
     public function offsetExists( $offset ) {
         return isset( $this->data[$offset] );
     }
