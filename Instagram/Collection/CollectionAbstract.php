@@ -14,7 +14,7 @@ namespace Instagram\Collection;
  * All Collections extend this class
  */
 
-abstract class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable {
+abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \Countable {
 
     /**
      * Holds the pagination data for teh collection
@@ -162,21 +162,8 @@ abstract class CollectionAbstract implements \Iterator, \ArrayAccess, \Countable
         return implode( $sep, $items );
     }
 
-    // Iterator stuff
-    public function rewind() {
-        $this->position = 0;
-    }
-    public function current(){
-        return $this->data[ $this->position ];
-    }
-    public function key() {
-        return $this->position;
-    }
-    public function next() {
-        return ++$this->position;
-    }
-    public function valid() {
-        return isset( $this->data[  $this->position ] );
+    public function getIterator(){
+        return new \ArrayIterator( $this->data );
     }
 
     // ArrayAccess stuff
