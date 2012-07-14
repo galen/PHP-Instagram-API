@@ -8,8 +8,8 @@
 	<dd><a href="?example=user.php&user=<?php echo $media->getUser() ?>"><?php echo $media->getUser() ?></a></dd>
 	<dt>Date</dt>
 	<dd><?php echo $media->getCreatedTime( 'M jS Y @ g:ia' ) ?></dd>
-	<dt>Likes (<?php echo $media->getLikesCount() ?>)</dt>
-	<dd><ul class="media_list"><?php foreach( $media->getLikes( false ) as $like ): ?><li><a href="?example=user.php&user=<?php echo $like ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
+	<dt>Likes (<?php echo $media->getLikesCount() ?>)<?php if( !isset( $_GET['all_likes'] ) ): ?><br><a href="?example=media.php&media=<?php echo $media->getId() ?>&all_likes=true">View all</a><?php else: ?><br>Viewing all <a href="?example=media.php&media=<?php echo $media->getId() ?>">X</a><?php endif; ?></dt>
+	<dd><ul class="media_list"><?php foreach( $media->getLikes( isset( $_GET['all_likes'] ) ? true : false ) as $like ): ?><li><a href="?example=user.php&user=<?php echo $like ?>"><img src="<?php echo $like->getProfilePicture() ?>"></a></li><?php endforeach; ?></ul></dd>
 	<dt>Tags</dt>
 	<dd><?php echo $media->getTags()->implode( function( $t ){ return sprintf( '<a href="?example=tag.php&tag=%1$s">#%1$s</a>', $t ); } ) ?></dd>
 	<dt>Filter</dt>

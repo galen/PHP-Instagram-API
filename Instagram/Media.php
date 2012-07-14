@@ -194,7 +194,7 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
             return new UserCollection( $this->data->likes );
         }
         $user_collection = new UserCollection( $this->proxy->getMediaLikes( $this->getApiId() ), $this->proxy );
-        $user_collection->setProxy( $this->proxy );
+        $user_collection->setProxies( $this->proxy );
         $this->likes = $user_collection;
         return $this->likes;
     }
