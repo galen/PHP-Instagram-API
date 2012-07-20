@@ -8,7 +8,7 @@ This is a PHP 5.3+ API wrapper for the [Instagram API](http://instagram.com/deve
 
 ##The API
 
-All methods that access the API can throw exceptions. If the API request fails for any reason other than an expired/missing access token an exception of type `\Instagram\Core\ApiException` will be thrown.  If the API request fails because of an expired/missing access token an exception of type `\Instagram\Core\ApiAuthException`. You can use this to redirect to your authorization page.
+All methods that access the API can throw exceptions. If the API request fails for any reason other than an expired/missing access token an exception of type `\Instagram\Core\ApiException` will be thrown.  If the API request fails because of an expired/missing access token an exception of type `\Instagram\Core\ApiAuthException` will be thrown. You can use this to redirect to your authorization page.
 
 ##Authentication
 
