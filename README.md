@@ -47,9 +47,6 @@ All methods that access the API can throw exceptions. If the API request fails f
     $instagram->setAccessToken( $_SESSION['instagram_access_token'] );
     $current_user = $instagram->getCurrentUser();
 
-See examples for a full example
-
-
 ##Basic Usage
 
     $instagram = new Instagram\Instagram( $_SESSION['instagram_access_token'] );
