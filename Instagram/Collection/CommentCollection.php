@@ -13,7 +13,6 @@ namespace Instagram\Collection;
  *
  * Holds a collection of comments
  */
-
 class CommentCollection extends \Instagram\Collection\CollectionAbstract {
 
     /**

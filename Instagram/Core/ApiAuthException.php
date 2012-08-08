@@ -15,5 +15,4 @@ namespace Instagram\Core;
  *
  * {@link https://github.com/galen/PHP-Instagram-API/blob/master/Examples/index.php#L39}
  */
-
 class ApiAuthException extends \Instagram\Core\ApiException {}

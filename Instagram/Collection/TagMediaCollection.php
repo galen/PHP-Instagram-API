@@ -13,7 +13,6 @@ namespace Instagram\Collection;
  *
  * Holds a collection of media associated with a tag
  */
-
 class TagMediaCollection extends \Instagram\Collection\MediaCollection {
 
     /**

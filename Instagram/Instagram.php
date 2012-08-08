@@ -23,9 +23,7 @@ use \Instagram\Location;
  * Instagram!
  *
  * All objects are created through this object
- *
  */
-
 class Instagram extends \Instagram\Core\BaseObjectAbstract {
 
     /**
@@ -44,6 +42,8 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
     /**
      * Set the access token
      *
+     * Most API calls require an access ID
+     * 
      * @param string $access_token
      * @access public
      */
@@ -51,6 +51,14 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
         $this->proxy->setAccessToken( $access_token );
     }
 
+    /**
+     * Set the client ID
+     *
+     * Some API calls can be called with only a Client ID
+     * 
+     * @param string $client_id Client ID
+     * @access public
+     */
     public function setClientID( $client_id ) {
         $this->proxy->setClientId( $client_id );
     }

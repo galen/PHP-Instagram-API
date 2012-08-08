@@ -13,23 +13,28 @@ namespace Instagram\Collection;
  *
  * All Collections extend this class
  */
-
 abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \Countable {
 
     /**
-     * Holds the pagination data for teh collection
+     * Holds the pagination data for the collection
+     *
+     * @var StdClass
      * @access protected
      */
     protected $pagination;
 
     /**
      * Holds the data for the collection
+     *
+     * @var array
      * @access protected
      */
     protected $data = array();
 
     /**
      * Holds the position for the iterator
+     *
+     * @var integer
      * @access protected
      */
     protected $position;
@@ -73,11 +78,12 @@ abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \
     /**
      * Get a collection item
      *
-     * @param int $item Item to retrieve, starting at 0
+     * @param int $position Item to retrieve, starting at 0
+     * @return mixed Returns the collection item at the position
      * @access public
      */
-    public function getItem( $item ) {
-        return isset( $this->data[$item] ) ? $this->data[$item] : null;
+    public function getItem( $position ) {
+        return isset( $this->data[$position] ) ? $this->data[$position] : null;
     }
 
     /**
@@ -85,6 +91,7 @@ abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \
      *
      * @param int $offset Where to start the slice
      * @param int $length Length of the slice
+     * @return array Returns a slice of the array
      * @access public
      */
     public function getSlice( $offset, $length ) {
@@ -162,23 +169,38 @@ abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \
         return implode( $sep, $items );
     }
 
-    // IteratorAggregate
+    /**
+     * IteratorAggregate
+     *
+     * {@link http://us2.php.net/manual/en/class.iteratoraggregate.php}
+     */
     public function getIterator(){
         return new \ArrayIterator( $this->data );
     }
 
-    // ArrayAccess
+    /**
+     * ArrayAccess
+     *
+     * {@link http://us2.php.net/manual/en/class.arrayaccess.php}
+     */
     public function offsetExists( $offset ) {
         return isset( $this->data[$offset] );
     }
-
     public function offsetGet( $offset ) {
         return $this->data[$offset];
     }
-    public function offsetSet( $offset, $value ) {}
-    public function offsetUnset( $offset ) {}
+    public function offsetSet( $offset, $value ) {
+        trigger_error( "You can't set collection data");
+    }
+    public function offsetUnset( $offset ) {
+        trigger_error( "You can't unset collection data" );
+    }
 
-    // Countable
+    /**
+     * Countable
+     * 
+     * {@link http://us2.php.net/manual/en/class.countable.php}
+     */
     public function count() {
         return count( $this->data );
     }

@@ -13,7 +13,6 @@ namespace Instagram\Collection;
  *
  * Holds a collection of tags
  */
-
 class TagCollection extends \Instagram\Collection\CollectionAbstract {
 
     /**
@@ -32,6 +31,12 @@ class TagCollection extends \Instagram\Collection\CollectionAbstract {
         $this->convertData( '\Instagram\Tag' );
     }
 
+    /**
+     * Get an array of tag names
+     * 
+     * @return array Returns an array of tags
+     * @access public
+     */
     public function toArray() {
         $tags = array();
         foreach( $this->data as $tag ) {

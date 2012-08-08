@@ -13,7 +13,6 @@ namespace Instagram\Collection;
  *
  * Holds a collection of media
  */
-
 class MediaCollection extends \Instagram\Collection\CollectionAbstract {
 
     /**

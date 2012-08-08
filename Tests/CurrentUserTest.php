@@ -4,16 +4,13 @@ require_once( '_autoloader.php' );
 
 class CurrentUserTest extends PHPUnit_Framework_TestCase {
 
-    protected $config = array(
-        'access_token'  => '11007611.f59def8.4f942a67c9174159a1601a037490d3ea'
-    );
-
+    protected $access_token = '11007611.f59def8.4f942a67c9174159a1601a037490d3ea';
     protected $instagram;
     protected $user;
     protected $valid_user_id = 11007611;
 
     protected function setUp() {
-        $this->instagram = new Instagram\Instagram( $this->config );
+        $this->instagram = new Instagram\Instagram( $this->access_token );
         $this->user = $this->instagram->getCurrentUser();
     }
 

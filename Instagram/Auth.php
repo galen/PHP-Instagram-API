@@ -10,8 +10,12 @@ namespace Instagram;
 
 /**
  * Auth class
+ *
+ * Handles authentication
+ * 
+ * {@link https://github.com/galen/PHP-Instagram-API#authentication}
+ * {@link https://github.com/galen/PHP-Instagram-API/blob/master/Examples/_auth.php}
  */
-
 class Auth {
 
     /**

@@ -13,7 +13,6 @@ namespace Instagram\Net;
  *
  * Holds the API response
  */
-
 class ApiResponse {
 
     /**

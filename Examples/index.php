@@ -59,6 +59,7 @@ $files = glob( EXAMPLES_DIR . '/*.php' );
 
 // Unset index file
 unset( $files[array_search( EXAMPLES_DIR . '/index.php', $files )] );
+unset( $files[array_search( EXAMPLES_DIR . '/test.php', $files )] );
 
 require( EXAMPLES_DIR . '/views/_header.php' );
 require( EXAMPLES_DIR . '/views/index.php' );

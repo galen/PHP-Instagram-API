@@ -2,5 +2,5 @@
 
 require( '_SplClassLoader.php' );
 
-$loader = new SplClassLoader( 'Instagram', '../Instagram' );
+$loader = new SplClassLoader( 'Instagram', '../' );
 $loader->register();

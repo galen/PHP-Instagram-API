@@ -12,8 +12,9 @@ namespace Instagram\Core;
  * API Exception
  *
  * This exception type will be thrown for any API error
+ *
+ * {@link https://github.com/galen/PHP-Instagram-API/blob/master/Examples/index.php#L48}
  */
-
 class ApiException extends \Exception {
 
     /**

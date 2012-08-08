@@ -12,7 +12,9 @@ use \Instagram\User;
 
 /**
  * Comment class
- * 
+ *
+ * @see \Instagram\CurrentUser::addMediaComment()
+ * @see \Instagram\CurrentUser::deleteMediaComment()
  * @see \Instagram\Media::getCaption()
  * @see \Instagram\Media::getComments()
  */

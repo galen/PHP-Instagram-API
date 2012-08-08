@@ -15,7 +15,6 @@ namespace Instagram\Net;
  *
  * The 4 http functions just need to return the raw data from the API
  */
-
 interface ClientInterface {
 
     function get( $url, array $data = null );

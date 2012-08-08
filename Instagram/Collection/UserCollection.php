@@ -13,7 +13,6 @@ namespace Instagram\Collection;
  *
  * Holds a collection of users
  */
-
 class UserCollection extends \Instagram\Collection\CollectionAbstract {
 
     /**

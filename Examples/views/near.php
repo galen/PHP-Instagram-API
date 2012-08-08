@@ -22,5 +22,5 @@ if (navigator.geolocation) {
   window.location = 'http://www.galengrover.com/projects/instagram';
 }
 </script>
-<p>Searching for your location <img src="/projects/instagram/system/lib/Instagram/Examples/_images/working.gif"></p>
+<p>Searching for your location <img src="system/lib/PHP-Instagram-API/Examples/_images/working.gif"></p>
 <?php endif; ?>

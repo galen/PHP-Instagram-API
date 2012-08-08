@@ -13,13 +13,13 @@ namespace Instagram\Collection;
  *
  * Holds a collection of searched media
  */
-
 class MediaSearchCollection extends \Instagram\Collection\CollectionAbstract {
 
     /**
      * Next max timestamp for use in pagination
      *
      * @var int
+     * @access protected
      */
     protected $next_max_timestamp;
 

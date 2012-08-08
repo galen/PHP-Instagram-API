@@ -13,11 +13,10 @@ namespace Instagram\Collection;
  *
  * Holds a collection of liked media
  */
-
 class LikedMediaCollection extends \Instagram\Collection\MediaCollection {
 
     /**
-     * Get the next max like id
+     * Get the next max like ID
      * 
      * @return string
      * @access public
@@ -27,7 +26,7 @@ class LikedMediaCollection extends \Instagram\Collection\MediaCollection {
     }
 
     /**
-     * Get the next max like id
+     * Get the next max like ID
      * 
      * @return string
      * @access public

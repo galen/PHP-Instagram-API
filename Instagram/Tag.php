@@ -12,6 +12,10 @@ use \Instagram\Collection\TagMediaCollection;
 
 /**
  * Tag class
+ *
+ * @see \Instagram\Instagram->getTag()
+ * {@link https://github.com/galen/PHP-Instagram-API/blob/master/Examples/tag.php}
+ * {@link http://galengrover.com/projects/PHP-Instagram-API/Examples/?example=tag.php}
  */
 class Tag extends \Instagram\Core\BaseObjectAbstract {
 
