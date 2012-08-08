@@ -70,7 +70,17 @@ class Helper {
         return $text;
     }
 
-    
+    /**
+     * Is the comment deletable
+     *
+     * Checks if a comment is deletable by checking if the current user posted the comment
+     * of if the comment was added to one of the current user's media
+     * 
+     * @param  \Instagram\Comment $comment The comment
+     * @param  \Instagram\Media $media The media the comment was added to
+     * @param  \Instagram\CurrentUser $current_user Current user
+     * @access public
+     */
     public function commentIsDeletable( \Instagram\Comment $comment, \Instagram\Media $media, \Instagram\CurrentUser $current_user ) {
         return
             $comment->getUser()->getId() == $current_user->getId() ||
