@@ -8,29 +8,32 @@ try{
 	$username = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
 	$user = $instagram->getUserByUsername( $username );
 
-	if ( isset( $_GET['action'] ) ) {
-		switch( $_GET['action'] ) {
-			case 'follow':
-				$current_user->follow( $user );
-				break;
-			case 'unfollow':
-				$current_user->unFollow( $user );
-				break;
-			case 'approve_follower':
-				$current_user->approveFollowRequest( $user );
-				break;
-			case 'ignore_follower':
-				$current_user->ignoreFollowRequest( $user );
-				break;
-			case 'block':
-				$current_user->block( $user );
-				break;
-			case 'unblock':
-				$current_user->unblock( $user );
-				break;
+	try {
+		if ( isset( $_POST['action'] ) ) {
+			switch( strtolower( $_POST['action'] ) ) {
+				case 'follow':
+					$current_user->follow( $user );
+					break;
+				case 'unfollow':
+					$current_user->unFollow( $user );
+					break;
+				case 'approve follower':
+					$current_user->approveFollowRequest( $user );
+					break;
+				case 'ignore follower':
+					$current_user->ignoreFollowRequest( $user );
+					break;
+				case 'block':
+					$current_user->block( $user );
+					break;
+				case 'unblock':
+					$current_user->unblock( $user );
+					break;
+			}
 		}
-		header( 'Location: ?example=user.php&user=' . $username );
-		exit;
+	}
+	catch( \Instagram\Core\ApiException $e ) {
+		$error = $_POST['error_message'];
 	}
 	$outgoing_relationship = $current_user->getRelationship( $user )->outgoing_status;
 	$incoming_relationship = $current_user->getRelationship( $user )->incoming_status;

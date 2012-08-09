@@ -6,26 +6,26 @@ $instagram->setAccessToken( $_SESSION['instagram_access_token'] );
 $media_id = isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611';
 $current_user = $instagram->getCurrentUser();
 
-if ( isset( $_POST['action'] ) ) {
-    switch( $_POST['action'] ) {
-        case 'add_comment':
-            $current_user->addMediaComment( $media_id, $_POST['comment_text'] );
-            break;
-        case 'delete_comment':
-            $current_user->deleteMediaComment( $media_id, $_POST['comment_id'] );
-            break;
+try {
+    if ( isset( $_POST['action'] ) ) {
+        switch( strtolower( $_POST['action'] ) ) {
+            case 'add_comment':
+                $current_user->addMediaComment( $media_id, $_POST['comment_text'] );
+                break;
+            case 'delete_comment':
+                $current_user->deleteMediaComment( $media_id, $_POST['comment_id'] );
+                break;
+            case 'like':
+                $current_user->addLike( $media_id );
+                break;
+            case 'unlike':
+                $current_user->deleteLike( $media_id );
+                break;
+        }
     }
 }
-
-if ( isset( $_GET['action'] ) ) {
-    switch( $_GET['action'] ) {
-        case 'like':
-            $current_user->addLike( $media_id );
-            break;
-        case 'unlike':
-            $current_user->deleteLike( $media_id );
-            break;
-    }
+catch( \Instagram\Core\ApiException $e ) {
+    $error = $e->getMessage();
 }
 
 $media = $instagram->getMedia( $media_id );

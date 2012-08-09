@@ -2,7 +2,13 @@
 <?php if( $media->getCaption() ): ?>
 <p id="caption"><em><?php echo \Instagram\Helper::parseTagsAndMentions( $media->getCaption(), $tags_closure, $mentions_closure ) ?></em></p>
 <?php endif; ?>
-<p id="like"><?php if( $current_user->likes( $media ) ): ?><a href="?example=media.php&media=<?php echo $media->getId() ?>&action=unlike">Unlike</a><?php else: ?><a href="?example=media.php&media=<?php echo $media->getId() ?>&action=like">Like</a><?php endif; ?></p>
+<form id="like" action="" method="post">
+	<?php if( $current_user->likes( $media ) ): ?>
+	<input type="submit" name="action" value="Unlike">
+	<?php else: ?>
+	<input type="submit" name="action" value="Like">
+	<?php endif; ?>
+</form>
 <dl>
 	<dt>User</dt>
 	<dd><a href="?example=user.php&user=<?php echo $media->getUser() ?>"><?php echo $media->getUser() ?></a></dd>

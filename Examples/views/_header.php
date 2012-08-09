@@ -37,6 +37,7 @@
 		.search_form_wrapper { padding:10px;border-bottom: 1px solid #d9d1c2; }
 		.search_form_wrapper.active { background: #f5f0e7; }
 		.search_form_wrapper h2 { margin:0; }
+		#error { color: #aa0000; font-weight: bold; margin-bottom: 10px; }
 	</style>
 </head>
 <body>
@@ -48,3 +49,4 @@
 
 <div id="content">
 
+<?php if( isset( $error ) ): ?><p id="error"><?php echo htmlspecialchars( $error ) ?></p><?php endif; ?>
