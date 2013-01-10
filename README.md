@@ -158,4 +158,4 @@ You can search for locations, media, tags, and users.
     $locations = $instagram->searchLocations( $lat, $lng );
     $media = $instagram->searchMedia( $lat, $lng );
     $tags = $instagram->searchTags( 'tag' );
-    $users = $instagram->searchUsersByName( 'username' );
+    $users = $instagram->searchUsers( 'username' );
