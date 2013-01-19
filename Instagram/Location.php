@@ -18,7 +18,7 @@ use \Instagram\Collection\MediaCollection;
  *
  * @see \Instagram\Instagram->getCurrentUser()
  * {@link https://github.com/galen/PHP-Instagram-API/blob/master/Examples/location.php}
- * {@link http://galengrover.com/projects/PHP-Instagram-API/Examples/?example=location.php}
+ * {@link http://galengrover.com/projects/instagram/?example=location.php}
  */
 class Location extends \Instagram\Core\BaseObjectAbstract {
 

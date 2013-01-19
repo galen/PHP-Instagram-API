@@ -16,7 +16,7 @@ use \Instagram\Collection\UserCollection;
  *
  * @see \Instagram\Instagram->getUser()
  * {@link https://github.com/galen/PHP-Instagram-API/blob/master/Examples/user.php}
- * {@link http://galengrover.com/projects/PHP-Instagram-API/Examples/?example=user.php}
+ * {@link http://galengrover.com/projects/instagram/?example=user.php}
  */
 class User extends \Instagram\Core\BaseObjectAbstract {
 
