@@ -27,7 +27,7 @@
 		</dd>
 		<dt>Incoming Relationship</dt>
 		<dd>
-			<?php if( $incoming_relationship == 'requested_by' ): ?>
+			<?php if( $current_user->hasBeenRequestedBy( $user ) ): ?>
 				Requested By: 
 				<form action="" method="post">
 					<input type="submit" name="action" value="Approve Follower">

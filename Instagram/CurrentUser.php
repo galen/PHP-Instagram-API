@@ -271,6 +271,20 @@ class CurrentUser extends \Instagram\User {
     }
 
     /**
+     * Check if the current user can view a user
+     *
+     * @return bool
+     * @access public
+     */
+    public function canViewUser( $user_id ) {
+        $relationship = $this->proxy->getRelationshipToCurrentUser( $user_id );
+        if ( $this->getId() == $user_id || !(bool)$relationship->target_user_is_private || $relationship->outgoing_status == 'follows' ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Get relationship
      *
      * Get the complete relationship to a user
@@ -298,9 +312,39 @@ class CurrentUser extends \Instagram\User {
     }
 
     /**
+     * Check outgoing request status
+     *
+     * Check if the current user is currently waiting approval of a follow request
+     *
+     * @param \Instagram\User|string $user User object or user id to check the status of
+     * @return boolean
+     */
+    public function isAwaitingFollowApprovalFrom( $user ) {
+        if ( $user instanceof \Instagram\User ) {
+            $user = $user->getId();
+        }
+        return $this->getRelationship( $user )->outgoing_status == 'requested';
+    }
+
+    /**
+     * Check incoming request status
+     *
+     * Check if the current user has been requested to be followed by a user
+     *
+     * @param \Instagram\User|string $user User object or user id to check the status of
+     * @return boolean
+     */
+    public function hasBeenRequestedBy( $user ) {
+        if ( $user instanceof \Instagram\User ) {
+            $user = $user->getId();
+        }
+        return $this->getRelationship( $user )->incoming_status == 'requested_by';
+    }
+
+    /**
      * Check following status
      *
-     * Check if hte current user is following a user
+     * Check if the current user is blocking a user
      *
      * @param \Instagram\User|string $user User object or user id to check the following status of
      * @return boolean
