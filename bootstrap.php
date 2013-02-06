@@ -9,6 +9,7 @@ Autoloader::add_classes(array(
 	// Classes
 		'Propeller\Instagram'					 	=> __DIR__.'/classes/instagram.php',
 		'Propeller\Instagram\Model_Subscription'	=> __DIR__.'/classes/model/subscription.php',
+		'Propeller\Instagram\Model_Account'			=> __DIR__.'/classes/model/account.php',
 
 		'Propeller\Instagram\Subscription'		=> __DIR__.'/classes/subscription.php',
 
