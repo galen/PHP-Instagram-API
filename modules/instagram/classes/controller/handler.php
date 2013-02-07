@@ -58,7 +58,7 @@ class Controller_Handler extends \Controller
 						$image->instagram_id = $med->id;
 						$image->author = $med->user->username;
 						$image->link = $med->link;
-						$image->active = '0';
+						$image->accepted = '0';
 						$image->subscription_id = $sub->instagram_subscription_id;
 
 						$image->save();
