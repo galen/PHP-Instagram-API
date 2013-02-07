@@ -16,6 +16,10 @@ class Model_Image extends \Orm\Model
 			'type' => 'varchar',
 			'label' => 'Instagram ID'
 		),
+		'subscription_id' => array(
+			'type' => 'varchar',
+			'label' => 'Subscription ID'
+		),
 		'thumb_img' => array(
 			'type' => 'varchar',
 			'label' => 'Thumbnail IMG'
@@ -44,6 +48,16 @@ class Model_Image extends \Orm\Model
 			'type' => 'int',
 			'label' => 'Updated',
 		),
+	);
+
+	protected static $_belongs_to = array(
+		'subscription' => array(
+			'key_from' => 'subscription_id',
+			'model_to' => '\Propeller\Instagram\Model_Subscription',
+			'key_to' => 'instagram_subscription_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		)
 	);
 
 	protected static $_observers = array(

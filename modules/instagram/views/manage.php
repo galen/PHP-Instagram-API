@@ -25,3 +25,9 @@
 		<? endforeach ?>
 		</tbody>
 	</table>
+
+	<div class="row">
+		<div class="span12">
+			<?= $fieldset ?>
+		</div>
+	</div>

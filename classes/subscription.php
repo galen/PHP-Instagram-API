@@ -30,6 +30,13 @@ class Subscription
 			$sub = \Propeller\Instagram\Model_Subscription::forge();
 		}
 
+		$params = array_merge($params, array(
+				'verify_token' => $guid,
+				'callback_url' => \Uri::create('instagram/handler/subscribe'),
+				'client_id' => $config['client_id'],
+				'client_secret' => $config['client_secret']
+		));
+
 		$sub->guid = $guid;
 		$sub->params = json_encode($params);
 		$sub->alias = $alias;
@@ -37,21 +44,15 @@ class Subscription
 		$sub->object_id = $params['object_id'];
 		$sub->save();
 
-		$params = array_merge($params, array(
-				'verify_token' => $guid,
-				'callback_url' => 'http://swtest.l2.prop.cm/instagram/handler/subscribe',
-				'client_id' => $config['client_id'],
-				'client_secret' => $config['client_secret']
-			));
 
 		$curl = new \Instagram\Net\CurlClient();
 		$result = $curl->post('https://api.instagram.com/v1/subscriptions/', $params);
 		$response = json_decode($result);
-		$sub->instagram_subscription_id = $response['id'];
+		$sub->instagram_subscription_id = $response->id;
 		$sub->status = 'Live';
 		$sub->save();
 
-		die();
+		return true;
 	}
 
 	public static function cancel($id)
@@ -84,6 +85,16 @@ class Subscription
 		$data = json_decode($result);
 		return $data->data;
 
+	}
+
+	public static function fieldset()
+	{
+		$fieldset = \Fieldset::forge();
+		$fieldset->add('name', '', array('type' => 'text', 'placeholder' => 'Subscription Name'));
+		$fieldset->add('tag', '', array('type' => 'text', 'placeholder' => 'Instagram Tag'));
+		$fieldset->add('submit', '', array('type' => 'submit', 'class' => 'btn'))->set_value('Create Subscription');
+
+		return $fieldset;
 	}
 
 }

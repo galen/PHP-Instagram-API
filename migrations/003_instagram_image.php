@@ -11,6 +11,7 @@ class Instagram_Image
 		\DBUtil::create_table('instagram__images', array(
 				'id'					=> array('type' => 'int', 'unsigned' => true, 'auto_increment' => true),
 				'instagram_id' 			=> array('type' => 'tinytext'),
+				'subscription_id'		=> array('type' => 'tinytext'),
 				'thumb_img'				=> array('type' => 'tinytext'),
 				'main_img'				=> array('type' => 'tinytext'),
 				'link'					=> array('type' => 'tinytext'),
