@@ -48,7 +48,7 @@ class Subscription
 		$curl = new \Instagram\Net\CurlClient();
 		$result = $curl->post('https://api.instagram.com/v1/subscriptions/', $params);
 		$response = json_decode($result);
-		$sub->instagram_subscription_id = $response->id;
+		$sub->instagram_subscription_id = $response['id'];
 		$sub->status = 'Live';
 		$sub->save();
 
