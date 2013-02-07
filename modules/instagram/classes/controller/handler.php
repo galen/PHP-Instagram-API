@@ -65,7 +65,7 @@ class Controller_Handler extends \Controller
 					}
 				}
 
-				$sub->last_image_recieved = time();
+				$sub->last_image_received = time();
 				$sub->save();
 
 			}
