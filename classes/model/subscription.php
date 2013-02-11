@@ -40,7 +40,10 @@ class Model_Subscription extends \Orm\Model
 		'last_image_received' => array(
 			'type' => 'int',
 			'label' => 'Last Image Received At',
-			'default' => 0,
+		),
+		'last_managed' => array(
+			'type' => 'int',
+			'label' => 'Last Managed',
 		),
 		'created_at' => array(
 			'type' => 'int',
@@ -51,6 +54,28 @@ class Model_Subscription extends \Orm\Model
 			'label' => 'Updated',
 		),
 	);
+
+	public function latest_images($count)
+	{
+		return \Propeller\Instagram\Model_Image::query()
+			->where('subscription_id', $this->instagram_subscription_id)
+			->order_by('created_at')
+			->limit($count)
+			->get();
+	}
+
+	public function random_images($count)
+	{
+		$images = array();
+		if(count($this->images) <= $count) {
+			return $this->images;
+		}
+		for($i = 1; $i <= $count; $i++) {
+			$images[] = $this->images[array_rand($this->images)];
+		}
+
+		return $images;
+	}
 
 	protected static $_has_many = array(
 		'images' => array(

@@ -11,6 +11,65 @@ class Controller_Manage extends \Admin\Controller_Template
 		\Config::load('instagram', true);
 	}
 
+	public function action_approval($id)
+	{
+		$sub = \Propeller\Instagram\Model_Subscription::query()
+			->where('instagram_subscription_id', $id)
+			->get_one();
+
+		$sub->last_managed = time();
+		$sub->save();
+
+		$image_counts = \DB::select(\DB::expr('COUNT(id) as image_count, accepted'))
+			->from('instagram__images')
+			->where('subscription_id', $id)
+			->order_by('created_at')
+			->group_by('accepted')
+			->limit(42)
+			->execute()
+			->as_array('accepted', 'image_count');
+
+		$unsorted_images = \DB::select()
+			->from('instagram__images')
+			->where('subscription_id', $id)
+			->where('accepted', 'unsorted')
+			->order_by('created_at')
+			->limit(42)
+			->execute()
+			->as_array();
+
+		$accepted_images = \DB::select()
+			->from('instagram__images')
+			->where('subscription_id', $id)
+			->where('accepted', 'accepted')
+			->order_by('created_at')
+			->limit(42)
+			->execute()
+			->as_array();
+
+		$declined_images = \DB::select()
+			->from('instagram__images')
+			->where('subscription_id', $id)
+			->where('accepted', 'declined')
+			->order_by('created_at')
+			->limit(42)
+			->execute()
+			->as_array();
+
+
+		$view = \View::forge('approval');
+		$view->set('unsorted_images', $unsorted_images);
+		$view->set('accepted_images', $accepted_images);
+		$view->set('declined_images', $declined_images);
+		$view->set('image_counts', $image_counts);
+		$view->set('subscription_id', $id);
+
+		$this->template->title = 'Approve Images - '.$sub->alias;
+		$this->template->content = $view;
+
+
+	}
+
 	public function action_unsubscribe($id)
 	{
 		$cancel = \Propeller\Instagram\Subscription::cancel($id);

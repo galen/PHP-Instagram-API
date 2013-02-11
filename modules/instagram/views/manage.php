@@ -5,6 +5,7 @@
 				<th>Name</th>
 				<th>Status</th>
 				<th>Tag Subscribed To</th>
+				<th>Preview</th>
 				<th>Last Recieved</th>
 				<th>Actions</th>
 			</tr>
@@ -15,9 +16,16 @@
 				<td><?= $sub->alias ?></td>
 				<td><?= $sub->status ?></td>
 				<td><?= $sub->object_id ?></td>
+				<td>
+					<? $images = $sub->latest_images(3);?>
+					<? foreach($images as $image): ?>
+						<img width="50" height="50" src="<?= $image->thumb_img ?>" />
+					<? endforeach; ?>
+				</td>
 				<td><?= $sub->last_image_received ? strftime('%d/%m/%Y %H:%M', $sub->last_image_received) : 'No Images Received' ?></td>
 				<td>
 					<? if($sub->status != 'Disabled'): ?>
+					<a href="/admin/instagram/manage/approval/<?= $sub->instagram->id ?>" class="btn btn-info btn-mini">Approve Images</a>
 					<a href="/admin/instagram/manage/unsubscribe/<?= $sub->instagram->id ?>" class="btn btn-danger btn-mini">Unsubscribe</a>
 					<? endif ?>
 				</td>
