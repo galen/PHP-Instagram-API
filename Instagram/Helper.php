@@ -74,7 +74,7 @@ class Helper {
      * Is the comment deletable
      *
      * Checks if a comment is deletable by checking if the current user posted the comment
-     * of if the comment was added to one of the current user's media
+     * or if the comment was added to one of the current user's media
      * 
      * @param  \Instagram\Comment $comment The comment
      * @param  \Instagram\Media $media The media the comment was added to
