@@ -81,7 +81,7 @@ class Helper {
      * @param  \Instagram\CurrentUser $current_user Current user
      * @access public
      */
-    public function commentIsDeletable( \Instagram\Comment $comment, \Instagram\Media $media, \Instagram\CurrentUser $current_user ) {
+    public static function commentIsDeletable( \Instagram\Comment $comment, \Instagram\Media $media, \Instagram\CurrentUser $current_user ) {
         return
             $comment->getUser()->getId() == $current_user->getId() ||
             $media->getUser()->getId() == $current_user->getId();
