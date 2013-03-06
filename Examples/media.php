@@ -1,9 +1,21 @@
 <?php
 
+$media_ids = array(
+    '339955848751665483_11007611',
+    '337879001662542678_11007611',
+    '298633372268810782_11007611',
+    '289221805769020118_11007611',
+    '197183110736564300_11007611',
+    '198817996966776929_11007611',
+    '195861999348404763_11007611'
+);
+
+shuffle( $media_ids );
+
 $instagram = new Instagram\Instagram;
 $instagram->setAccessToken( $_SESSION['instagram_access_token'] );
 
-$media_id = isset( $_GET['media'] ) ? $_GET['media'] : '427150720_11007611';
+$media_id = isset( $_GET['media'] ) ? $_GET['media'] : $media_ids[0];
 $current_user = $instagram->getCurrentUser();
 
 try {
