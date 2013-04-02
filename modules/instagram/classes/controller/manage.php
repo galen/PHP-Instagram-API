@@ -98,12 +98,16 @@ class Controller_Manage extends \Admin\Controller_Template
 			$prop_sub = \Propeller\Instagram\Model_Subscription::find('all');
 			$merged = array();
 
-			foreach($prop_sub as $subscription) {
-				$merged[$subscription->object_id] = $subscription;
-			}
+			if($prop_sub) {
+				foreach($prop_sub as $subscription) {
+					$merged[$subscription->object_id] = $subscription;
+				}
 
-			foreach($subscriptions as $subscription) {
-				$merged[$subscription->object_id]->instagram = $subscription;
+				foreach($subscriptions as $subscription) {
+					if(isset($merged[$subscription->object_id])) {
+						$merged[$subscription->object_id]->instagram = $subscription;
+					}	
+				}
 			}
 
 			if(\Input::post()) {

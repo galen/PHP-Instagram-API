@@ -19,6 +19,13 @@ class Controller_Ajax extends \Admin\Controller_Rest
 
 	}
 
+	public function get_subscriptions()
+	{
+		return $this->response(array(
+			'subscriptions' => \Propeller\Instagram\Subscription::get()
+		));
+	}
+
 	public function post_status()
 	{
 		$image = \Propeller\Instagram\Model_Image::find(\Input::post('image'));
