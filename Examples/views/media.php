@@ -2,7 +2,7 @@
 <?php if( $media->getCaption() ): ?>
 <p id="caption"><em><?php echo \Instagram\Helper::parseTagsAndMentions( $media->getCaption(), $tags_closure, $mentions_closure ) ?></em></p>
 <?php endif; ?>
-<form id="like" action="" method="post">
+<form id="like" action="?example=media.php&media_id=<?php echo $media_id ?>" method="post">
 	<?php if( $current_user->likes( $media ) ): ?>
 	<input type="submit" name="action" value="Unlike">
 	<?php else: ?>
