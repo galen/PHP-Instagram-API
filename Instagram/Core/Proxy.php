@@ -549,7 +549,7 @@ class Proxy {
                     throw new \Instagram\Core\ApiAuthException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
                 }
                 else {
-                    throw new \Instagram\Core\ApiException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
+                    throw new \Instagram\Core\ApiException( __FILE__ . ' : ' . $url . ' - ' . $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
                 }
             }
             else {
