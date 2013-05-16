@@ -150,6 +150,18 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
     }
 
     /**
+     * Get OEmbed
+     *
+     * @param string $url The URL of the instagram Post
+     * @return \Instagram\Media
+     * @access public
+     */
+    public function getOEmbed( $url ) {
+        $oembed = new OEmbed( $this->proxy->getOEmbed( $url ), $this->proxy );
+        return $oembed;
+    }
+
+    /**
      * Get location
      *
      * Retreive a location given it's ID
