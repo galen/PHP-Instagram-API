@@ -39,6 +39,8 @@ abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \
      */
     protected $position;
 
+    public $raw_data;
+
     /**
      * Constructor
      *
@@ -50,6 +52,7 @@ abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \
      */
     public function __construct( $raw_data = null, \Instagram\Core\Proxy $proxy = null ) {
         if ( $raw_data ) {
+            $this->raw_data = $raw_data;
             $this->setData( $raw_data );
         }
         if ( $proxy ) {
