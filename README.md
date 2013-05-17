@@ -161,3 +161,11 @@ You can search for locations, media, tags, and users.
     $media = $instagram->searchMedia( $lat, $lng );
     $tags = $instagram->searchTags( 'tag' );
     $users = $instagram->searchUsers( 'username' );
+
+##OEmbed
+
+Get information about a shared link (http://instagram.com/developer/embedding/#oembed)
+
+    $instagram_post = "http://instagr.am/p/aBcDeFg123/"
+    $oembed = $instagram->getOEmbed( $instagram_post_url );
+    echo $oembed->media_id;
