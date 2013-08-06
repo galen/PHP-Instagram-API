@@ -1,7 +1,5 @@
 #PHP Instagram API
 
-[Gittip!](https://www.gittip.com/galen/)
-
 This is a PHP 5.3+ API wrapper for the [Instagram API](http://instagram.com/developer/)
 
 [Live Examples](http://galengrover.com/projects/instagram/)
