@@ -53,6 +53,16 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
     protected $tags = null;
 
     /**
+     * Get the ID
+     *
+     * @return string
+     * @access public
+     */
+    public function getId() {
+        return $this->data->id;
+     } 
+
+    /**
      * Get the thumbnail
      *
      * @return string
