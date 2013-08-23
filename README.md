@@ -2,7 +2,11 @@
 
 This is a PHP 5.3+ API wrapper for the [Instagram API](http://instagram.com/developer/)
 
-[Live Examples](http://www.galengrover.com/projects/instagram/)
+The API comes with a cURL client (`Instagram\Net\CurlClient`) to access the Instagran API.  You can create your own client, it just has to implement `Instagram\Net\ClientInterface`.
+
+##Examples
+
+[http://www.galengrover.com/projects/instagram/](http://www.galengrover.com/projects/instagram/)
 
 ---
 

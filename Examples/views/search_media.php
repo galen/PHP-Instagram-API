@@ -2,6 +2,6 @@
 Searching near <em><?php echo $_GET['lat'] ?>, <?php echo $_GET['lng'] ?></em><?php if( isset( $_GET['max_timestamp'] ) ): ?> before <?php echo date( 'M jS Y @ g:ia', $_GET['max_timestamp'] ) ?><?php endif ?>
 <ul class="media_list">
 <?php foreach( $media as $m ): ?>
-	<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getStandardRes()->url ?>" title="Posted by <?php echo $m->getUser() ?> on <?php echo $m->getCreatedTime( 'M jS Y @ g:ia' ) ?>"></a></li>
+	<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getStandardRes()->url ?>" title="Posted by <?php echo $m->getUser() ?> on <?php echo $m->getCreatedTime( 'M jS Y @ g:ia' ) ?>"><?php if( $m->getType() == 'video' ): ?><img src="system/lib/PHP-Instagram-API/Examples/_images/play.png" class="play"><?php endif; ?></a></li>
 <?php endforeach; ?>
 </ul>
