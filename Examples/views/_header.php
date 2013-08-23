@@ -16,9 +16,10 @@
 		h2, h3, h4 { margin: 10px 0 }
 		.next_page { font-size:12px }
 		.media_list { overflow:auto; list-style:none }
-		.media_list li { float:left; margin: 0 4px 4px 0 }
+		.media_list li { float:left; margin: 0 4px 4px 0; position:relative; }
 		.media_list img { width:50px; height:50px; border: 1px solid #aaa; padding: 2px; }
 		.media_list img:hover { border: 1px solid #000 }
+		.media_list .play { position:absolute;top:0;left:0; }
 		dl { overflow:auto }
 		dt, dd { float:left; width: 450px; margin-bottom: 6px}
 		dt { clear:left; width:150px }

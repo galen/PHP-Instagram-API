@@ -66,7 +66,7 @@
 <h4>Recent Media (<?php echo $user->getMediaCount() ?>) <?php if( $media->getNextMaxId() ): ?><a href="?example=user.php&user=<?php echo $user ?>&max_id=<?php echo $media->getNextMaxId() ?>#recent_media" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $media as $m ): ?>
-<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a></li>
+<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"><?php if( $m->getType() == 'video' ): ?><img src="system/lib/PHP-Instagram-API/Examples/_images/play.png" class="play"><?php endif; ?></a></li>
 <?php endforeach; ?>
 </ul>
 

@@ -7,7 +7,7 @@
 <h4>Recent Media (<?php echo $current_user->getMediaCount() ?>) <?php if( $media->getNextMaxId() ): ?><a href="?example=current_user.php&max_id=<?php echo $media->getNextMaxId() ?>#recent_media" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $media as $m ): ?>
-<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"></a></li>
+<li><a href="?example=media.php&media=<?php echo $m->getId() ?>"><img src="<?php echo $m->getThumbnail()->url ?>"><?php if( $m->getType() == 'video' ): ?><img src="system/lib/PHP-Instagram-API/Examples/_images/play.png" class="play"><?php endif; ?></a></li>
 <?php endforeach; ?>
 </ul>
 
@@ -31,7 +31,7 @@
 <h4>Liked Media <?php if( $liked_media->getNextMaxLikeId() ): ?> <a href="?example=current_user.php&max_like_id=<?php echo $liked_media->getNextMaxLikeId() ?>#liked_media" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $liked_media as $liked_m ): ?>
-<li><a href="?example=media.php&media=<?php echo $liked_m->getId() ?>"><img src="<?php echo $liked_m->getThumbnail()->url ?>"></a></li>
+<li><a href="?example=media.php&media=<?php echo $liked_m->getId() ?>"><img src="<?php echo $liked_m->getThumbnail()->url ?>"><?php if( $liked_m->getType() == 'video' ): ?><img src="system/lib/PHP-Instagram-API/Examples/_images/play.png" class="play"><?php endif; ?></a></li>
 <?php endforeach; ?>
 </ul>
 
@@ -39,7 +39,7 @@
 <h4>Feed <?php if( $feed->getNextMaxId() ): ?> <a href="?example=current_user.php&max_feed_id=<?php echo $feed->getNextMaxId() ?>#feed" class="next_page">Next page</a><?php endif; ?></h4>
 <ul class="media_list">
 <?php foreach( $feed as $f ): ?>
-<li><a href="?example=media.php&media=<?php echo $f->getId() ?>"><img src="<?php echo $f->getThumbnail()->url ?>" title="Posted by <?php echo $f->getUser() ?>"></a></li>
+<li><a href="?example=media.php&media=<?php echo $f->getId() ?>"><img src="<?php echo $f->getThumbnail()->url ?>" title="Posted by <?php echo $f->getUser() ?>"><?php if( $f->getType() == 'video' ): ?><img src="system/lib/PHP-Instagram-API/Examples/_images/play.png" class="play"><?php endif; ?></a></li>
 <?php endforeach; ?>
 </ul>
 

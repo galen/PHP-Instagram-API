@@ -1,4 +1,10 @@
+<?php if( $media->getType() == 'image' ): ?>
 <a href="<?php echo $media->getLink() ?>"><img src="<?php echo $media->getStandardRes()->url ?>"></a>
+<?php else: ?>
+<object width="<?php echo $media->getStandardResVideo()->width ?>" height="<?php echo $media->getStandardResVideo()->height ?>" type="application/x-shockwave-flash" data="system/lib/PHP-Instagram-API/Examples/_images/jwplayer.swf">
+<param name="movie" value="system/lib/PHP-Instagram-API/Examples/_images/jwplayer.swf" />
+<param name="flashvars" value="image=<?php echo $media->getStandardResImage()->url ?>&amp;file=<?php echo $media->getStandardResVideo()->url ?>" />
+<?php endif; ?>
 <?php if( $media->getCaption() ): ?>
 <p id="caption"><em><?php echo \Instagram\Helper::parseTagsAndMentions( $media->getCaption(), $tags_closure, $mentions_closure ) ?></em></p>
 <?php endif; ?>
