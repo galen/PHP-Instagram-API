@@ -115,11 +115,7 @@ You can pass an array of parameters to `getMedia()`. These parameters will be pa
 
 ##Images and Videos
 
-You can distinguish between images and videos with:
-
-    Media::getType()
-
-This will return `video` or `image`. Video files can be accessed with `Media::getStandardResVideo()` and `Media::getLowResVideo()`. The image methods on a video will return a still of the video.
+You can distinguish between images and videos with `Media::getType()`. This will return `video` or `image`. Video files can be accessed with `Media::getStandardResVideo()` and `Media::getLowResVideo()`. The image methods on a video will return a still of the video.
 
 ##Collections
 
