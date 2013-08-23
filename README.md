@@ -1,7 +1,5 @@
 #PHP Instagram API
 
-[Gittip!](https://www.gittip.com/galen/)
-
 This is a PHP 5.3+ API wrapper for the [Instagram API](http://instagram.com/developer/)
 
 [Live Examples](http://galengrover.com/projects/instagram/)
@@ -92,7 +90,6 @@ With this object you can:
 
 You can also perform all the functions you could on a normal user
 
-
 ##Getting Media
 
 Users, tags, locations, and the current user have media associated with them.
@@ -116,6 +113,13 @@ You can pass an array of parameters to `getMedia()`. These parameters will be pa
         array( 'max_id' => $max_id )
     );
 
+##Images and Videos
+
+You can distinguish betwenn images and videos with:
+
+    $media->getType()
+
+This will return `video` or `image`. Video files can be accessed with `Media::getStandardResVideo()` and `Media::getLowResVideo()`. The image methods on a video will return a still of the video.
 
 ##Collections
 
