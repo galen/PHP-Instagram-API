@@ -7,6 +7,14 @@ $current_user = $instagram->getCurrentUser();
 $username = isset( $_GET['user'] ) ? $_GET['user'] : 'galenweee';
 $user = $instagram->getUserByUsername( $username );
 
+$tags_closure = function($m){
+    return sprintf( '<a href="?example=tag.php&tag=%s">%s</a>', $m[1], $m[0] );
+};
+
+$mentions_closure = function($m){
+    return sprintf( '<a href="?example=user.php&user=%s">%s</a>', $m[1], $m[0] );
+};
+
 // Perform actions
 if ( isset( $_POST['action'] ) ) {
 	try {

@@ -7,7 +7,7 @@
 	<dt>Website</dt>
 	<dd><a href="<?php echo $user->getWebsite() ?>"><?php echo $user->getWebsite() ?></a></dd>
 	<dt>Bio</dt>
-	<dd><?php echo $user->getBio() ?></dd>
+	<dd><?php echo \Instagram\Helper::parseTagsAndMentions( $user->getBio(), $tags_closure, $mentions_closure ) ?></dd>
 
 	<?php if( $user->username != $current_user->username ): ?>
 		<dt>Outgoing Relationship</dt>
