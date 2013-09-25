@@ -23,6 +23,13 @@ class CurlClient implements ClientInterface {
     protected $curl = null;
 
     /**
+     * Curl Response header
+     *
+     * @var array
+     */
+    protected $curlRequestHeaders = array();
+
+    /**
      * Constructor
      *
      * Initializes the curl object
@@ -97,6 +104,7 @@ class CurlClient implements ClientInterface {
         $this->curl = curl_init();
         curl_setopt( $this->curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $this->curl, CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt( $this->curl, CURLOPT_HEADERFUNCTION, array($this, 'fetchHeader') );
     }
 
     /**
@@ -104,7 +112,7 @@ class CurlClient implements ClientInterface {
      *
      * Execute the curl object
      *
-     * @return StdClass
+     * @return ApiResponse
      * @access protected
      * @throws \Instagram\Core\ApiException
      */
@@ -114,7 +122,28 @@ class CurlClient implements ClientInterface {
         if ( $error ) {
             throw new \Instagram\Core\ApiException( $error, 666, 'CurlError' );
         }
-        return $raw_response;
+        
+        $response = new ApiResponse($raw_response, $this->curlRequestHeaders);
+        return $response;
+    }
+    
+    /**
+     * Method parses the headers returned by CURL and
+     * stores them into private array.
+     *
+     * @return ApiResponse
+     * @access protected
+     * @throws \Instagram\Core\ApiException
+     */
+    protected function fetchHeader($ch, $header) {
+    	$i = strpos($header, ':');
+    	if (!empty($i)) {
+    		$key = strtolower(substr($header, 0, $i));
+    		$value = trim(substr($header, $i + 2));
+    		$this->curlRequestHeaders[$key] = $value;
+    	}
+    	
+    	return strlen($header);
     }
     
 }
