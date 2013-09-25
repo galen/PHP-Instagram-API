@@ -26,13 +26,23 @@ class ApiResponse {
     protected $response;
 
     /**
+     * Response headers
+     * 
+     * @var array
+     * @access protected
+     */
+    protected $responseHeaders;
+    
+    /**
      * Constructor
      *
      * @param $raw_response Response from teh API
+     * @param $response_headers Response headers
      * @access public
      */
-    public function __construct( $raw_response ){
+    public function __construct( $raw_response, array $response_headers = null ){
         $this->response = json_decode( $raw_response );
+        $this->responseHeaders = $response_headers;
         if ( !$this->isValidApiResponse() ) {
             $this->response = new \StdClass;
             $this->response->meta = new \StdClass;
@@ -88,7 +98,15 @@ class ApiResponse {
         return isset( $this->response ) ? $this->response : null;
     }
 
-
+    /**
+     * Get the response headers
+     * 
+     * @return array Return the response's headers
+     * @access public
+     */
+	public function getHeaders() {
+		return $this->responseHeaders;
+	}
 
     /**
      * Get the response's error message
@@ -137,7 +155,27 @@ class ApiResponse {
         }
         return null;
     }
-
+    
+    /**
+     * Gets the Rate limit returned from API
+     * 
+     * @return mixed Returns the Rate limit returned from API
+     * @access public
+     */
+    public function getRateLimit() {
+    	return isset($this->responseHeaders['x-ratelimit-limit']) ? (int) $this->responseHeaders['x-ratelimit-limit'] : null;
+    }
+    
+    /**
+     * Gets the Remaining Rate limit returned from API
+     *
+     * @return mixed Returns the Remaining Rate limit returned from API
+     * @access public
+     */
+    public function getRateLimitRemaining() {
+    	return isset($this->responseHeaders['x-ratelimit-remaining']) ? (int) $this->responseHeaders['x-ratelimit-remaining'] : null;
+    }
+    
     /**
      * Magic to string method
      *
