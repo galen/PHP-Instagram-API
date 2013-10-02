@@ -16,3 +16,14 @@ $nav_title = $count > 0 ? 'Instagram <span class="badge badge-important">' . $co
 	\PropNav\Item::forge($nav_title, '', 100)
 		->add_item(\PropNav\Item::forge('Manage', '/admin/instagram/manage/index'), 1)
 );
+
+
+$roles = array(
+	'manage_instagram' => array(
+		'Instagram\Controller_Ajax' => true,
+		'Instagram\Controller_Handler' => true,
+		'Instagram\Controller_Manage' => true
+	)
+);
+
+\Auth::acl()->add($roles);
