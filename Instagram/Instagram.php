@@ -268,14 +268,14 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
         return $location_collection;
     }
 
-	/**
-	 * Get tag media
-	 *
-	 * @param string $tag
-	 * @param array $params Optional params to pass to the endpoint
-	 * @return TagMediaCollection
-	 */
-    public function searchTagMedia( $tag, array $params = null ) {
+    /**
+     * Get tag media
+     *
+     * @param string $tag
+     * @param array $params Optional params to pass to the endpoint
+     * @return TagMediaCollection
+     */
+    public function getTagMedia( $tag, array $params = null ) {
         $params = (array)$params;
         return new TagMediaCollection( $this->proxy->getTagMedia( $tag, $params ), $this->proxy );
     }
