@@ -142,4 +142,12 @@ class InstagramTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf( '\Instagram\Collection\TagCollection', $tags );
     }
 
+    public function testSearchTagMedia() {
+        $instagram = new Instagram\Instagram($this->access_token);
+        $media = $instagram->searchTagMedia($this->valid_tag);
+        $this->assertInstanceOf('\Instagram\Collection\TagMediaCollection', $media);
+        $this->assertTrue((bool)strlen($media->getNextMaxTagId()));
+    }
+
+
 }
