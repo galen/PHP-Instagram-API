@@ -39,6 +39,12 @@ All methods that access the API can throw exceptions. If the API request fails f
 
 - This will redirect the user to the Instagram authorization page. After authorization Instagram will redirect the user to the url in `$auth_config['redirect_uri']` with a code that you will need to obtain an access token
 
+- You can also just retrieve the authorisation URL and take care of the redirection yourself via
+
+    $auth->getAuthorizationUrl();
+
+
+
 <b></b>
 
     $_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] );
