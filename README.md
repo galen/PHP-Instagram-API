@@ -41,6 +41,8 @@ All methods that access the API can throw exceptions. If the API request fails f
 
 - You can also just retrieve the authorisation URL and take care of the redirection yourself via
 
+<b></b>
+
     $auth->getAuthorizationUrl();
 
 
