@@ -31,6 +31,16 @@ class User extends \Instagram\Core\BaseObjectAbstract {
     }
 
     /**
+     * Get the user's id
+     *
+     * @return int
+     * @access public
+     */
+    public function getId() {
+        return $this->data->id;
+    }
+
+    /**
      * Get the user's full name
      *
      * @return string|null
