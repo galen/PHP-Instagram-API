@@ -194,15 +194,29 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
      * Get media comments
      *
      * Return all the comments associated with a media
-     *
+     * @param bool $fetch_from_api Query the API or use internal
      * @return \Instagram\CommentCollection
      * @access public
      */
-    public function getComments() {
+    public function getComments( $fetch_from_api = true ) {
+        if ( !$fetch_from_api ) {
+            return new CommentCollection( $this->data->comments, $this->proxy );
+        }
+
         if ( !$this->comments ) {
             $this->comments = new CommentCollection( $this->proxy->getMediaComments( $this->getApiId() ), $this->proxy );
         }
         return $this->comments;
+    }
+
+    /**
+     * Get the media's comments count
+     *
+     * @return int
+     * @access public
+     */
+    public function getCommentsCount() {
+        return (int)$this->data->comments->count;
     }
 
     /**
