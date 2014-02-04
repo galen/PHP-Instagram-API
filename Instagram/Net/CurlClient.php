@@ -112,7 +112,7 @@ class CurlClient implements ClientInterface {
         $raw_response = curl_exec( $this->curl );
         $error = curl_error( $this->curl );
         if ( $error ) {
-            throw new \Instagram\Core\ApiException( $error, 666, 'CurlError' );
+            throw new \Instagram\Core\ApiException( 'CurlClient::fetch() ' . __FILE__ . ' : ' . $error, 666, 'CurlError' );
         }
         return $raw_response;
     }

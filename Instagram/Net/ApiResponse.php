@@ -75,7 +75,14 @@ class ApiResponse {
      * @access public
      */
     public function getData() {
-        return isset( $this->response->data ) ? $this->response->data : null;
+        if (isset( $this->response->data ))
+        {
+            return $this->response->data;
+        }elseif (isset($this->response->media_id))
+        {
+            return $this->response;
+        }
+        return null;
     }
 
     /**

@@ -49,6 +49,7 @@ class Proxy {
      * @access protected
      */
     protected $api_url = 'https://api.instagram.com/v1';
+    protected $api_oembed_url = 'http://api.instagram.com/oembed';
 
     /**
      * Constructor
@@ -269,6 +270,21 @@ class Proxy {
         $response = $this->apiCall(
             'get',
             sprintf( '%s/media/%s', $this->api_url, $id )
+        );
+        return $response->getData();
+    }
+
+    /**
+     * Get oembed
+     * 
+     * @param string $url The URL of the instagram Post
+     * @return StdClass Returns the media data
+     * @access public
+     */
+    public function getOEmbed( $url ) {
+        $response = $this->apiCall(
+            'get',
+            sprintf( '%s/oembed/?url=%s', $this->api_oembed_url, $url )
         );
         return $response->getData();
     }
@@ -550,7 +566,7 @@ class Proxy {
                     throw new \Instagram\Core\ApiAuthException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
                 }
                 else {
-                    throw new \Instagram\Core\ApiException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
+                    throw new \Instagram\Core\ApiException( __FILE__ . ' : ' . $url . ' - ' . $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
                 }
             }
             else {
