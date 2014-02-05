@@ -61,15 +61,24 @@ class Auth {
      * @access public
      */
     public function authorize() {
-        header(
-            sprintf(
-                'Location:https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code&scope=%s',
-                $this->config['client_id'],
-                $this->config['redirect_uri'],
-                implode( '+', $this->config['scope'] )
-            )
-        );
+        header('Location:' . $this->getAuthorizationUrl());
         exit;
+    }
+
+    /**
+     * getAuthorizationUrl
+     *
+     * Return the URL to request authorization from an Instagram user
+     * @return string
+     */
+    public function getAuthorizationUrl()
+    {
+        return sprintf(
+            'https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code&scope=%s',
+            $this->config['client_id'],
+            $this->config['redirect_uri'],
+            implode( '+', $this->config['scope'] )
+        );
     }
 
     /**
