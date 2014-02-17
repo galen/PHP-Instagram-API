@@ -104,9 +104,10 @@ class Controller_Manage extends \Admin\Controller_Template
 				}
 
 				foreach($subscriptions as $subscription) {
-					if(isset($merged[$subscription->object_id])) {
-						$merged[$subscription->object_id]->instagram = $subscription;
-					}	
+					$key = str_replace('#', '', $subscription->object_id);
+					if(isset($merged[$key])) {
+						$merged[$key]->instagram = $subscription;
+					}
 				}
 			}
 
