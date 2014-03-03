@@ -117,6 +117,7 @@ class InstagramPoll
 						$image->accepted = 'unsorted';
 						$image->subscription_id = $sub->instagram_subscription_id;
 						$image->caption = $med->caption->text;
+						$image->tags = serialize($med->tags);
 
 						$image->save();
 						$count++;

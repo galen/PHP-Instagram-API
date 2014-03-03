@@ -41,6 +41,11 @@ class Model_Image extends \Orm\Model
 			'label' => 'Caption',
 			'null' => true
 		),
+		'tags' => array(
+			'type' => 'text',
+			'label' => 'Tags',
+			'null' => true
+		),
 		'accepted' => array(
 			'type' => 'boolean',
 			'label' => 'Accepted'
