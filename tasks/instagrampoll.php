@@ -78,7 +78,7 @@ class InstagramPoll
 			$count = 0;
 			
 			foreach($media as $med) {
-			
+
 				$image = \DB::select('instagram_id')
 					->from(\Propeller\Instagram\Model_Image::table())
 					->where('instagram_id', $med->id)
@@ -116,6 +116,7 @@ class InstagramPoll
 						$image->link = $med->link;
 						$image->accepted = 'unsorted';
 						$image->subscription_id = $sub->instagram_subscription_id;
+						$image->caption = $med->caption->text;
 
 						$image->save();
 						$count++;

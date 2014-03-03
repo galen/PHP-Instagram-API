@@ -36,6 +36,11 @@ class Model_Image extends \Orm\Model
 			'type' => 'varchar',
 			'label' => 'Author'
 		),
+		'caption' => array(
+			'type' => 'text',
+			'label' => 'Caption',
+			'null' => true
+		),
 		'accepted' => array(
 			'type' => 'boolean',
 			'label' => 'Accepted'
