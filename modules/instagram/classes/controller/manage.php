@@ -111,12 +111,22 @@ class Controller_Manage extends \Admin\Controller_Template
 			}
 
 			if(\Input::post()) {
-				 \Propeller\Instagram\Subscription::forge(\Input::post('name'), array(
-						 'object_id' => \Input::post('tag'),
-						 'aspect' => 'media',
-						 'object' => 'tag'
-					 )
-				 );
+				try {
+					 \Propeller\Instagram\Subscription::forge(
+						 \Input::post('name'),
+						 array(
+							 'object_id' => \Input::post('tag'),
+							 'aspect' => 'media',
+							 'object' => 'tag',
+						 )
+					 );
+				} catch (\Exception $e) {
+					if (in_array(\Fuel::$env, [\Fuel::PRODUCTION, \Fuel::STAGING, \Fuel::TEST])) {
+						\Session::set_flash('error', '');
+					} else {
+						\Session::set_flash('error', 'Instagram integration can not be used on development.');
+					}
+				}
 			}
 
 			$view->set('subscriptions', $merged);
