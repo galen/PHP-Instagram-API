@@ -48,6 +48,24 @@ class Subscription
 		$curl = new \Instagram\Net\CurlClient();
 		$result = $curl->post('https://api.instagram.com/v1/subscriptions/', $params);
 		$response = json_decode($result);
+
+
+		if (
+			isset($response->meta)
+			and isset($response->meta->code) // Who knows what might not exist
+			and $response->meta->code !== 200
+		) {
+			\Log::error(
+				sprintf(
+					'Instagram subscription failed (%s) - %s',
+					$response->meta->code,
+					isset($response->meta->error_message) ? $response->meta->error_message : ''
+				),
+				__METHOD__
+			);
+			throw new \RuntimeException('Instagram integration failed - ' . (isset($response->meta->error_type) ? $response->meta->error_type : ''));
+		}
+
 		$sub->instagram_subscription_id = $response->data->id;
 		$sub->status = 'Live';
 		$sub->save();
