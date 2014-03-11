@@ -41,11 +41,6 @@ class Model_Image extends \Orm\Model
 			'label' => 'Caption',
 			'null' => true
 		),
-		'tags' => array(
-			'type' => 'text',
-			'label' => 'Tags',
-			'null' => true
-		),
 		'accepted' => array(
 			'type' => 'boolean',
 			'label' => 'Accepted'
@@ -68,6 +63,19 @@ class Model_Image extends \Orm\Model
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		)
+	);
+
+	protected static $_many_many = array(
+		'tags' => array(
+			'key_from' => 'id',
+			'key_through_from' => 'image_id',
+			'table_through' => 'instagram__images_tags',
+			'key_through_to' => 'tag_id',
+			'model_to' => '\Propeller\Instagram\Model_Tag',
+			'key_to' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
 	);
 
 	protected static $_observers = array(

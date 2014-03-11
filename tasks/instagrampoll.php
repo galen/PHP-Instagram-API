@@ -117,9 +117,33 @@ class InstagramPoll
 						$image->accepted = 'unsorted';
 						$image->subscription_id = $sub->instagram_subscription_id;
 						$image->caption = $med->caption->text;
-						$image->tags = serialize($med->tags);
 
 						$image->save();
+
+						//Loop Thorugh Tags and store each one
+						foreach($med->tags as $tag) 
+						{
+							//Check Tag Existance
+							$check_tag_existance = \Propeller\Instagram\Model_Tag::query()->where('tag_name', $tag)->get_one();
+							if ($check_tag_existance) 
+							{
+								//Get Model Of Tag if it already exists
+								$tag_id = $check_tag_existance->id;
+								$tag_model = \Propeller\Instagram\Model_Tag::find($tag_id);
+							}
+							else
+							{
+								//Create That Tag if it doesnt already exist
+								$tag_model = \Propeller\Instagram\Model_Tag::forge();
+								$tag_model->tag_name = $tag;
+								$tag_model->save();
+							}
+
+							//Save Tags 
+							$image->tags[] = $tag_model;
+							$image->save();
+						}
+
 						$count++;
 					}				
 				}
