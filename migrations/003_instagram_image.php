@@ -7,8 +7,11 @@ class Instagram_Image
 {
 	function up()
 	{
-		// Create sites table and add default
-		\DBUtil::create_table('instagram__images', array(
+		try 
+		{
+			\DB::start_transaction();
+			
+			\DBUtil::create_table('instagram__images', array(
 				'id'					=> array('type' => 'int', 'unsigned' => true, 'auto_increment' => true),
 				'instagram_id' 			=> array('type' => 'tinytext'),
 				'subscription_id'		=> array('type' => 'tinytext'),
@@ -20,11 +23,37 @@ class Instagram_Image
 				'created_at'			=> array('type' => 'int'),
 				'updated_at'			=> array('type' => 'int'),
 			), array('id'), false, 'InnoDB', 'utf8_unicode_ci');
+
+			\DB::commit_transaction();
+		} 
+		catch (\Exception $e)
+		{
+			\DB::rollback_transaction();
+			\Cli::error(sprintf('Up Migration Failed - %s - %s', $e->getMessage(), __FILE__));
+			return false;
+		}
+
+		\Cli::write('Migrated Up Successfully: ' . __FILE__, 'green');
 	}
 
 	function down()
 	{
-		\DBUtil::drop_table('instagram__images');
+		try
+		{
+			\DB::start_transaction();
+
+			\DBUtil::drop_table('instagram__images');
+
+			\DB::commit_transaction();
+		}
+		catch (\Exception $e)
+		{
+			\DB::rollback_transaction();
+			\Cli::error(sprintf('Up Migration Failed - %s - %s', $e->getMessage(), __FILE__));
+			return false;
+		}
+
+		\Cli::write('Migrated Down Successfully: ' . __FILE__, 'green');
 	}
 
 }

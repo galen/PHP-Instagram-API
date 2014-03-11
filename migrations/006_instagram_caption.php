@@ -1,24 +1,19 @@
 <?php
 
+
 namespace Fuel\Migrations;
 
-class Instagram_Account_Auth
+class Instagram_Caption
 {
 	function up()
 	{
 		try 
 		{
 			\DB::start_transaction();
-			
-			\DBUtil::create_table('instagram__accounts', array(
-				'id'					=> array('type' => 'int', 'unsigned' => true, 'auto_increment' => true),
-				'username'				=> array('type' => 'tinytext'),
-				'instagram_id'			=> array('type' => 'tinytext'),
-				'token'					=> array('type' => 'text'),
-				'active'				=> array('type' => 'bool'),
-				'created_at'			=> array('type' => 'int'),
-				'updated_at'			=> array('type' => 'int'),
-			), array('id'), false, 'InnoDB', 'utf8_unicode_ci');
+
+			\DBUtil::add_fields('instagram__images', array(
+				'caption' => array('type' => 'text', 'null' => true),
+			));
 
 			\DB::commit_transaction();
 		} 
@@ -38,7 +33,9 @@ class Instagram_Account_Auth
 		{
 			\DB::start_transaction();
 
-			\DBUtil::drop_table('instagram__accounts');
+			\DBUtil::drop_fields('instagram__images', array(
+				'caption'
+			));
 
 			\DB::commit_transaction();
 		}
