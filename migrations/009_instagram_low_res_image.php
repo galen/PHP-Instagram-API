@@ -3,7 +3,7 @@
 
 namespace Fuel\Migrations;
 
-class Instagram_Tags_Many_To_Many
+class Instagram_Low_Res_Image
 {
 	function up()
 	{	
