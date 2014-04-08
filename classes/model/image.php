@@ -28,6 +28,10 @@ class Model_Image extends \Orm\Model
 			'type' => 'varchar',
 			'label' => 'Main IMG'
 		),
+		'lowres_img' => array(
+			'type' => 'varchar',
+			'label' => 'Low Res IMG'
+		),
 		'link' => array(
 			'type' => 'varchar',
 			'label' => 'Link'

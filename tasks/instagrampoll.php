@@ -111,6 +111,7 @@ class InstagramPoll
 						$image = \Propeller\Instagram\Model_Image::forge();
 						$image->thumb_img = $med->images->thumbnail->url;
 						$image->main_img = $med->images->standard_resolution->url;
+						$image->lowres_img = $med->images->low_resolution->url;
 						$image->instagram_id = $med->id;
 						$image->author = $med->user->username;
 						$image->link = $med->link;
