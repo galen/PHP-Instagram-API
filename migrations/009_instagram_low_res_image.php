@@ -12,7 +12,7 @@ class Instagram_Low_Res_Image
 			\DB::start_transaction();
 
 			\DBUtil::add_fields('instagram__images', array(
-				'lowres_img' => array('type' => 'varchar', 'null' => true),
+				'lowres_img' => array('type' => 'text', 'null' => true),
 			));
 
 			\DB::commit_transaction();
