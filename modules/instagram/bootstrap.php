@@ -13,7 +13,7 @@ $count = \DB::select(\DB::expr('COUNT(*) as count'))
 $nav_title = $count > 0 ? 'Instagram <span class="badge badge-important">' . $count . '</span>' : 'Instagram';
 
 \PropNav\Menu::instance('admin')->add_item(
-	\PropNav\Item::forge($nav_title, '', 100)
+	\PropNav\Item::forge("Your CMS.{$nav_title}", '', 100)
 		->add_item(\PropNav\Item::forge('Manage', '/admin/instagram/manage/index'), 1)
 );
 
