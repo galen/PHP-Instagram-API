@@ -280,4 +280,12 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
         return new TagMediaCollection( $this->proxy->getTagMedia( $tag, $params ), $this->proxy );
     }
 
+    /**
+     * Return the number of requests remaining on this client connection
+     * @return int
+     */
+    public function getRequestsRemaining() {
+        return $this->proxy->getRequestsRemaining();
+    }
+
 }

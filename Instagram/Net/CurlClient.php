@@ -97,6 +97,7 @@ class CurlClient implements ClientInterface {
         $this->curl = curl_init();
         curl_setopt( $this->curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $this->curl, CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt($this->curl, CURLOPT_HEADER, 1);
     }
 
     /**
