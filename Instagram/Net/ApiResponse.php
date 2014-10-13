@@ -26,12 +26,23 @@ class ApiResponse {
     protected $response;
 
     /**
+     * Response
+     *
+     * This is the headers from the response
+     *
+     * @var StdClass
+     * @access protected
+     */
+    protected $headers;
+
+    /**
      * Constructor
      *
      * @param $raw_response Response from teh API
      * @access public
      */
     public function __construct( $raw_response ){
+        $this->headers = $this->_strip_headers( $raw_response );
         $this->response = json_decode( $raw_response );
         if ( !$this->isValidApiResponse() ) {
             $this->response = new \StdClass;
@@ -88,6 +99,15 @@ class ApiResponse {
         return isset( $this->response ) ? $this->response : null;
     }
 
+    /**
+     * Get the HTTP headers from the response
+     *
+     * @return array Returns the headers from the response
+     * @access public
+     */
+    public function getHeaders() {
+        return isset( $this->headers ) ? $this->headers : null;
+    }
 
 
     /**
@@ -139,6 +159,16 @@ class ApiResponse {
     }
 
     /**
+     * Return the remaining request limit
+     *
+     * @return int Returns the number of requests left in the hour.  -1 if unknown
+     * @access public
+     */
+    public function getRemainingRequests() {
+        return isset( $this->headers['X-Ratelimit-Remaining'] ) ? $this->headers['X-Ratelimit-Remaining'] : -1;
+    }
+
+    /**
      * Magic to string method
      *
      * @return string Return the json encoded response
@@ -146,6 +176,25 @@ class ApiResponse {
      */
     public function __toString() {
         return json_encode( $this->response );
+    }
+
+    private function _strip_headers( &$raw_response ) {
+        $headers = array();
+
+        $header_text = substr($raw_response, 0, strpos($raw_response, "\r\n\r\n"));
+        $raw_response = substr($raw_response, strlen($header_text));
+
+        foreach (explode("\r\n", $header_text) as $i => $line)
+            if ($i === 0)
+                $headers['http_code'] = $line;
+            else
+            {
+                list ($key, $value) = explode(': ', $line);
+
+                $headers[$key] = $value;
+            }
+
+        return $headers;
     }
 
 }
