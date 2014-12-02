@@ -274,6 +274,21 @@ class Proxy {
     }
 
     /**
+     * Get media by shortcode
+     *
+     * @param string $shortcode Media shortcode
+     * @return StdClass Returns the media data
+     * @access public
+     */
+    public function getMediaByShortcode( $shortcode ) {
+      $response = $this->apiCall(
+        'get',
+        sprintf( '%s/media/shortcode/%s', $this->api_url, $shortcode )
+      );
+      return $response->getData();
+    }
+
+    /**
      * Get tag
      * 
      * @param string $id Tag ID
