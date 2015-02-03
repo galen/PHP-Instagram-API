@@ -63,6 +63,16 @@ class Model_Subscription extends \Orm\Model
 			->limit($count)
 			->get();
 	}
+	
+	public function preview_images($limit)
+	{
+		return \Propeller\Instagram\Model_Image::query()
+			->where('subscription_id', $this->instagram_subscription_id)
+			->where('accepted', 'unsorted')
+			->order_by('created_at', 'desc')
+			->limit($limit)
+			->get();
+	}
 
 	public function random_images($count)
 	{
