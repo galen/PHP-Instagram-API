@@ -28,9 +28,10 @@ class InstagramPoll
 				curl_setopt($ch, CURLOPT_URL, $image->main_img);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				$output = curl_exec($ch);
+				$curl_info = curl_getinfo($ch);
 				curl_close($ch);					
 
-				if($output == "Content not found")
+				if($curl_info['http_code'] == 404)
 				{
 					\Cli::error("Image is not accessible, going to delete now...");
 					
