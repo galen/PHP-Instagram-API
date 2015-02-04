@@ -98,7 +98,7 @@ class InstagramPoll
 						// Handle access denied error
 						if($xml->Code == 'AccessDenied')						
 						{						
-							throw new ImageAccessDeindedException("Access denied to 'http://distilleryimage0.s3.amazonaws.com/47040426c57211e2880f22000a1f9ca7_5.jpg'. This entry hasn't been saved to the DB.");
+							throw new ImageAccessDeindedException("Access denied to '" . $med->images->standard_resolution->url ."' This entry hasn't been saved to the DB.");
 						}
 						
 						// Thrown an uknown error exception
