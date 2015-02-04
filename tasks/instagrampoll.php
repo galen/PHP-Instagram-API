@@ -28,10 +28,10 @@ class InstagramPoll
 				curl_setopt($ch, CURLOPT_URL, $image->main_img);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				$output = curl_exec($ch);
-				$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+				$curl_info = curl_getinfo($ch);
 				curl_close($ch);					
-				
-				if($content_type == 'application/xml' and $xml = new \SimpleXMLElement($output))
+
+				if($curl_info['http_code'] == 404)
 				{
 					\Cli::error("Image is not accessible, going to delete now...");
 					
@@ -99,7 +99,7 @@ class InstagramPoll
 						// Handle access denied error
 						if($xml->Code == 'AccessDenied')						
 						{						
-							throw new ImageAccessDeindedException("Access denied to 'http://distilleryimage0.s3.amazonaws.com/47040426c57211e2880f22000a1f9ca7_5.jpg'. This entry hasn't been saved to the DB.");
+							throw new ImageAccessDeindedException("Access denied to '" . $med->images->standard_resolution->url ."' This entry hasn't been saved to the DB.");
 						}
 						
 						// Thrown an uknown error exception
