@@ -17,7 +17,7 @@
 				<td><?= $sub->status ?></td>
 				<td><?= $sub->object_id ?></td>
 				<td>
-					<? $images = $sub->latest_images(3);?>
+					<? $images = $sub->preview_images(3);?>
 					<? foreach($images as $image): ?>
 						<img width="50" height="50" src="<?= $image->thumb_img ?>" />
 					<? endforeach; ?>

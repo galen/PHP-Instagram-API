@@ -28,10 +28,10 @@ class InstagramPoll
 				curl_setopt($ch, CURLOPT_URL, $image->main_img);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				$output = curl_exec($ch);
-				$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+				$curl_info = curl_getinfo($ch);
 				curl_close($ch);					
-				
-				if($content_type == 'application/xml' and $xml = new \SimpleXMLElement($output))
+
+				if($curl_info['http_code'] == 404)
 				{
 					\Cli::error("Image is not accessible, going to delete now...");
 					
@@ -79,11 +79,9 @@ class InstagramPoll
 			
 			foreach($media as $med) {
 
-				$image = \DB::select('instagram_id')
-					->from(\Propeller\Instagram\Model_Image::table())
+				$image = \Propeller\Instagram\Model_Image::query()
 					->where('instagram_id', $med->id)
-					->execute()
-					->as_array('instagram_id', null);
+					->get_one();
 										
 				try
 				{
@@ -99,7 +97,7 @@ class InstagramPoll
 						// Handle access denied error
 						if($xml->Code == 'AccessDenied')						
 						{						
-							throw new ImageAccessDeindedException("Access denied to 'http://distilleryimage0.s3.amazonaws.com/47040426c57211e2880f22000a1f9ca7_5.jpg'. This entry hasn't been saved to the DB.");
+							throw new ImageAccessDeindedException("Access denied to '" . $med->images->standard_resolution->url ."' This entry hasn't been saved to the DB.");
 						}
 						
 						// Thrown an uknown error exception
@@ -109,44 +107,40 @@ class InstagramPoll
 					// Carry on..
 					if(!$image) {
 						$image = \Propeller\Instagram\Model_Image::forge();
-						$image->thumb_img = $med->images->thumbnail->url;
-						$image->main_img = $med->images->standard_resolution->url;
-						$image->lowres_img = $med->images->low_resolution->url;
-						$image->instagram_id = $med->id;
-						$image->author = $med->user->username;
-						$image->link = $med->link;
 						$image->accepted = 'unsorted';
-						$image->subscription_id = $sub->instagram_subscription_id;
-						$image->caption = $med->caption->text;
-
-						$image->save();
-
-						//Loop Thorugh Tags and store each one
-						foreach($med->tags as $tag) 
+					}
+						
+					$image->thumb_img = $med->images->thumbnail->url;
+					$image->main_img = $med->images->standard_resolution->url;
+					$image->lowres_img = $med->images->low_resolution->url;
+					$image->instagram_id = $med->id;
+					$image->author = $med->user->username;
+					$image->link = $med->link;
+					$image->subscription_id = $sub->instagram_subscription_id;
+					$image->caption = $med->caption->text;
+					$image->tags = [];
+					//Loop Thorugh Tags and store each one
+					foreach($med->tags as $tag)
+					{
+						//Check Tag Existance
+						$tag_model = \Propeller\Instagram\Model_Tag::query()->where('tag_name', $tag)->get_one();
+						if ( !$tag_model )
 						{
-							//Check Tag Existance
-							$check_tag_existance = \Propeller\Instagram\Model_Tag::query()->where('tag_name', $tag)->get_one();
-							if ($check_tag_existance) 
-							{
-								//Get Model Of Tag if it already exists
-								$tag_id = $check_tag_existance->id;
-								$tag_model = \Propeller\Instagram\Model_Tag::find($tag_id);
-							}
-							else
-							{
-								//Create That Tag if it doesnt already exist
-								$tag_model = \Propeller\Instagram\Model_Tag::forge();
-								$tag_model->tag_name = $tag;
-								$tag_model->save();
-							}
-
-							//Save Tags 
-							$image->tags[] = $tag_model;
-							$image->save();
+							//Create That Tag if it doesnt already exist
+							$tag_model = \Propeller\Instagram\Model_Tag::forge();
+							$tag_model->tag_name = $tag;
+							$tag_model->save();
 						}
 
-						$count++;
-					}				
+						//Save Tags 
+						$image->tags[] = $tag_model;
+						
+					}
+
+					$image->save();
+
+					$count++;
+									
 				}
 				catch (ImageAccessDeindedException $e)
 				{
