@@ -60,7 +60,8 @@ class Auth {
      * Redirects the user to the Instagram authorization url
      * @access public
      */
-    public function authorize() {
+    public function authorize(array $config = null) {
+        $this->config = (array) $config + $this->config;
         header(
             sprintf(
                 'Location:https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code&scope=%s',
