@@ -83,7 +83,8 @@ class Auth {
      * @throws \Instagram\Core\ApiException
      * @access public
      */
-    public function getAccessToken( $code ) {
+    public function getAccessToken( $code, array $config = null ) {
+        $this->config = (array) $config + $this->config;
         $post_data = array(
             'client_id'         => $this->config['client_id'],
             'client_secret'     => $this->config['client_secret'],
