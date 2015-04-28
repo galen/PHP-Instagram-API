@@ -51,6 +51,12 @@ class Proxy {
     protected $api_url = 'https://api.instagram.com/v1';
 
     /**
+     * @var int
+     * @access protected
+     */
+    protected $requests_remaining = -1;
+
+    /**
      * Constructor
      *
      * @param \Instagram\Net\ClientInterface $client HTTP Client
@@ -301,6 +307,15 @@ class Proxy {
             sprintf( '%s/locations/%s', $this->api_url, $id )
         );
         return $response->getData();
+    }
+
+    /**
+     * Get the number of requests remaining for this client.  Returns -1 if unknown
+     *
+     * @return int
+     */
+    public function getRequestsRemaining() {
+        return $this->requests_remaining;
     }
 
     /**
@@ -557,6 +572,12 @@ class Proxy {
                 return false;
             }
         }
+
+        $headers = $response->getHeaders();
+        if (isset($headers['X-Ratelimit-Remaining'])) {
+            $this->requests_remaining = $headers['X-Ratelimit-Remaining'];
+        }
+
         return $response;
     }
 
