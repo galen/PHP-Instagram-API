@@ -17,10 +17,10 @@ class InstagramPoll
 		$subscriptions = \Propeller\Instagram\Model_Subscription::query()
 			->where('status', 'Live')
 			->get();
-			
+
 		$image_delete_count = 0;
 
-		foreach($subscriptions as $sub) 
+		foreach($subscriptions as $sub)
 		{
 			foreach($sub->images as $image)
 			{
@@ -34,11 +34,11 @@ class InstagramPoll
 				if($curl_info['http_code'] == 404)
 				{
 					\Cli::error("Image is not accessible, going to delete now...");
-					
+
 					try
 					{
-						$image->delete();						
-						
+						$image->delete();
+
 						// Show what image we've deleted
 						// and increment the count.
 						\Cli::write("Image {$image->main_img} deleted", "cyan");
@@ -47,15 +47,15 @@ class InstagramPoll
 					catch(\Exception $e)
 					{
 						// Log the error
-						\Log::error($e->getMessage());						
+						\Log::error($e->getMessage(), __METHOD__);
 						\Cli::error("Unable to delete image: " . $e->getMessage());
 					}
-				}		
+				}
 			}
 		}
-		
-		// Show the amount 
-		\Cli::write("{$image_delete_count} images deleted.");		
+
+		// Show the amount
+		\Cli::write("{$image_delete_count} images deleted.");
 	}
 
 	public function subscriptions()
@@ -76,100 +76,11 @@ class InstagramPoll
 			$tag = $instagram->getTag($sub->object_id);
 			$media = $tag->getMedia();
 			$count = 0;
-			
+
 			foreach($media as $med) {
-
-				$image = \Propeller\Instagram\Model_Image::query()
-					->where('instagram_id', $med->id)
-					->get_one();
-										
-				try
-				{
-					$ch = curl_init();
-					curl_setopt($ch, CURLOPT_URL, $med->images->standard_resolution->url);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					$output = curl_exec($ch);
-					$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-					curl_close($ch);	
-					
-					if($content_type == 'application/xml' and $xml = new \SimpleXMLElement($output))
-					{
-						// Handle access denied error
-						if($xml->Code == 'AccessDenied')						
-						{						
-							throw new ImageAccessDeindedException("Access denied to '" . $med->images->standard_resolution->url ."' This entry hasn't been saved to the DB.");
-						}
-						
-						// Thrown an uknown error exception
-						throw new UknownInstagramError("Uknown error ({$xml->Code}): {$xml->Message}");
-					}												
-					
-					// Carry on..
-					if(!$image) {
-						$image = \Propeller\Instagram\Model_Image::forge();
-						$image->accepted = 'unsorted';
-					}
-						
-					$image->thumb_img = $med->images->thumbnail->url;
-					$image->main_img = $med->images->standard_resolution->url;
-					$image->lowres_img = $med->images->low_resolution->url;
-					$image->instagram_id = $med->id;
-					$image->author = $med->user->username;
-					$image->link = $med->link;
-					$image->subscription_id = $sub->instagram_subscription_id;
-					$image->caption = $med->caption->text;
-					$image->tags = [];
-					//Loop Thorugh Tags and store each one
-					foreach($med->tags as $tag)
-					{
-						//Check Tag Existance
-						$tag_model = \Propeller\Instagram\Model_Tag::query()->where('tag_name', $tag)->get_one();
-						if ( !$tag_model )
-						{
-							//Create That Tag if it doesnt already exist
-							$tag_model = \Propeller\Instagram\Model_Tag::forge();
-							$tag_model->tag_name = $tag;
-							$tag_model->save();
-						}
-
-						//Save Tags 
-						$image->tags[] = $tag_model;
-						
-					}
-
-					$image->save();
-
+				if (static::add_media($med, $sub)) {
 					$count++;
-									
 				}
-				catch (ImageAccessDeindedException $e)
-				{
-					\Cli::write("Attempting to delete image", "cyan");
-					
-					if($image) 
-					{
-						$obj = \Propeller\Instagram\Model_Image::find($image->id);
-						
-						// Delete the image as we no longer have access to it!
-						try
-						{
-							$obj->delete();				
-							
-							\Cli::write("Image deleted", "green");
-						}
-						catch(\Exception $e)
-						{
-							\Cli::error("Unable to delete image: " . $e->getMessage());
-						}
-					}				
-				}
-				catch(\Exception $e)
-				{
-					// Some other error
-					\Log::error($e->getMessage()); 	
-					
-					\Cli::error("Uknown error: " . $e->getMessage());
-				}				
 			}
 
 			if($count) {
@@ -177,10 +88,107 @@ class InstagramPoll
 				$sub->save();
 			}
 
+			\Log::info($count ? $count.' updates for tag: '.$sub->object_id : 'No updates for tag: '.$sub->object_id, __METHOD__);
 			\Cli::write($count ? $count.' updates for tag: '.$sub->object_id : 'No updates for tag: '.$sub->object_id, 'green');
 
 		}
 	}
+
+	protected static function add_media($med, $sub)
+	{
+		$image = \Propeller\Instagram\Model_Image::query()
+			->where('instagram_id', $med->id)
+			->get_one();
+
+		try
+		{
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $med->images->standard_resolution->url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$output = curl_exec($ch);
+			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+			curl_close($ch);	
+
+			if($content_type == 'application/xml' and $xml = new \SimpleXMLElement($output))
+			{
+				// Handle access denied error
+				if($xml->Code == 'AccessDenied')
+				{
+					throw new ImageAccessDeindedException("Access denied to '" . $med->images->standard_resolution->url ."' This entry hasn't been saved to the DB.");
+				}
+
+				// Thrown an uknown error exception
+				throw new UknownInstagramError("Uknown error ({$xml->Code}): {$xml->Message}");
+			}
+
+			// Carry on..
+			if(!$image) {
+				$image = \Propeller\Instagram\Model_Image::forge();
+				$image->accepted = 'unsorted';
+			}
+
+			$image->thumb_img = $med->images->thumbnail->url;
+			$image->main_img = $med->images->standard_resolution->url;
+			$image->lowres_img = $med->images->low_resolution->url;
+			$image->instagram_id = $med->id;
+			$image->author = $med->user->username;
+			$image->link = $med->link;
+			$image->subscription_id = $sub->instagram_subscription_id;
+			$image->caption = $med->caption->text;
+			$image->tags = [];
+			//Loop Thorugh Tags and store each one
+			foreach($med->tags as $tag)
+			{
+				//Check Tag Existance
+				$tag_model = \Propeller\Instagram\Model_Tag::query()->where('tag_name', $tag)->get_one();
+				if ( !$tag_model )
+				{
+					//Create That Tag if it doesnt already exist
+					$tag_model = \Propeller\Instagram\Model_Tag::forge();
+					$tag_model->tag_name = $tag;
+					$tag_model->save();
+				}
+
+				//Save Tags 
+				$image->tags[] = $tag_model;
+
+			}
+
+			$image->save();
+
+			return true;
+
+		}
+		catch (ImageAccessDeindedException $e)
+		{
+			\Cli::write("Attempting to delete image", "cyan");
+
+			if($image)
+			{
+				$obj = \Propeller\Instagram\Model_Image::find($image->id);
+
+				// Delete the image as we no longer have access to it!
+				try
+				{
+					$obj->delete();
+
+					\Cli::write("Image deleted", "green");
+				}
+				catch(\Exception $e)
+				{
+					\Cli::error("Unable to delete image: " . $e->getMessage());
+				}
+			}
+		}
+		catch(\Exception $e)
+		{
+			// Some other error
+			\Log::error($e->getMessage(), __METHOD__);
+
+			\Cli::error("Uknown error: " . $e->getMessage());
+		}
+	}
+
 }
 
 class ImageAccessDeindedException extends \Exception {}
