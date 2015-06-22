@@ -58,8 +58,17 @@ class InstagramPoll
 		\Cli::write("{$image_delete_count} images deleted.");
 	}
 
-	public function subscriptions()
+	/**
+	 * Get list of recently tagged media
+	 *
+	 * Use --all option to get all tagged media.
+	 *
+	 * @param string $tag Tag name
+	 */
+	public function subscriptions($tag = null)
 	{
+		$get_all = \Cli::option('all', false);
+
 		$account = \Propeller\Instagram\Model_Account::query()
 				->where('active', 1)
 				->get_one();
@@ -67,21 +76,33 @@ class InstagramPoll
 		$instagram = new \Instagram\Instagram;
 		$instagram->setAccessToken($account->token);
 
-		$subscriptions = \Propeller\Instagram\Model_Subscription::query()
-			->where('status', 'Live')
-			->get();
+		$query = \Propeller\Instagram\Model_Subscription::query()
+			->where('status', 'Live');
+		if ($tag) {
+			$query->where('object_id', $tag);
+		}
 
-		foreach($subscriptions as $sub) {
-
+		foreach($query->get() as $sub)
+		{
 			$tag = $instagram->getTag($sub->object_id);
-			$media = $tag->getMedia();
 			$count = 0;
+			$params = [
+				'max_tag_id' => null,
+			];
 
-			foreach($media as $med) {
-				if (static::add_media($med, $sub)) {
-					$count++;
+			do {
+				$media = $tag->getMedia($params);
+				foreach($media as $med) {
+					if (static::add_media($med, $sub)) {
+						$count++;
+					}
 				}
-			}
+
+				if ($get_all) {
+					$params['max_tag_id'] = $media->getNextMaxTagId();
+				}
+			} while ($params['max_tag_id']);
+
 
 			if($count) {
 				$sub->last_image_received = time();
