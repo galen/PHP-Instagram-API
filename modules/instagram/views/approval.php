@@ -1,17 +1,17 @@
 <div class="tabbable"> <!-- Only required for left/right tabs -->
   <ul class="nav nav-tabs">
     <li class="active">
-    	<a href="#unsorted" data-toggle="tab">Unsorted 
+		<a href="#unsorted" data-toggle="tab" data-status="unsorted">Unsorted
     		<span class="badge badge-warning unsorted-cnt"><?= isset($image_counts['unsorted']) ? $image_counts['unsorted'] : '0' ?></span>
     	</a>
     </li>
-    <li>	
-    	<a href="#approved" data-toggle="tab">Approved 
+    <li>
+		<a href="#approved" data-toggle="tab" data-status="accepted">Approved
     		<span class="badge badge-warning approved-cnt"><?= isset($image_counts['accepted']) ? $image_counts['accepted'] : '0' ?></span>
     	</a>
     </li>
     <li>
-    	<a href="#rejected" data-toggle="tab">Rejected 
+		<a href="#rejected" data-toggle="tab" data-status="declined">Rejected
     		<span class="badge badge-warning rejected-cnt"><?= isset($image_counts['declined']) ? $image_counts['declined'] : '0'  ?></span>
     	</a>
     </li>
@@ -65,19 +65,21 @@
 			max_iterations['#rejected'] = parseInt(images['#rejected'] / 42);
 			var current_tab;
 			var active_popover;
+			var status;
 
 			$(window).scroll(function() {
 
 				if ($(window).scrollTop() == $(document).height() - $(window).height()) {
 
 					current_tab = $('.nav-tabs .active a').attr('href');
+					status = $('.nav-tabs .active a').data('status');
 
 					var offset = 42 * iterations[current_tab];
 					if(max_iterations[current_tab] > 1 && offset < images[current_tab]) {
 
 						iterations[current_tab]++;
 
-						$.post('/admin/instagram/ajax/more.json', {'offset' : offset, 'subscription' : sub_id}, function(data){
+						$.post('/admin/instagram/ajax/more.json', {'offset' : offset, 'subscription' : sub_id, 'status': status}, function(data){
 							$.each(data.images, function(index, img){
 								$(current_tab).find('.images-container').append($('<img>').attr({
 									'src' : img.thumb_img,
