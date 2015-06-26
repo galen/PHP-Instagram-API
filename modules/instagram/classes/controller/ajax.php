@@ -8,7 +8,8 @@ class Controller_Ajax extends \Admin\Controller_Rest
 
 		$images = \Propeller\Instagram\Model_Image::query()
 			->where('subscription_id', \Input::post('subscription'))
-			->order_by('created_at')
+			->where('accepted', \Input::post('status'))
+			->order_by('created_at', 'desc')
 			->offset(\Input::post('offset'))
 			->limit(42)
 			->get();
