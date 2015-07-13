@@ -157,6 +157,9 @@ class InstagramPoll
 			$image->subscription_id = $sub->instagram_subscription_id;
 			$image->caption = $med->caption ? $med->caption->text : '';
 			$image->tags = [];
+			$image->likes = $med->getLikesCount();
+			$image->posted_at = $med->getCreatedTime();
+
 			//Loop Thorugh Tags and store each one
 			foreach($med->tags as $tag)
 			{

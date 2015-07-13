@@ -57,6 +57,15 @@ class Model_Image extends \Orm\Model
 			'type' => 'int',
 			'label' => 'Updated',
 		),
+		'likes' => array(
+			'type' => 'int',
+			'label' => 'Likes',
+			'default' => 0,
+		),
+		'posted_at' => array(
+			'type' => 'int',
+			'label' => 'Posted At',
+		),
 	);
 
 	protected static $_belongs_to = array(
