@@ -138,6 +138,18 @@ class Instagram extends \Instagram\Core\BaseObjectAbstract {
         return $media;
     }
 
+
+    /**
+     * Get media by its shortcode
+     *
+     * @param string $shortcode Instagram media shortcode
+     * @return mixed
+     */
+    public function getMediaShortcode($shortcode) {
+        $media = new Media( $this->proxy->getMediaShortCode( $shortcode ), $this->proxy );
+        return $media;
+    }
+
     /**
      * Get Tag
      *
