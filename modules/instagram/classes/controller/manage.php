@@ -155,7 +155,7 @@ class Controller_Manage extends \Admin\Controller_Template
 		}
 
 		
-		$this->template->title = 'Authorize Instagram';
+		$this->template->title = 'Authenticate Instagram';
 		$this->template->content = $view;
 	}
 
