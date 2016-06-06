@@ -90,56 +90,88 @@ class Controller_Manage extends \Admin\Controller_Template
 			->where('active', 1)
 			->get_one();
 
-		if($account) {
-
-			$view = \View::forge('manage');
-			$view->set('fieldset', \Propeller\Instagram\Subscription::fieldset(), false);
-			$subscriptions = \Propeller\Instagram\Subscription::get();
-			$prop_sub = \Propeller\Instagram\Model_Subscription::find('all');
-			$merged = array();
-
-			if($prop_sub) {
-				foreach($prop_sub as $subscription) {
-					$merged[$subscription->object_id] = $subscription;
-				}
-
-				foreach($subscriptions as $subscription) {
-					$key = str_replace('#', '', $subscription->object_id);
-					if(isset($merged[$key])) {
-						$merged[$key]->instagram = $subscription;
-					}
-				}
-			}
-
-			if(\Input::post()) {
-				try {
-					 \Propeller\Instagram\Subscription::forge(
-						 \Input::post('name'),
-						 array(
-							 'object_id' => \Input::post('tag'),
-							 'aspect' => 'media',
-							 'object' => 'tag',
-						 )
-					 );
-				} catch (\Exception $e) {
-					if (in_array(\Fuel::$env, [\Fuel::PRODUCTION, \Fuel::STAGING, \Fuel::TEST])) {
-						\Session::set_flash('error', '');
-					} else {
-						\Session::set_flash('error', 'Instagram integration can not be used on development.');
-					}
-				}
-			}
-
-			$view->set('subscriptions', $merged);
-
-		} else {
-
-			$auth = new \Instagram\Auth(\Config::get('instagram.auth'));
-			$auth->authorize();
-
+		if (!$account) {
+			\Response::redirect('admin/instagram/manage/authenticate');
 		}
 
+		$view = \View::forge('manage');
+		$view->set('fieldset', \Propeller\Instagram\Subscription::fieldset(), false);
+		$subscriptions = \Propeller\Instagram\Subscription::get();
+		$prop_sub = \Propeller\Instagram\Model_Subscription::find('all');
+		$merged = array();
+
+		if($prop_sub) {
+			foreach($prop_sub as $subscription) {
+				$merged[$subscription->object_id] = $subscription;
+			}
+
+			foreach($subscriptions as $subscription) {
+				$key = str_replace('#', '', $subscription->object_id);
+				if(isset($merged[$key])) {
+					$merged[$key]->instagram = $subscription;
+				}
+			}
+		}
+
+		if(\Input::post()) {
+			try {
+				 \Propeller\Instagram\Subscription::forge(
+					 \Input::post('name'),
+					 array(
+						 'object_id' => \Input::post('tag'),
+						 'aspect' => 'media',
+						 'object' => 'tag',
+					 )
+				 );
+			} catch (\Exception $e) {
+				if (in_array(\Fuel::$env, [\Fuel::PRODUCTION, \Fuel::STAGING, \Fuel::TEST])) {
+					\Session::set_flash('error', '');
+				} else {
+					\Session::set_flash('error', 'Instagram integration can not be used on development.');
+				}
+			}
+		}
+
+		$view->set('subscriptions', $merged);
+
+
 		$this->template->title = 'Instagram';
+		$this->template->content = $view;
+	}
+
+	public function action_authenticate()
+	{
+		$auth_config = \Config::get('instagram.auth');
+		$view = \View::forge('authenticate');
+
+		// Check we have the configs we need
+		if ( !$auth_config['client_id'] || !$auth_config['redirect_uri'] ) {
+			$view->set('error', 'Please make sure Instagram configuration is filled in correctly');
+		}
+		// If they have clicked the "authenticate" button
+		elseif ( \Input::get('go') !== null ) {
+			$auth = new \Instagram\Auth($auth_config);
+			$auth->authorize();
+		}
+
+		
+		$this->template->title = 'Authorize Instagram';
+		$this->template->content = $view;
+	}
+
+	public function action_authenticate_success()
+	{
+		// check we have an account
+		$account = \Propeller\Instagram\Model_Account::query()
+			->where('active', 1)
+			->get_one();
+
+		if (!$account) {
+			\Response::redirect('admin/instagram/manage/authenticate');
+		}
+
+		$view = \View::forge('authenticate_success');
+		$this->template->title = 'Authorize Instagram - Success';
 		$this->template->content = $view;
 	}
 }
