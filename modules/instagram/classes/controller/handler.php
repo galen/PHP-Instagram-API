@@ -26,7 +26,7 @@ class Controller_Handler extends \Controller
 			$acct->active = 1;
 			$acct->save();
 
-			\Response::redirect('/admin/instagram/manage/index');
+			\Response::redirect('/admin/instagram/manage/authenticate_success');
 
 		} else {
 			// Read in the change statuses.
