@@ -14,7 +14,7 @@ class Controller_Manage extends \Admin\Controller_Template
 	public function action_approval($id)
 	{
 		$sub = \Propeller\Instagram\Model_Subscription::query()
-			->where('instagram_subscription_id', $id)
+			->where('id', $id)
 			->get_one();
 
 		$sub->last_managed = time();
@@ -111,11 +111,7 @@ class Controller_Manage extends \Admin\Controller_Template
 					$sub->save();
 				}
 			} catch (\Exception $e) {
-				if (in_array(\Fuel::$env, [\Fuel::PRODUCTION, \Fuel::STAGING, \Fuel::TEST])) {
-					\Session::set_flash('error', '');
-				} else {
-					\Session::set_flash('error', 'Instagram integration can not be used on development.');
-				}
+				\Session::set_flash('error', 'Error adding subscription: '.$e->getMessage());
 			}
 		}
 
