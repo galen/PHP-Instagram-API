@@ -2,8 +2,8 @@
 
 return array(
 	'auth' => array(
-		'client_id'     => '8d316ba637af488b91ad01e2b2ac41ea',
-		'client_secret' => '97ba5bfd2d2743aab12f5e16f3368fd1',
+		'client_id'     => 'e2a904382e2448958d984cffa5554956',
+		'client_secret' => 'c080c821eef54f94844f0679ff77538f',
 		'redirect_uri'  => \Uri::create('instagram/handler/subscribe'),
 		'scope'         => array('basic', 'public_content'),
 		'display'       => ''
