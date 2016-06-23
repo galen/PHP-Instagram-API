@@ -154,7 +154,7 @@ class InstagramPoll
 			$image->instagram_id = $med->id;
 			$image->author = $med->user->username;
 			$image->link = $med->link;
-			$image->subscription_id = $sub->instagram_subscription_id;
+			$image->subscription_id = $sub->id;
 			$image->caption = $med->caption ? $med->caption->text : '';
 			$image->tags = [];
 			$image->likes = $med->getLikesCount();

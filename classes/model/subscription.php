@@ -89,7 +89,7 @@ class Model_Subscription extends \Orm\Model
 
 	protected static $_has_many = array(
 		'images' => array(
-			'key_from' => 'instagram_subscription_id',
+			'key_from' => 'id',
 			'model_to' => '\Propeller\Instagram\Model_Image',
 			'key_to' => 'subscription_id',
 			'cascade_save' => true,

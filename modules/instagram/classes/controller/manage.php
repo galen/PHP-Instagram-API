@@ -94,6 +94,31 @@ class Controller_Manage extends \Admin\Controller_Template
 			\Response::redirect('admin/instagram/manage/authenticate');
 		}
 
+		if(\Input::post()) {
+			try {
+				$sub = \Propeller\Instagram\Model_Subscription::query()
+					->where('object_id', \Input::post('tag'))
+					->get_one();
+
+				if (!$sub) {
+					$sub = \Propeller\Instagram\Model_Subscription::forge(array(
+					 	'guid' => uniqid(),
+					 	'alias' => \Input::post('name'),
+					 	'params' => '',
+					 	'object_id' => \Input::post('tag'),
+					 	'status' => 'Live',
+					));
+					$sub->save();
+				}
+			} catch (\Exception $e) {
+				if (in_array(\Fuel::$env, [\Fuel::PRODUCTION, \Fuel::STAGING, \Fuel::TEST])) {
+					\Session::set_flash('error', '');
+				} else {
+					\Session::set_flash('error', 'Instagram integration can not be used on development.');
+				}
+			}
+		}
+
 		$view = \View::forge('manage');
 		$view->set('fieldset', \Propeller\Instagram\Subscription::fieldset(), false);
 		$subscriptions = \Propeller\Instagram\Subscription::get();
@@ -109,25 +134,6 @@ class Controller_Manage extends \Admin\Controller_Template
 				$key = str_replace('#', '', $subscription->object_id);
 				if(isset($merged[$key])) {
 					$merged[$key]->instagram = $subscription;
-				}
-			}
-		}
-
-		if(\Input::post()) {
-			try {
-				 \Propeller\Instagram\Subscription::forge(
-					 \Input::post('name'),
-					 array(
-						 'object_id' => \Input::post('tag'),
-						 'aspect' => 'media',
-						 'object' => 'tag',
-					 )
-				 );
-			} catch (\Exception $e) {
-				if (in_array(\Fuel::$env, [\Fuel::PRODUCTION, \Fuel::STAGING, \Fuel::TEST])) {
-					\Session::set_flash('error', '');
-				} else {
-					\Session::set_flash('error', 'Instagram integration can not be used on development.');
 				}
 			}
 		}

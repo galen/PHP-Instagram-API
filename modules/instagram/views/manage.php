@@ -26,7 +26,7 @@
 				<td>
 					<? if($sub->status != 'Disabled'): ?>
 					<a href="/admin/instagram/manage/approval/<?= $sub->instagram_subscription_id ?>" class="btn btn-info btn-mini">Approve Images</a>
-					<a href="/admin/instagram/manage/unsubscribe/<?= $sub->instagram_subscription_id ?>" class="btn btn-danger btn-mini">Unsubscribe</a>
+					<!-- <a href="/admin/instagram/manage/unsubscribe/<?= $sub->instagram_subscription_id ?>" class="btn btn-danger btn-mini">Unsubscribe</a> -->
 					<? endif ?>
 				</td>
 			</tr>
