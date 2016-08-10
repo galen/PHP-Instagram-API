@@ -23,7 +23,7 @@ class Controller_Manage extends \Admin\Controller_Template
 		$image_counts = \DB::select(\DB::expr('COUNT(id) as image_count, accepted'))
 			->from('instagram__images')
 			->where('subscription_id', $id)
-			->order_by('created_at', 'desc')
+			->order_by('posted_at', 'desc')
 			->group_by('accepted')
 			->limit(42)
 			->execute()
@@ -33,7 +33,7 @@ class Controller_Manage extends \Admin\Controller_Template
 			->from('instagram__images')
 			->where('subscription_id', $id)
 			->where('accepted', 'unsorted')
-			->order_by('created_at', 'desc')
+			->order_by('posted_at', 'desc')
 			->limit(42)
 			->execute()
 			->as_array();
@@ -42,7 +42,7 @@ class Controller_Manage extends \Admin\Controller_Template
 			->from('instagram__images')
 			->where('subscription_id', $id)
 			->where('accepted', 'accepted')
-			->order_by('created_at', 'desc')
+			->order_by('posted_at', 'desc')
 			->limit(42)
 			->execute()
 			->as_array();
@@ -51,7 +51,7 @@ class Controller_Manage extends \Admin\Controller_Template
 			->from('instagram__images')
 			->where('subscription_id', $id)
 			->where('accepted', 'declined')
-			->order_by('created_at', 'desc')
+			->order_by('posted_at', 'desc')
 			->limit(42)
 			->execute()
 			->as_array();
