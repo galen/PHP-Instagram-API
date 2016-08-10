@@ -108,9 +108,9 @@ class Subscription
 	public static function fieldset()
 	{
 		$fieldset = \Fieldset::forge();
-		$fieldset->add('name', '', array('type' => 'text', 'placeholder' => 'Subscription Name'));
+		$fieldset->add('name', '', array('type' => 'text', 'placeholder' => 'Name'));
 		$fieldset->add('tag', '', array('type' => 'text', 'placeholder' => 'Instagram Tag'));
-		$fieldset->add('submit', '', array('type' => 'submit', 'class' => 'btn'))->set_value('Create Subscription');
+		$fieldset->add('submit', '', array('type' => 'submit', 'class' => 'btn'))->set_value('Create Tag Search');
 
 		return $fieldset;
 	}

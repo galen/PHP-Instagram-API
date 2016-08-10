@@ -72,7 +72,7 @@ class Model_Image extends \Orm\Model
 		'subscription' => array(
 			'key_from' => 'subscription_id',
 			'model_to' => '\Propeller\Instagram\Model_Subscription',
-			'key_to' => 'instagram_subscription_id',
+			'key_to' => 'id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		)

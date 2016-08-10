@@ -17,7 +17,19 @@ $nav = \Config::get('instagram.nav').'.'.$nav_title;
 
 \PropNav\Menu::instance('admin')->add_item(
 	\PropNav\Item::forge($nav, '', 100)
-		->add_item(\PropNav\Item::forge('Manage', '/admin/instagram/manage/index'), 1)
+		->add_item(
+			\PropNav\Item::forge('Manage', '/admin/instagram/manage/index')
+				->active_callable(
+					function ($item, $url) {
+						if ( strpos($url, "instagram/manage") !== false ) {
+							return true;
+						}
+
+						return false;
+					}
+				)
+			,1
+		)
 );
 
 

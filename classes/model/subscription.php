@@ -58,7 +58,7 @@ class Model_Subscription extends \Orm\Model
 	public function latest_images($count)
 	{
 		return \Propeller\Instagram\Model_Image::query()
-			->where('subscription_id', $this->instagram_subscription_id)
+			->where('subscription_id', $this->id)
 			->order_by('created_at')
 			->limit($count)
 			->get();
@@ -67,8 +67,8 @@ class Model_Subscription extends \Orm\Model
 	public function preview_images($limit)
 	{
 		return \Propeller\Instagram\Model_Image::query()
-			->where('subscription_id', $this->instagram_subscription_id)
-			->where('accepted', 'unsorted')
+			->where('subscription_id', $this->id)
+			->where('accepted', 'IN', ['unsorted', 'accepted'])
 			->order_by('created_at', 'desc')
 			->limit($limit)
 			->get();
@@ -89,7 +89,7 @@ class Model_Subscription extends \Orm\Model
 
 	protected static $_has_many = array(
 		'images' => array(
-			'key_from' => 'instagram_subscription_id',
+			'key_from' => 'id',
 			'model_to' => '\Propeller\Instagram\Model_Image',
 			'key_to' => 'subscription_id',
 			'cascade_save' => true,
