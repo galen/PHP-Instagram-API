@@ -12,6 +12,11 @@ return array(
 	/**
 	 * Change the place for the defaul nav to be placed.
 	 */
-	'nav' => 'Your CMS'
+	'nav' => 'Your CMS',
+
+	/**
+	 * Set to true to auto approve submissions
+	 */
+	'auto_approve' => false,
 
 );
