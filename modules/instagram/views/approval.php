@@ -19,9 +19,19 @@
   <div class="tab-content">
     <div class="tab-pane active" id="unsorted">
       <div class="row images-container">
-			<? foreach($unsorted_images as $image): ?>
-				<img class="span2 instagram-img unsorted" data-image-id="<?= $image['id'] ?>" style="margin-bottom: 15px;" src="<?= $image['thumb_img'] ?>" />
-			<? endforeach ?>
+		  <? foreach($unsorted_images as $image): ?>
+			  <div style="display: block; width: 23%; float: left; padding: 0 10px 0 0">
+				  <div style="clear: both; display: block; width: 100%;">
+					  <img class="instagram-img unsorted" data-image-id="<?= $image['id'] ?>" style="margin-bottom: 15px;" src="<?= $image['thumb_img'] ?>" />
+				  </div>
+
+				  <div style="clear: both; display: block; width: 100%;">
+					  <p>
+						  <?= $image['caption']; ?>
+					  </p>
+				  </div>
+			  </div>
+		  <? endforeach ?>
 		</div>
 		<input type="hidden" name="unsorted_image_count" value="<?= isset($image_counts['unsorted']) ? $image_counts['unsorted'] : 0 ?>">
     </div>
