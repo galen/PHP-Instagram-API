@@ -18,7 +18,7 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="unsorted">
-      <div class="row images-container">
+      <div class="images-container">
 		  <? foreach($unsorted_images as $image): ?>
 			  <div style="display: block; width: 23%; float: left; padding: 0 10px 0 0">
 				  <div style="clear: both; display: block; width: 100%;">
