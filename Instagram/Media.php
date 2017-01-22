@@ -239,6 +239,16 @@ class Media extends \Instagram\Core\BaseObjectAbstract {
     }
 
     /**
+     * Get the media's id
+     *
+     * @return string
+     * @access public
+     */
+    public function getId() {
+        return $this->data->id;
+    }
+
+    /**
      * Get the media's likes count
      *
      * @return int
