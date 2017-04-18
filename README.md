@@ -1,4 +1,4 @@
-#PHP Instagram API
+# PHP Instagram API
 
 This is a PHP 5.3+ API wrapper for the [Instagram API](http://instagram.com/developer/)
 
@@ -6,11 +6,11 @@ The API comes with a cURL client (`Instagram\Net\CurlClient`) to access the Inst
 
 ---
 
-##The API
+## The API
 
 All methods that access the API can throw exceptions. If the API request fails for any reason other than an expired/missing access token an exception of type `\Instagram\Core\ApiException` will be thrown.  If the API request fails because of an expired/missing access token an exception of type `\Instagram\Core\ApiAuthException` will be thrown. You can use this to redirect to your authorization page.
 
-##Authentication
+## Authentication
 
 - [Set up a client for use with Instagram's API](http://instagr.am/developer/clients/manage/)
 
@@ -47,7 +47,7 @@ All methods that access the API can throw exceptions. If the API request fails f
     $instagram->setAccessToken( $_SESSION['instagram_access_token'] );
     $current_user = $instagram->getCurrentUser();
 
-##Basic Usage
+## Basic Usage
 
     $instagram = new Instagram\Instagram( $_SESSION['instagram_access_token'] );
     $user = $instagram->getUser( $user_id );
@@ -56,7 +56,7 @@ All methods that access the API can throw exceptions. If the API request fails f
     $location = $instagram->getLocation( 3001881 );
     $current_user = $instagram->getCurrentUser();
 
-##Current User
+## Current User
 
 The current user object will give you the currently logged in user
 
@@ -90,7 +90,7 @@ With this object you can:
 
 You can also perform all the functions you could on a normal user
 
-##Getting Media
+## Getting Media
 
 Users, tags, locations, and the current user have media associated with them.
 
@@ -113,11 +113,11 @@ You can pass an array of parameters to `getMedia()`. These parameters will be pa
         array( 'max_id' => $max_id )
     );
 
-##Images and Videos
+## Images and Videos
 
 You can distinguish between images and videos with `Media::getType()`. This will return `video` or `image`. Video files can be accessed with `Media::getStandardResVideo()` and `Media::getLowResVideo()`. The image methods on a video will return a still of the video.
 
-##Collections
+## Collections
 
 When making a call to a method that returns more than one of something (e.g. getMedia(), searchUsers() ), a collection object will be returned.  Collections can be iterated, counted, and accessed like arrays.
 
@@ -153,7 +153,7 @@ In `user_media.php` you would check for a next page when obtaining the user medi
 Unfortunately API methods require different params to be passed to them in order to obtain the next set of results (e.g. Tags require the *max_tag_id* param ).
 
 
-##Searching
+## Searching
 
 You can search for locations, media, tags, and users.
 
